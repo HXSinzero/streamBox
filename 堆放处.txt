@@ -1,0 +1,1 @@
+@网页接收扫码枪扫码输入事件				http://jileniao.net/use-js-capture-scanbarinput.html

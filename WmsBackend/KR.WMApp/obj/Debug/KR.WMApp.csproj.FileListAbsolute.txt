@@ -1,0 +1,7 @@
+C:\Users\zengs\Documents\wms\GYWms\publish\BIN\KR.WMApp.dll
+C:\Users\zengs\Documents\wms\GYWms\publish\BIN\KR.WMApp.pdb
+C:\Users\zengs\Documents\wms\GYWms\KR.WMApp\obj\Debug\KR.WMApp.csproj.CoreCompileInputs.cache
+C:\Users\zengs\Documents\wms\GYWms\KR.WMApp\obj\Debug\KR.WMApp.csproj.CopyComplete
+C:\Users\zengs\Documents\wms\GYWms\KR.WMApp\obj\Debug\KR.WMApp.dll
+C:\Users\zengs\Documents\wms\GYWms\KR.WMApp\obj\Debug\KR.WMApp.pdb
+C:\Users\zengs\Documents\wms\GYWms\KR.WMApp\obj\Debug\KR.WMApp.csprojAssemblyReference.cache

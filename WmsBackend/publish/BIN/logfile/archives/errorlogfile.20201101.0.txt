@@ -1,0 +1,1 @@
+2020-11-01 09:59:06.8539 Error 7928 9 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico

@@ -1,0 +1,77 @@
+2020-10-06 00:20:14.2385 Error 316400 22 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 00:20:18.5119 Error 316400 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 00:21:06.9216 Error 316400 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 10:21:52.2402 Error 316600 1 KR.BaseApp.Installer.Install System.Data.SqlClient.SqlException (0x80131904): 在与 SQL Server 建立连接时出现与网络相关的或特定于实例的错误。未找到或无法访问服务器。请验证实例名称是否正确并且 SQL Server 已配置为允许远程连接。 (provider: Named Pipes Provider, error: 40 - 无法打开到 SQL Server 的连接) ---> System.ComponentModel.Win32Exception (0x80004005): 找不到网络路径。
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 ServiceStack.OrmLite.OrmLiteConnection.Open()
+   在 ServiceStack.OrmLite.OrmLiteConnectionFactory.OpenDbConnection()
+   在 KR.BaseApp.Installer.Install() 位置 D:\gitee\krcims\KRCIMS\KR.BaseApp\Installer.cs:行号 22
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2020-10-06 10:21:52.2492 Error 316600 1 WMProjectHost.HelperApp.Start System.Data.SqlClient.SqlException (0x80131904): 在与 SQL Server 建立连接时出现与网络相关的或特定于实例的错误。未找到或无法访问服务器。请验证实例名称是否正确并且 SQL Server 已配置为允许远程连接。 (provider: Named Pipes Provider, error: 40 - 无法打开到 SQL Server 的连接) ---> System.ComponentModel.Win32Exception (0x80004005): 找不到网络路径。
+   在 KR.BaseApp.Installer.Install() 位置 D:\gitee\krcims\KRCIMS\KR.BaseApp\Installer.cs:行号 72
+   在 WMProjectHost.HelperApp.InitDataBase() 位置 D:\gitee\gywms\GYWms\WMProjectHost\HelperApp.cs:行号 70
+   在 WMProjectHost.HelperApp.Start() 位置 D:\gitee\gywms\GYWms\WMProjectHost\HelperApp.cs:行号 42
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2020-10-06 10:26:13.7025 Error 326204 1 KR.BaseApp.Installer.Install System.Data.SqlClient.SqlException (0x80131904): 在与 SQL Server 建立连接时出现与网络相关的或特定于实例的错误。未找到或无法访问服务器。请验证实例名称是否正确并且 SQL Server 已配置为允许远程连接。 (provider: Named Pipes Provider, error: 40 - 无法打开到 SQL Server 的连接) ---> System.ComponentModel.Win32Exception (0x80004005): 找不到网络路径。
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 ServiceStack.OrmLite.OrmLiteConnection.Open()
+   在 ServiceStack.OrmLite.OrmLiteConnectionFactory.OpenDbConnection()
+   在 KR.BaseApp.Installer.Install() 位置 D:\gitee\krcims\KRCIMS\KR.BaseApp\Installer.cs:行号 22
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2020-10-06 10:26:13.7025 Error 326204 1 WMProjectHost.HelperApp.Start System.Data.SqlClient.SqlException (0x80131904): 在与 SQL Server 建立连接时出现与网络相关的或特定于实例的错误。未找到或无法访问服务器。请验证实例名称是否正确并且 SQL Server 已配置为允许远程连接。 (provider: Named Pipes Provider, error: 40 - 无法打开到 SQL Server 的连接) ---> System.ComponentModel.Win32Exception (0x80004005): 找不到网络路径。
+   在 KR.BaseApp.Installer.Install() 位置 D:\gitee\krcims\KRCIMS\KR.BaseApp\Installer.cs:行号 72
+   在 WMProjectHost.HelperApp.InitDataBase() 位置 D:\gitee\gywms\GYWms\WMProjectHost\HelperApp.cs:行号 70
+   在 WMProjectHost.HelperApp.Start() 位置 D:\gitee\gywms\GYWms\WMProjectHost\HelperApp.cs:行号 42
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2020-10-06 12:24:17.1752 Error 327292 30 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 12:25:55.4278 Error 327292 33 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 12:27:07.1883 Error 327292 33 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 12:28:26.7818 Error 327292 35 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 13:23:39.0894 Error 327292 31 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 13:25:34.3743 Error 327292 19 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 13:35:21.4925 Error 327292 30 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 14:51:25.2746 Error 202868 27 WMProject.Services.ProjCustomizeForLBKService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeForLBKService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeForLBKService.cs:行号 274
+2020-10-06 14:52:57.2433 Error 202868 27 WMProject.BPTemplet.BPCommonLBK.CreatePalletByMen 未将对象引用设置到对象的实例。
+2020-10-06 15:30:30.9854 Error 286448 32 WMProject.BPTemplet.BPCommonLBK.CreatePalletByMen 未将对象引用设置到对象的实例。
+2020-10-06 16:50:17.6026 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /index.html
+2020-10-06 16:50:18.1472 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 16:50:22.6177 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 17:08:27.8604 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 17:08:35.7182 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 17:08:41.9100 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico

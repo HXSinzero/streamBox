@@ -1,0 +1,14 @@
+C:\Users\zengs\Documents\wms\GYWms\publish\BIN\WMProject.dll
+C:\Users\zengs\Documents\wms\GYWms\publish\BIN\WMProject.pdb
+C:\Users\zengs\Documents\wms\GYWms\WMProject\obj\Debug\WMProject.csprojAssemblyReference.cache
+C:\Users\zengs\Documents\wms\GYWms\WMProject\obj\Debug\WMProject.csproj.CoreCompileInputs.cache
+C:\Users\zengs\Documents\wms\GYWms\WMProject\obj\Debug\WMProject.csproj.CopyComplete
+C:\Users\zengs\Documents\wms\GYWms\WMProject\obj\Debug\WMProject.dll
+C:\Users\zengs\Documents\wms\GYWms\WMProject\obj\Debug\WMProject.pdb
+C:\Users\zengs\Documents\书记项目\GYWms\WMProject\obj\Debug\WMProject.csprojAssemblyReference.cache
+C:\Users\zengs\Documents\书记项目\GYWms\WMProject\obj\Debug\WMProject.csproj.CoreCompileInputs.cache
+C:\Users\zengs\Documents\书记项目\GYWms\WMProject\obj\Debug\WMProject.dll
+C:\Users\zengs\Documents\书记项目\GYWms\WMProject\obj\Debug\WMProject.pdb
+C:\Users\zengs\Documents\书记项目\GYWms\publish\BIN\WMProject.dll
+C:\Users\zengs\Documents\书记项目\GYWms\publish\BIN\WMProject.pdb
+C:\Users\zengs\Documents\书记项目\GYWms\WMProject\obj\Debug\WMProject.csproj.CopyComplete

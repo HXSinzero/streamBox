@@ -1,0 +1,33 @@
+2020-10-07 10:53:19.5174 Info 8432 1 WMProjectHost.HelperApp.Start ...
+2020-10-07 10:53:19.5842 Info 8432 1 WMProjectHost.HelperApp.Start ......
+2020-10-07 10:53:19.5842 Info 8432 1 WMProjectHost.HelperApp.Start .........
+2020-10-07 10:53:21.6396 Info 8432 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 2428.8891ms. No errors detected.
+2020-10-07 10:53:21.6812 Info 8432 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-07 10:53:21.7228 Info 8432 1 WMProjectApp.WebQuartz.Init 启动定时服务失败，未查询到相关数据！
+2020-10-07 10:53:21.7228 Info 8432 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-07 10:53:21.7228 Info 8432 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-07 10:53:40.1149 Warn 8432 8 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.BasicRequest'
+2020-10-07 10:53:45.7694 Info 8432 8 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_EQUIPMENTSTATUS WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:53:45.8176 Info 8432 8 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_EQUIPMENTREQUEST WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:53:45.8603 Info 8432 14 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_JOBDOWNLOAD WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:53:45.8667 Info 8432 15 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_JOBFEEDBACK WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:53:46.4760 Warn 8432 16 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:53:46.4760 Warn 8432 16 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:53:46.5033 Warn 8432 17 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:53:46.5106 Warn 8432 17 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:54:06.4978 Warn 8432 18 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:54:06.4978 Warn 8432 18 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:54:06.5288 Warn 8432 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:54:06.5288 Warn 8432 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:54:09.4137 Info 8432 20 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_EQUIPMENTSTATUS WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:54:09.4291 Info 8432 21 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_EQUIPMENTREQUEST WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:54:09.4427 Info 8432 20 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_JOBDOWNLOAD WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:54:09.4642 Info 8432 21 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_JOBFEEDBACK WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:54:11.7479 Warn 8432 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:54:11.7479 Warn 8432 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:54:11.7762 Warn 8432 18 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:54:11.7762 Warn 8432 18 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-07 10:54:15.9774 Info 8432 17 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_EQUIPMENTSTATUS WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:54:15.9932 Info 8432 16 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_EQUIPMENTREQUEST WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:54:15.9932 Info 8432 17 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_JOBDOWNLOAD WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-07 10:54:16.0184 Info 8432 16 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_JOBFEEDBACK WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC

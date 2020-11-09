@@ -1,0 +1,6 @@
+2020-10-30 20:25:21.6661 Error 9948 14 ServiceStack.ServiceStackHost.OnLogError ServiceBase<TRequest>::Service Exception
+2020-10-30 20:25:57.0472 Error 9948 17 ServiceStack.ServiceStackHost.OnLogError ServiceBase<TRequest>::Service Exception
+2020-10-30 20:26:17.1416 Error 9948 18 ServiceStack.ServiceStackHost.OnLogError ServiceBase<TRequest>::Service Exception
+2020-10-30 20:28:12.8562 Error 9948 20 ServiceStack.ServiceStackHost.OnLogError ServiceBase<TRequest>::Service Exception
+2020-10-30 20:33:25.3114 Error 10100 8 ServiceStack.ServiceStackHost.OnLogError ServiceBase<TRequest>::Service Exception
+2020-10-30 20:34:17.1488 Error 10100 11 ServiceStack.ServiceStackHost.OnLogError ServiceBase<TRequest>::Service Exception

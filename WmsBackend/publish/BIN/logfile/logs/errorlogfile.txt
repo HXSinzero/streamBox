@@ -1,0 +1,4 @@
+2020-11-02 17:11:34.0198 Error 10196 8 ServiceStack.ServiceStackHost.OnLogError ServiceBase<TRequest>::Service Exception
+2020-11-02 17:15:15.6491 Error 6548 8 ServiceStack.ServiceStackHost.OnLogError ServiceBase<TRequest>::Service Exception
+2020-11-09 07:13:19.5135 Error 11916 9 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-11-09 10:35:56.5977 Error 7456 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico

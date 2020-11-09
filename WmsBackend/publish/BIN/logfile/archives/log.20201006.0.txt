@@ -1,0 +1,455 @@
+2020-10-06 00:20:06.1123 Info 316400 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 00:20:06.2256 Info 316400 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 00:20:06.2304 Info 316400 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 00:20:08.4095 Info 316400 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 2800.7635ms. No errors detected.
+2020-10-06 00:20:12.5483 Info 316400 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 00:20:12.6231 Info 316400 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 00:20:12.9081 Info 316400 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 00:20:12.9081 Info 316400 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 00:20:12.9217 Info 316400 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 00:20:12.9217 Info 316400 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 00:20:13.1003 Info 316400 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 00:20:13.1003 Info 316400 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 00:20:14.2385 Error 316400 22 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 00:20:18.5119 Error 316400 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 00:21:06.9216 Error 316400 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 00:23:25.5285 Warn 316400 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.BasicRequest'
+2020-10-06 00:23:35.1973 Warn 316400 33 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationRequest'
+2020-10-06 00:24:23.3787 Warn 316400 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.BasicRequest'
+2020-10-06 00:24:34.0813 Warn 316400 27 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationRequest'
+2020-10-06 00:30:15.7419 Warn 316400 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.BasicRequest'
+2020-10-06 00:30:24.3646 Warn 316400 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationRequest'
+2020-10-06 00:30:42.6785 Warn 316400 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationRequest'
+2020-10-06 10:21:19.1324 Info 316600 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 10:21:19.1633 Info 316600 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 10:21:19.1633 Info 316600 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 10:21:52.2402 Error 316600 1 KR.BaseApp.Installer.Install System.Data.SqlClient.SqlException (0x80131904): 在与 SQL Server 建立连接时出现与网络相关的或特定于实例的错误。未找到或无法访问服务器。请验证实例名称是否正确并且 SQL Server 已配置为允许远程连接。 (provider: Named Pipes Provider, error: 40 - 无法打开到 SQL Server 的连接) ---> System.ComponentModel.Win32Exception (0x80004005): 找不到网络路径。
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 ServiceStack.OrmLite.OrmLiteConnection.Open()
+   在 ServiceStack.OrmLite.OrmLiteConnectionFactory.OpenDbConnection()
+   在 KR.BaseApp.Installer.Install() 位置 D:\gitee\krcims\KRCIMS\KR.BaseApp\Installer.cs:行号 22
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2020-10-06 10:21:52.2492 Error 316600 1 WMProjectHost.HelperApp.Start System.Data.SqlClient.SqlException (0x80131904): 在与 SQL Server 建立连接时出现与网络相关的或特定于实例的错误。未找到或无法访问服务器。请验证实例名称是否正确并且 SQL Server 已配置为允许远程连接。 (provider: Named Pipes Provider, error: 40 - 无法打开到 SQL Server 的连接) ---> System.ComponentModel.Win32Exception (0x80004005): 找不到网络路径。
+   在 KR.BaseApp.Installer.Install() 位置 D:\gitee\krcims\KRCIMS\KR.BaseApp\Installer.cs:行号 72
+   在 WMProjectHost.HelperApp.InitDataBase() 位置 D:\gitee\gywms\GYWms\WMProjectHost\HelperApp.cs:行号 70
+   在 WMProjectHost.HelperApp.Start() 位置 D:\gitee\gywms\GYWms\WMProjectHost\HelperApp.cs:行号 42
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2020-10-06 10:21:52.2492 Info 316600 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 10:25:40.6914 Info 326204 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 10:25:40.7197 Info 326204 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 10:25:40.7197 Info 326204 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 10:26:13.7025 Error 326204 1 KR.BaseApp.Installer.Install System.Data.SqlClient.SqlException (0x80131904): 在与 SQL Server 建立连接时出现与网络相关的或特定于实例的错误。未找到或无法访问服务器。请验证实例名称是否正确并且 SQL Server 已配置为允许远程连接。 (provider: Named Pipes Provider, error: 40 - 无法打开到 SQL Server 的连接) ---> System.ComponentModel.Win32Exception (0x80004005): 找不到网络路径。
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 ServiceStack.OrmLite.OrmLiteConnection.Open()
+   在 ServiceStack.OrmLite.OrmLiteConnectionFactory.OpenDbConnection()
+   在 KR.BaseApp.Installer.Install() 位置 D:\gitee\krcims\KRCIMS\KR.BaseApp\Installer.cs:行号 22
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2020-10-06 10:26:13.7025 Error 326204 1 WMProjectHost.HelperApp.Start System.Data.SqlClient.SqlException (0x80131904): 在与 SQL Server 建立连接时出现与网络相关的或特定于实例的错误。未找到或无法访问服务器。请验证实例名称是否正确并且 SQL Server 已配置为允许远程连接。 (provider: Named Pipes Provider, error: 40 - 无法打开到 SQL Server 的连接) ---> System.ComponentModel.Win32Exception (0x80004005): 找不到网络路径。
+   在 KR.BaseApp.Installer.Install() 位置 D:\gitee\krcims\KRCIMS\KR.BaseApp\Installer.cs:行号 72
+   在 WMProjectHost.HelperApp.InitDataBase() 位置 D:\gitee\gywms\GYWms\WMProjectHost\HelperApp.cs:行号 70
+   在 WMProjectHost.HelperApp.Start() 位置 D:\gitee\gywms\GYWms\WMProjectHost\HelperApp.cs:行号 42
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2020-10-06 10:26:13.7025 Info 326204 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 10:26:58.8678 Info 325324 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 10:26:58.8912 Info 325324 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 10:26:58.8912 Info 325324 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 10:27:01.8034 Info 325324 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 3037.1029ms. No errors detected.
+2020-10-06 10:27:05.8634 Info 325324 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 10:27:06.0879 Info 325324 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 10:27:06.2475 Info 325324 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 10:27:06.2475 Info 325324 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 10:27:06.2475 Info 325324 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 10:27:06.2475 Info 325324 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 10:27:06.3763 Info 325324 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 10:27:06.3763 Info 325324 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 10:27:26.6662 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:27:26.6662 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:28:32.8286 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:28:32.8286 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:29:35.9063 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:29:35.9063 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:31:02.2863 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:31:02.2863 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:31:28.9648 Warn 325324 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:31:28.9648 Warn 325324 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:31:31.5816 Warn 325324 23 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:31:31.5816 Warn 325324 23 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:32:28.1681 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'controlno' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:32:28.1681 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:32:28.4130 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:32:28.4130 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:33:00.4477 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:33:00.4487 Warn 325324 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:33:03.1583 Warn 325324 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:33:03.1583 Warn 325324 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:33:07.6142 Warn 325324 23 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 10:33:07.6142 Warn 325324 23 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 11:06:37.6253 Info 327292 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 11:06:37.6614 Info 327292 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 11:06:37.6614 Info 327292 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 11:06:38.8014 Info 327292 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 1283.4377ms. No errors detected.
+2020-10-06 11:06:38.8375 Info 327292 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 11:06:38.8892 Info 327292 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 11:06:39.0034 Info 327292 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 11:06:39.0034 Info 327292 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 11:06:39.0142 Info 327292 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 11:06:39.0142 Info 327292 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 11:06:39.1342 Info 327292 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 11:06:39.1342 Info 327292 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 11:43:42.3180 Warn 327292 22 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.BasicRequest'
+2020-10-06 11:43:54.3780 Warn 327292 27 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 11:43:54.3780 Warn 327292 27 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property '__type' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'planid' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'linenum' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'stationno' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'modifyby' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'modifydate' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'bomid' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productid' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'batchno' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q01' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q02' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2052 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q03' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2150 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q04' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2150 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q05' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2150 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q06' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2150 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'mainunit' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:44:59.2150 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'basicunit' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property '__type' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'planid' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'linenum' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'stationno' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'modifyby' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'modifydate' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'bomid' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productid' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'batchno' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q01' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q02' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3000 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q03' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3088 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q04' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3088 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q05' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3088 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'q06' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3088 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'mainunit' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:45:18.3088 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'basicunit' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 11:53:11.2907 Warn 327292 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 12:01:29.3879 Warn 327292 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.PlanDetailRequest'
+2020-10-06 12:06:10.7775 Warn 327292 4 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:06:10.9424 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:06:20.0723 Warn 327292 25 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:07:02.0940 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:07:02.4327 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:08:06.5641 Warn 327292 23 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:08:07.2869 Warn 327292 28 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:08:32.6246 Warn 327292 4 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:09:08.7264 Warn 327292 29 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:09:09.2735 Warn 327292 29 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:09:23.8773 Warn 327292 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:09:24.4517 Warn 327292 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:09:45.4780 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:10:33.8249 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:10:34.4110 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:10:34.5194 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:12:06.3903 Warn 327292 22 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:12:56.7034 Warn 327292 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:15:47.1889 Warn 327292 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:15:47.1996 Warn 327292 4 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:16:59.4290 Warn 327292 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:16:59.4368 Warn 327292 24 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:17:26.2617 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:17:26.2617 Warn 327292 25 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:19:18.1378 Warn 327292 27 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:19:18.1378 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:19:18.7439 Warn 327292 27 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:19:18.7458 Warn 327292 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:24:09.4433 Warn 327292 25 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:24:09.4492 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:24:09.9572 Warn 327292 25 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:24:09.9572 Warn 327292 29 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:24:17.0048 Warn 327292 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productno' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:24:17.0048 Warn 327292 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:24:17.0048 Warn 327292 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:24:17.1752 Error 327292 30 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 12:25:48.7782 Warn 327292 24 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:25:48.7782 Warn 327292 32 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:25:55.4151 Warn 327292 33 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productno' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:25:55.4151 Warn 327292 33 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:25:55.4151 Warn 327292 33 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:25:55.4278 Error 327292 33 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 12:27:00.6064 Warn 327292 29 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:27:00.6064 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:27:00.8914 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:27:00.8914 Warn 327292 32 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:27:01.0495 Warn 327292 32 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:27:01.0495 Warn 327292 29 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:27:07.1766 Warn 327292 33 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productno' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:27:07.1766 Warn 327292 33 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:27:07.1766 Warn 327292 33 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:27:07.1883 Error 327292 33 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 12:27:28.9942 Warn 327292 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:27:29.0010 Warn 327292 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:28:17.9323 Warn 327292 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:28:17.9352 Warn 327292 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:28:18.7325 Warn 327292 33 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 12:28:18.7325 Warn 327292 34 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 12:28:26.7701 Warn 327292 35 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productno' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:28:26.7701 Warn 327292 35 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:28:26.7701 Warn 327292 35 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 12:28:26.7818 Error 327292 35 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 13:23:39.0885 Warn 327292 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productno' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:23:39.0894 Warn 327292 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:23:39.0894 Warn 327292 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:23:39.0894 Error 327292 31 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 13:25:19.7672 Warn 327292 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productno' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:25:19.7672 Warn 327292 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:25:19.7672 Warn 327292 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'remark' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:25:19.7672 Warn 327292 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:25:34.3743 Error 327292 19 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 13:34:43.1291 Warn 327292 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productno' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:34:43.1291 Warn 327292 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:34:43.1291 Warn 327292 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'remark' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:34:43.1291 Warn 327292 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 13:35:21.4925 Error 327292 30 WMProject.Services.ProjCustomizeService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeService.cs:行号 274
+2020-10-06 14:49:55.0958 Info 327920 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 14:49:55.1192 Info 327920 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 14:49:55.1192 Info 327920 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 14:49:56.0855 Info 327920 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 1100.9614ms. No errors detected.
+2020-10-06 14:49:56.1216 Info 327920 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 14:49:56.1743 Info 327920 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 14:49:56.3114 Info 327920 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 14:49:56.3114 Info 327920 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 14:49:56.3241 Info 327920 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 14:49:56.3241 Info 327920 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 14:49:56.4471 Info 327920 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 14:49:56.4471 Info 327920 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 14:50:58.3710 Info 202868 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 14:50:58.3954 Info 202868 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 14:50:58.3954 Info 202868 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 14:50:59.3948 Info 202868 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 1134.111ms. No errors detected.
+2020-10-06 14:50:59.4290 Info 202868 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 14:50:59.4739 Info 202868 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 14:50:59.5871 Info 202868 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 14:50:59.5871 Info 202868 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 14:50:59.5969 Info 202868 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 14:50:59.5969 Info 202868 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 14:50:59.7169 Info 202868 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 14:50:59.7169 Info 202868 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 14:51:04.7605 Warn 202868 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 14:51:04.7605 Warn 202868 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 14:51:17.9987 Warn 202868 27 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 14:51:17.9987 Warn 202868 27 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 14:51:25.2746 Error 202868 27 WMProject.Services.ProjCustomizeForLBKService.CreatePalletByPlan System.Exception: 计划不存在！
+   在 WMProject.Services.ProjCustomizeForLBKService.CreatePalletByPlan(ProjMoveRequest request) 位置 D:\gitee\gywms\GYWms\WMProject\Services\ProjCustomizeForLBKService.cs:行号 274
+2020-10-06 14:51:39.6401 Warn 202868 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 14:51:39.6401 Warn 202868 27 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 14:51:50.8383 Warn 202868 27 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 14:51:50.8403 Warn 202868 27 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 14:52:57.2433 Error 202868 27 WMProject.BPTemplet.BPCommonLBK.CreatePalletByMen 未将对象引用设置到对象的实例。
+2020-10-06 14:53:05.0830 Warn 202868 23 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 14:53:05.0830 Warn 202868 23 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'remark' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 14:53:05.0830 Warn 202868 23 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 14:56:09.1253 Info 329264 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 14:56:09.1497 Info 329264 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 14:56:09.1497 Info 329264 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 14:56:10.1018 Info 329264 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 1076.0232ms. No errors detected.
+2020-10-06 14:56:10.1389 Info 329264 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 14:56:10.1945 Info 329264 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 14:56:10.3732 Info 329264 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 14:56:10.3732 Info 329264 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 14:56:10.3732 Info 329264 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 14:56:10.3732 Info 329264 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 14:56:10.5078 Info 329264 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 14:56:10.5078 Info 329264 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 14:56:13.3268 Warn 329264 28 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 14:56:13.3268 Warn 329264 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 14:56:13.3268 Warn 329264 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 14:56:13.3268 Warn 329264 29 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 14:56:23.8302 Warn 329264 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 14:56:23.8302 Warn 329264 30 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 14:56:31.6238 Info 329264 30 WMProject.BPTemplet.BPCommonLBK.CreatePalletByMen 构造批次信息成功:时间:14:56:31批次:111-B
+2020-10-06 15:00:18.5934 Info 329964 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 15:00:18.6168 Info 329964 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 15:00:18.6168 Info 329964 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 15:00:19.5689 Info 329964 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 1073.1278ms. No errors detected.
+2020-10-06 15:00:19.6011 Info 329964 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 15:00:19.6451 Info 329964 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 15:00:19.7641 Info 329964 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 15:00:19.7641 Info 329964 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 15:00:19.7641 Info 329964 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 15:00:19.7641 Info 329964 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 15:00:19.8949 Info 329964 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 15:00:19.8949 Info 329964 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 15:00:27.4874 Warn 329964 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:00:27.4874 Warn 329964 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'remark' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:00:27.4874 Warn 329964 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:00:42.0395 Info 329964 20 WMProject.BPTemplet.BPCommonLBK.CreatePalletByMen 构造批次信息成功:时间:15:00:39批次:111-B
+2020-10-06 15:01:36.8577 Info 329964 20 WMProject.Services.ProjCustomizeForLBKService.AffirmRkByMen True//创建任务81托盘0从195到100201，结果True:
+2020-10-06 15:29:30.1639 Info 286448 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 15:29:30.1892 Info 286448 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 15:29:30.1892 Info 286448 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 15:29:31.2946 Info 286448 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 1236.1232ms. No errors detected.
+2020-10-06 15:29:31.3297 Info 286448 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 15:29:31.3873 Info 286448 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 15:29:31.5850 Info 286448 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 15:29:31.5850 Info 286448 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 15:29:31.5977 Info 286448 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 15:29:31.5977 Info 286448 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 15:29:31.7421 Info 286448 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 15:29:31.7421 Info 286448 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 15:29:35.0419 Warn 286448 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:29:35.0419 Warn 286448 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'taskclass' does not exist on type 'KR.WMApp.Dtos.TaskRequest'
+2020-10-06 15:29:35.0419 Warn 286448 22 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:29:59.8386 Warn 286448 28 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:29:59.8454 Warn 286448 25 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:30:27.0464 Warn 286448 32 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:30:27.0464 Warn 286448 32 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:30:29.8185 Info 286448 32 WMProject.BPTemplet.BPCommonLBK.CreatePalletByMen 构造批次信息成功:时间:15:30:29批次:888-B
+2020-10-06 15:30:30.9854 Error 286448 32 WMProject.BPTemplet.BPCommonLBK.CreatePalletByMen 未将对象引用设置到对象的实例。
+2020-10-06 15:30:43.8981 Warn 286448 32 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:30:43.8981 Warn 286448 32 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'remark' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:30:43.8981 Warn 286448 32 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:30:43.9020 Info 286448 32 WMProject.BPTemplet.BPCommonLBK.CreatePalletByMen 构造批次信息成功:时间:15:30:43批次:888-B
+2020-10-06 15:31:29.6245 Info 299136 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 15:31:29.6479 Info 299136 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 15:31:29.6479 Info 299136 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 15:31:30.8362 Info 299136 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 1317.1333ms. No errors detected.
+2020-10-06 15:31:30.8850 Info 299136 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 15:31:30.9670 Info 299136 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 15:31:31.2110 Info 299136 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 15:31:31.2207 Info 299136 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 15:31:31.2378 Info 299136 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 15:31:31.2378 Info 299136 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 15:31:31.4194 Info 299136 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 15:31:31.4194 Info 299136 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 15:31:33.9715 Warn 299136 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:31:33.9715 Warn 299136 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'remark' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:31:33.9715 Warn 299136 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:31:34.0174 Info 299136 20 WMProject.BPTemplet.BPCommonLBK.CreatePalletByMen 构造批次信息成功:时间:15:31:34批次:888-B
+2020-10-06 15:31:34.1413 Info 299136 20 WMProject.Services.ProjCustomizeForLBKService.AffirmRkByMen True//创建任务82托盘0从196到104601，结果True:
+2020-10-06 15:31:39.5562 Warn 299136 23 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:31:39.5592 Warn 299136 25 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:32:12.5894 Warn 299136 28 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:32:12.5894 Warn 299136 34 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:32:13.7865 Warn 299136 22 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:32:13.7865 Warn 299136 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:32:47.3624 Warn 299136 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:32:47.3721 Warn 299136 38 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:32:56.8223 Warn 299136 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:32:56.8223 Warn 299136 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:33:31.2961 Warn 299136 35 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:33:31.2961 Warn 299136 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:33:37.7289 Warn 299136 21 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:33:37.7348 Warn 299136 22 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:33:43.7572 Warn 299136 44 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:33:43.7572 Warn 299136 45 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:33:43.8675 Warn 299136 46 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:33:43.8705 Warn 299136 45 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:35:06.6629 Warn 299136 19 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:35:06.6629 Warn 299136 39 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:35:06.8054 Warn 299136 36 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:35:06.8054 Warn 299136 39 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:35:07.3725 Warn 299136 39 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:35:07.3725 Warn 299136 43 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:35:17.6585 Warn 299136 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'productname' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:35:17.6585 Warn 299136 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'WMProject.Dtos.ProjMoveRequest'
+2020-10-06 15:35:17.6585 Info 299136 31 WMProject.BPTemplet.BPCommonLBK.CreatePalletByMen 构造批次信息成功:时间:15:35:17批次:1212-Z
+2020-10-06 15:35:17.7102 Info 299136 31 WMProject.Services.ProjCustomizeForLBKService.AffirmRkByMen True//创建任务83托盘0从196到104701，结果True:
+2020-10-06 15:35:43.1192 Warn 299136 41 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:35:43.1241 Warn 299136 42 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:35:43.6853 Warn 299136 41 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:35:43.6853 Warn 299136 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:36:43.8392 Warn 299136 41 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:36:43.8480 Warn 299136 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:38:03.8319 Warn 299136 43 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:38:03.8319 Warn 299136 35 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:38:59.8094 Warn 299136 31 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:38:59.8094 Warn 299136 43 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:38:59.9714 Warn 299136 43 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:38:59.9714 Warn 299136 23 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:39:23.6501 Info 273984 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 15:39:23.6775 Info 273984 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 15:39:23.6775 Info 273984 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 15:39:24.7862 Info 273984 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 1240.4925ms. No errors detected.
+2020-10-06 15:39:24.8291 Info 273984 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 15:39:24.8994 Info 273984 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 15:39:25.0361 Info 273984 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 15:39:25.0361 Info 273984 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 15:39:25.0468 Info 273984 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 15:39:25.0468 Info 273984 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 15:39:25.1732 Info 273984 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 15:39:25.1732 Info 273984 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 15:39:27.5803 Warn 273984 22 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 15:39:27.5803 Warn 273984 20 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 15:39:30.2121 Info 273984 21 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_EQUIPMENTSTATUS WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-06 15:39:30.2248 Info 273984 26 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_JOBDOWNLOAD WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-06 15:39:30.2306 Info 273984 20 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_EQUIPMENTREQUEST WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-06 15:39:30.2536 Info 273984 21 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_JOBFEEDBACK WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-06 16:49:52.1171 Info 304140 1 WMProjectHost.HelperApp.Start ...
+2020-10-06 16:49:52.1406 Info 304140 1 WMProjectHost.HelperApp.Start ......
+2020-10-06 16:49:52.1406 Info 304140 1 WMProjectHost.HelperApp.Start .........
+2020-10-06 16:49:53.1800 Info 304140 1 ServiceStack.ServiceStackHost.LogInitComplete Initializing Application RestAPI took 1171.1974ms. No errors detected.
+2020-10-06 16:49:53.2161 Info 304140 1 WMProjectHost.HelperApp.Start http://*:18080/已启动！
+2020-10-06 16:49:53.2898 Info 304140 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,加载3个JOB
+2020-10-06 16:49:53.4167 Info 304140 1 WMProjectApp.WebQuartz.Init 501创建成功！
+2020-10-06 16:49:53.4206 Info 304140 1 WMProjectApp.WebQuartz.Init 503创建成功！
+2020-10-06 16:49:53.4206 Info 304140 1 WMProjectApp.WebQuartz.Init 601创建成功！
+2020-10-06 16:49:53.4206 Info 304140 1 WMProjectApp.WebQuartz.Init DESKTOP-VVQE4UP&WMProjectApp,启动了3个JOB
+2020-10-06 16:49:53.5680 Info 304140 1 WMProjectHost.HelperApp.Start Quartz已启动！
+2020-10-06 16:49:53.5680 Info 304140 1 WMProjectHost.Program.Main WMProjectHost服务已启动……
+2020-10-06 16:50:17.6026 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /index.html
+2020-10-06 16:50:18.1472 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 16:50:22.6177 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 17:08:27.8604 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 17:08:35.7182 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 17:08:41.9100 Error 304140 6 ServiceStack.ServiceStackHost.OnLogError 127.0.0.1 Request not found: /favicon.ico
+2020-10-06 17:34:47.3360 Warn 304140 22 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 17:34:47.3360 Warn 304140 22 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 17:34:48.8808 Warn 304140 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 17:34:48.8808 Warn 304140 26 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 17:34:59.1407 Warn 304140 28 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-06 17:34:59.1407 Warn 304140 28 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-06 17:34:59.1768 Warn 304140 29 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'page' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-06 17:34:59.1768 Warn 304140 29 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'limit' does not exist on type 'KR.WMApp.Dtos.CheckRequest'
+2020-10-06 17:35:00.0322 Info 304140 30 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_EQUIPMENTSTATUS WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-06 17:35:00.0322 Info 304140 31 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_EQUIPMENTREQUEST WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-06 17:35:00.0478 Info 304140 30 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_JOBDOWNLOAD WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-06 17:35:00.0478 Info 304140 32 KR.WMApp.Services.DCSInfService.GetList SELECT * FROM INF_JOBFEEDBACK WHERE 1=1 ORDER BY AUTOID DESC,CREATEDATE DESC
+2020-10-06 17:35:01.0121 Warn 304140 33 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'
+2020-10-06 17:35:01.9749 Warn 304140 36 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.ProductRequest'
+2020-10-06 17:35:01.9807 Warn 304140 40 ServiceStack.Serialization.StringMapTypeDeserializer.PopulateFromKeyValue Property 'access_token' does not exist on type 'KR.WMApp.Dtos.LocationStnRequest'

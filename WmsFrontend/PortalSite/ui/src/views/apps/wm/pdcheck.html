@@ -1,0 +1,187 @@
+<!--数据盘点检查-->
+<title>盘点检查</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <table id="id-tablelist-pdcheck" lay-filter="filter-tablelist-pdcheck"></table>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            element = layui.element;
+
+        //任务数据列表
+        table.render({
+            elem: '#id-tablelist-pdcheck',
+            url: setter.checkop + '?ACTION=100',
+            cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'ITEMNAME', title: '检查项', hide: false, width: 200 }
+                , { field: 'ITEMSTATE', title: '使用状态', hide: false, width: 100, templet: '#itemstateTpl' }
+                , { field: 'ITEMVALUE', title: '检查项值', hide: false, width: 350 }
+                , { field: 'ITEMDESC', title: '检查描述', hide: false, width: 300 }
+                , { field: 'EXECUTEDATE', title: '执行时间', hide: false, width: 160 }
+                , { field: 'AFFECTEDCOUNT', title: '受影响的行', hide: false, width: 300 }
+            ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-150',
+            even: true,
+            toolbar: '#toolbarpdcheck',
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+        //监听行工具事件
+        table.on('toolbar(filter-tablelist-pdcheck)', function (obj) {
+
+            // var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'dopandian':
+
+                    layer.confirm('确认重置系统数据状态？', function (index) {
+                        pandiancheck(obj.data)
+                    });
+
+                    break;
+
+            };
+        })
+
+
+        pandiancheck = function (data) {
+            admin.req({
+                type: "get",
+                url: setter.checkop + '?ACTION=101',
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    layui.table.reload('id-tablelist-pdcheck'); //重载表格
+                }
+            });
+        }
+
+    });
+</script>
+
+<!-- 工具栏模板-表格头部工具栏： -->
+<script type="text/html" id="toolbarpdcheck">
+    <a class="layui-btn layui-btn-xs" lay-event="dopandian">执行</a>
+</script>
+
+<script type="text/html" id="itemstateTpl">
+    {{#  if(d.ITEMSTATE === 0){ }}
+    <span style="color: gray;">停用</span>
+    {{# } else if(d.ITEMSTATE === 1){ }}
+    <span style="color: blue;">启用</span>
+    {{#  } else { }}
+    {{ d.ITEMSTATE }}
+    {{#  } }}
+</script><!--数据盘点检查-->
+<title>盘点检查</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <table id="id-tablelist-pdcheck" lay-filter="filter-tablelist-pdcheck"></table>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            element = layui.element;
+
+        //任务数据列表
+        table.render({
+            elem: '#id-tablelist-pdcheck',
+            url: setter.checkop + '?ACTION=100',
+            cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'ITEMNAME', title: '检查项', hide: false, width: 200 }
+                , { field: 'ITEMSTATE', title: '使用状态', hide: false, width: 100, templet: '#itemstateTpl' }
+                , { field: 'ITEMVALUE', title: '检查项值', hide: false, width: 350 }
+                , { field: 'ITEMDESC', title: '检查描述', hide: false, width: 300 }
+                , { field: 'EXECUTEDATE', title: '执行时间', hide: false, width: 160 }
+                , { field: 'AFFECTEDCOUNT', title: '受影响的行', hide: false, width: 300 }
+            ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-150',
+            even: true,
+            toolbar: '#toolbarpdcheck',
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+        //监听行工具事件
+        table.on('toolbar(filter-tablelist-pdcheck)', function (obj) {
+
+            // var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'dopandian':
+
+                    layer.confirm('确认重置系统数据状态？', function (index) {
+                        pandiancheck(obj.data)
+                    });
+
+                    break;
+
+            };
+        })
+
+
+        pandiancheck = function (data) {
+            admin.req({
+                type: "get",
+                url: setter.checkop + '?ACTION=101',
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    layui.table.reload('id-tablelist-pdcheck'); //重载表格
+                }
+            });
+        }
+
+    });
+</script>
+
+<!-- 工具栏模板-表格头部工具栏： -->
+<script type="text/html" id="toolbarpdcheck">
+    <a class="layui-btn layui-btn-xs" lay-event="dopandian">执行</a>
+</script>
+
+<script type="text/html" id="itemstateTpl">
+    {{#  if(d.ITEMSTATE === 0){ }}
+    <span style="color: gray;">停用</span>
+    {{# } else if(d.ITEMSTATE === 1){ }}
+    <span style="color: blue;">启用</span>
+    {{#  } else { }}
+    {{ d.ITEMSTATE }}
+    {{#  } }}
+</script>

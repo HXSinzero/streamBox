@@ -1,0 +1,67 @@
+﻿<title>开发测试1</title>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!--主表-->
+        <table id="id-tablelist-projreceipt01" lay-filter="fillter-projreceipt01"></table>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //数据列表
+        table.render({
+            elem: '#id-tablelist-projreceipt01',
+            url: setter.projreceipt01 + "?ACTION=2012",
+            cols: [[
+                { type: 'checkbox', fixed: 'left', hide: true, width: 80 }
+                , { field: 'ID', title: 'ID', hide: false, width: 80 }
+                , { field: 'ORDERNO', title: '收货单号', hide: false, width: 180 }
+                , { field: 'BIANHAO', title: '编号', hide: false, width: 180 }
+                , { field: 'TTYPE', title: '分类', hide: false, width: 100 }
+                , { field: 'HAOTOU', title: '号头', hide: false, width: 100 }
+                , { field: 'CHAHAO', title: '茶号', hide: false, width: 100 }
+                , { field: 'PRODUCAREA', title: '产地', hide: false, width: 200 }
+                , { field: 'VENDOR', title: '供应商', hide: false, width: 150 }
+                , { field: 'SINGLEWEIGHT', title: '单包重量', hide: false, width: 100 }
+                , { field: 'PLANCOUNT', title: '件数', hide: false, width: 100 }
+                , { field: 'PLANTOTALQTY', title: '总重量(KG)', hide: false, width: 100 }
+                , { field: 'INVAREA', title: '堆码区域', hide: false, width: 100 }
+                , { field: 'RECEIPTDATE', title: '收货日期', hide: false, width: 150 }
+                , { field: 'COMMENT', title: '评语', hide: false, width: 100, templet: '#commentTpl' }
+                , { field: 'STATE', title: '状态', hide: false, width: 100, templet: '#stateTpl' }
+                , { field: 'REMARK', title: '备注', hide: false, width: 100 }
+                , { field: 'OPMESSAGE', title: '操作消息', hide: false, width: 100 }
+                , { field: 'OPDATE', title: '操作日期', hide: false, width: 150 }
+                , { field: 'OPBY', title: '操作人', hide: false, width: 100 }
+                , { field: 'P01', title: '属性1', hide: true, width: 100 }
+                , { field: 'P02', title: '属性2', hide: true, width: 100 }
+                , { field: 'P03', title: '属性3', hide: true, width: 100 }
+                , { field: 'P04', title: '属性4', hide: true, width: 100 }
+                , { field: 'P05', title: '属性5', hide: true, width: 100 }
+                , { field: 'P06', title: '属性6', hide: true, width: 100 }
+                , { field: 'P07', title: '属性7', hide: true, width: 100 }
+                , { field: 'P08', title: '属性8', hide: true, width: 100 }
+                , { field: 'P09', title: '属性9', hide: true, width: 100 }
+                , { field: 'P10', title: '属性10', hide: true, width: 100 }
+            ]],
+            page: true,
+            limit: 10,
+            height: 'full-70',
+            even: true,
+            toolbar: true
+        });
+
+    })
+</script>

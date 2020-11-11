@@ -1,0 +1,64 @@
+<title>报表管理</title>
+
+<div class="layui-fluid">
+
+	<div class="layui-card">
+
+		<!-- <div style="padding-bottom: 10px;">
+			<button class="layui-btn layuiadmin-btn-useradmin" data-type="batchdel">删除</button>
+			<button class="layui-btn layuiadmin-btn-useradmin" data-type="add">添加</button>
+		</div> -->
+	  
+		<div class="layui-card-body">
+			<table id="LAY-tablelist-report" lay-filter="LAY-tablelist"></table>
+		</div>
+
+	</div>
+</div>
+
+<script type="text/html" id="reportstateTpl">
+    {{#  if(d.REPORTSTATE === '0'){ }}
+    <span style="color: red;">停用</span>
+    {{# } else if(d.REPORTSTATE === '1'){ }}
+    <span style="color: green;">正常</span>
+    {{#  } else { }}
+    {{ d.REPORTSTATE }}
+    {{#  } }}
+</script>
+
+<script>
+	layui.use(['admin', 'table'], function () {
+        var $ = layui.$
+            , setter = layui.setter
+            , admin = layui.admin
+            , table = layui.table
+            , form = layui.form
+            , element = layui.element;
+
+		//报表列表
+		table.render({
+			elem: '#LAY-tablelist-report',
+			url: setter.getreportlist+'?ACTION=100',
+			cols: [[
+				{field:'ID',title:'ID',hide:false,width:100}
+				,{field:'REPORTNO',title:'报表编号',hide:false,width:200}
+				,{field:'REPORTNAME',title:'报表名称',hide:false,width:150}
+				,{field:'REPORTTYPE',title:'报表类别',hide:false,width:100}
+				,{field:'REPORTFILENAME',title:'文件名称',hide:false,width:200}
+				,{field:'REPORTSTATE',title:'状态',hide:false,width:80, templet: '#reportstateTpl'}
+				,{field:'DATASOURCE',title:'数据源',hide:false,width:1000}
+				,{field:'DATASOURCESUM',title:'汇总计算列',hide:false,width:100}
+			]],
+			page: true,
+			limit: 100,
+			height: 'full-120',
+			text: '对不起，加载出现异常！',
+			even: true,
+			initSort: {
+				field: 'ID' //排序字段，对应 cols 设定的各字段名
+				,type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+			}
+		});
+
+	});
+</script>

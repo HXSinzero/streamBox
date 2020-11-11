@@ -1,0 +1,282 @@
+<!--
+追溯查询（任务查询）:taskQuery.html
+后台接口：
+1）数据列表：setter.projinvoprequest + '?ACTION=100'
+2）
+3）
+备注说明：
+-->
+<title>追溯查询</title>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab" lay-filter="taskQueryTabfilter">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="1">任务列表</li>
+                <li lay-id="2">任务追溯</li>
+            </ul>
+            <div class="layui-tab-content">
+                <!--页面1-->
+                <div class="layui-tab-item layui-show">
+
+                    <form class="layui-form" action="">
+
+                        <div class="layui-form-item">
+
+                            <!--时间范围-->
+                            <div class="layui-inline" style="width:500px;">
+                                <label class="layui-form-label">时间范围：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="datetimerange" class="layui-input" id="taskQuery-laydate-datetimerange1" lay-verify="required" autocomplete="off" style="width:400px;">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="layui-form-item">
+                            <!--任务ID-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">任务ID:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="ID" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <!--任务号-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">任务号:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="TASKNO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <!--托盘ID-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">托盘ID:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="PALLETID" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <!--关联单号-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">关联单号:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="RELATENO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <!--起始站台-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">起始站台:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="SOURCE02" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <!--目标站台-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">目标站台:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="DESTINATION02" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <!--按钮-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label"></label>
+                                <button class="layui-btn" lay-submit lay-filter="taskQuerySearchfilter">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <!--任务主表-->
+                    <table id="id-taskQueryTablelist" lay-filter="taskQueryTablelistfilter"></table>
+
+                </div>
+
+                <!--页面2-->
+                <div class="layui-tab-item">
+
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">托盘ID：</label>
+                                <div class="layui-input-block">
+                                    <textarea type="text" id="PALLETID" name="ListPalletid"
+                                              lay-verify="required" autocomplete="off" class="layui-textarea"
+                                              style="width: 800px; height: 100px; "></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <!--按钮-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label"></label>
+                                <button class="layui-btn" lay-submit lay-filter="taskQueryResultSearchfilter">
+                                    查询
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--任务主表-->
+                    <table id="id-taskQueryResultTablelist" lay-filter="taskQueryResultTablelistfilter"></table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 工具栏模板-表格头部工具栏： -->
+<script type="text/html" id="taskQueryOPBtn">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm  layui-btn-normal" lay-event="taskQueryOP1">按托盘ID查询</button>
+    </div>
+</script>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //日期时间范围
+        laydate.render({
+            elem: '#taskQuery-laydate-datetimerange1'
+            , type: 'datetime'
+            , range: true
+        });
+
+        //任务数据列表
+        table.render({
+            elem: '#id-taskQueryTablelist',
+            data: [],
+            cols: [[
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'ID', title: 'ID', false: true, width: 100, sort: true }
+                , { field: 'TASKNO', title: '任务号', hide: false, width: 100, sort: true }
+                , { field: 'TASKSTATE', title: '任务状态', hide: false, width: 100, templet: '#taskQuery-taskstateTpl' }
+                , { field: 'PALLETID', title: '托盘ID', hide: false, width: 100, sort: true }
+                , { field: 'PALLETNO', title: '托盘号', hide: false, width: 100 }
+                , { field: 'TASKDESC', title: '任务描述', hide: false, width: 450, style: 'background-color: green; color: #fff;' }
+                , { field: 'SOURCE02', title: '源控制号', hide: false, width: 150, sort: true, style: 'background-color: #007688; color: #fff;' }
+                , { field: 'DESTINATION02', title: '目标控制号', hide: false, width: 150, sort: true, style: 'background-color: #000088; color: #fff;' }
+                , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 180, sort: true }
+                , { field: 'ENDDATE', title: '结束时间', hide: false, width: 180 }
+                , { field: 'CANCELREASON', title: '取消原因', hide: false, width: 150, style: 'color: red;font-size:24px;' }
+                , { field: 'CANCELDATE', title: '取消时间', hide: false, width: 180 }
+                , { field: 'RELATENO', title: '关联单号', hide: false, width: 150 }
+            ]
+            ],
+            page: true,
+            limit: 500,
+            height: 'full-320',
+            even: true,
+            toolbar: '#taskQueryOPBtn'
+        });
+
+        //监听指定开关
+        form.on('submit(taskQuerySearchfilter)', function (data) {
+            //layui.msg(JSON.stringify(data));
+            var serviceurl = setter.projviewtaksquery + '?ACTION=100';
+            layui.table.reload('id-taskQueryTablelist', { url: serviceurl, where: data.field });
+            return false;
+        });
+
+        //监听头工具栏事件
+        table.on('toolbar(taskQueryTablelistfilter)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+            switch (obj.event) {
+                case 'taskQueryOP1':
+                    querybypalletid(data);
+                    break;
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+
+
+        querybypalletid = function (data) {
+            var palletidList = [];
+            $.each(data, function (index, item) {
+                palletidList.push(item.PALLETID);
+            });
+
+            $('#PALLETID').val(palletidList);
+            //切换到指定Tab项
+            element.tabChange('taskQueryTabfilter', '2');
+        }
+
+        //任务数据列表
+        table.render({
+            elem: '#id-taskQueryResultTablelist',
+            data: [],
+            cols: [[
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'ID', title: 'ID', false: true, width: 100, sort: true }
+                , { field: 'TASKNO', title: '任务号', hide: false, width: 100, sort: true }
+                , { field: 'TASKSTATE', title: '任务状态', hide: false, width: 100, templet: '#taskQuery-taskstateTpl' }
+                , { field: 'PALLETID', title: '托盘ID', hide: false, width: 100, sort: true }
+                , { field: 'PALLETNO', title: '托盘号', hide: false, width: 100 }
+                , { field: 'TASKDESC', title: '任务描述', hide: false, width: 450, style: 'background-color: green; color: #fff;' }
+                , { field: 'SOURCE02', title: '源控制号', hide: false, width: 150, sort: true, style: 'background-color: #007688; color: #fff;' }
+                , { field: 'DESTINATION02', title: '目标控制号', hide: false, width: 150, sort: true, style: 'background-color: #000088; color: #fff;' }
+                , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 180, sort: true }
+                , { field: 'ENDDATE', title: '结束时间', hide: false, width: 180 }
+                , { field: 'CANCELREASON', title: '取消原因', hide: false, width: 150, style: 'color: red;font-size:24px;' }
+                , { field: 'CANCELDATE', title: '取消时间', hide: false, width: 180 }
+                , { field: 'RELATENO', title: '关联单号', hide: false, width: 150 }
+            ]
+            ],
+            page: true,
+            limit: 500,
+            height: 'full-320',
+            even: true,
+            toolbar
+        });
+
+        //监听指定开关
+        form.on('submit(taskQueryResultSearchfilter)', function (data) {
+            var serviceurl = setter.projviewtaksquery + '?ACTION=2011';
+            layui.table.reload('id-taskQueryResultTablelist', { url: serviceurl, where: data.field });
+            return false;
+        });
+    });
+</script>
+
+<!-- 任务状态：-->
+<script type="text/html" id="taskQuery-taskstateTpl">
+    {{#  if(d.TASKSTATE === '-1'){ }}
+    <span style="color: orange;">等待分配</span>
+    {{# } else if(d.TASKSTATE === '0'){ }}
+    <span style="color: skyblue;">新任务</span>
+    {{# } else if(d.TASKSTATE === '1'){ }}
+    <span style="color: blue;">装货完成</span>
+    {{# } else if(d.TASKSTATE === '3'){ }}
+    <span style="color: gold;">任务变更</span>
+    {{# } else if(d.TASKSTATE === '99'){ }}
+    <span style="color: green;">搬运完成</span>
+    {{# } else if(d.TASKSTATE === '4'){ }}
+    <span style="color: red;">任务取消</span>
+    {{#  } else { }}
+    {{ d.TASKSTATE }}
+    {{#  } }}
+</script>

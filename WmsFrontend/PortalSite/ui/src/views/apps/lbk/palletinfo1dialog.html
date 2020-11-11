@@ -1,0 +1,72 @@
+<!--
+抽检站台选择:人工站台
+-->
+<title>抽检站台选择</title>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <form class="layui-form" lay-filter="layui-palletinfo1dialog" style="padding: 20px 0px 20px 0px;">
+
+            <!-- 托盘ID列表 -->
+            <div class="layui-inline">
+                <label class="layui-form-label">托盘ID：</label>
+                <div class="layui-input-block">
+                    <script type="text/html" template>
+                        <input type="text" name="ListPalletid" value="{{ d.params.ListPalletid || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly
+                               style="width: 320px; height: 100px; ">
+                    </script>
+                </div>
+            </div>
+
+            <!-- 站台列表 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">站台编号：</label>
+                <div class="layui-input-block">
+                    <select id="palletinfo1dialog-StationNo" name="StationNo" lay-verify="required">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="palletinfo1dialogFormAction">确认</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //获取站台列表
+        admin.req({
+            type: "get",
+            url: setter.getstnlist + "&STATIONTYPE=5",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                stnlist = resultdata.data;
+                $("#palletinfo1dialog-StationNo option").remove();
+                $.each(resultdata.data, function (index, item) {
+                    $('#palletinfo1dialog-StationNo').append(
+                        new Option(item.STATIONDESC, item.CONTROLNO));
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+    });
+</script>

@@ -1,0 +1,141 @@
+<title>定时器管理</title>
+
+<div class="layui-fluid">
+	<div class="layui-card">
+	</div>
+
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<table id="LAY-tablelist-job" lay-filter="LAY-tablelist"></table>
+		</div>
+	</div>
+</div>
+
+<!-- 工具栏模板： -->
+<script type="text/html" id="opbtnbar">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+</script>
+
+<script type="text/html" id="jobstateTpl">
+    <input type="checkbox" name="STATE" value="{{d.JOBID}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="jobstateSwitch" {{ d.STATE == 1 ? 'checked' : '' }}>
+</script>
+
+<script>
+	layui.use(['admin', 'table'], function() {
+		var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            element = layui.element;
+
+		//数据列表
+		table.render({
+			elem: '#LAY-tablelist-job',
+			url: setter.getjoblist,
+			cols: [[
+			{field:'JOBID',title:'定时器ID',hide:false,width:100,fixed: 'left'}
+			,{field:'JOBDESC',title:'定时器描述',hide:false,width:200, fixed: 'left'}
+			,{field:'CLASSFULLNAME',title:'程序集',hide:false,width:300}
+			,{field:'JOBTRIGGER',title:'触发器',hide:false,width:100}
+			,{field:'JOBTRIGGERPARA',title:'触发器参数',hide:false,width:100}
+			,{field:'STATE',title:'状态',hide:false,width:100, templet: '#jobstateTpl'}
+			,{field:'RESPONSESVRNAME',title:'响应服务器主机',hide:false,width:200}
+			,{field:'RETURNVALUE',title:'返回值',hide:false,width:100}
+			,{field:'MESSAGECODE',title:'消息代码',hide:false,width:100}
+			,{field:'MESSAGETEXT',title:'消息文本',hide:false,width:300}
+			,{field:'MODIFYDATE',title:'更新时间',hide:false,width:160}
+			,{field:'ATTRIBUTE01',title:'属性1',hide:true,width:100}
+			,{field:'ATTRIBUTE02',title:'属性2',hide:true,width:100}
+			,{field:'ATTRIBUTE03',title:'属性3',hide:true,width:100}
+			,{field:'ATTRIBUTE04',title:'属性4',hide:true,width:100}
+			,{field:'ATTRIBUTE05',title:'属性5',hide:true,width:100}
+			,{field:'ATTRIBUTE06',title:'属性6',hide:true,width:100}
+			,{field:'ATTRIBUTE07',title:'属性7',hide:true,width:100}
+			,{field:'ATTRIBUTE08',title:'属性8',hide:true,width:100}
+			,{field:'ATTRIBUTE09',title:'属性9',hide:true,width:100}
+			,{field:'ATTRIBUTE10',title:'属性10',hide:true,width:100}
+
+			,{title: '操作', width: 150, align:'center', fixed: 'right', toolbar: '#opbtnbar'}
+			]],
+			page: true,
+			limit: 100,
+			height: 'full-150',
+			text: '对不起，加载出现异常！',
+			even: true,
+			toolbar: true,
+			initSort: {
+				field: 'JOBID' //排序字段，对应 cols 设定的各字段名
+				,type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+			}
+		});
+
+
+
+		//监听行工具事件
+	  table.on('tool(LAY-tablelist)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+	    var data = obj.data //获得当前行数据
+	    ,layEvent = obj.event; //获得 lay-event 对应的值
+
+	    if(layEvent === 'edit'){
+	      	openjobForm(data);
+	      }
+
+	  });
+
+
+	  openjobForm = function(data) {
+			//打开编辑窗口
+			admin.popup({
+				  id: 'LAY-popup-jobForm' //定义唯一ID，防止重复弹出
+				  ,title:'编辑-定时器设置'
+				  ,type:1					  
+				  ,area: ['500px', '450px']
+				  ,success: function(layero, index){
+				     layui.view(this.id).render('mydesk/jobForm',data)
+				     .done(function(resultdata)
+				     	{
+				     		layer.alter(resultdata.msg); 
+				     		layui.table.reload('LAY-tablelist-job'); //重载表格
+         			 		layer.close(index); //执行关闭 
+				     	});
+				  }
+				  ,end:function()
+				  {
+				  	layui.table.reload('LAY-tablelist-job');	
+				  }
+				});						
+		};
+
+		 //监听开关操作
+        form.on('switch(jobstateSwitch)', function (obj) {
+            var state = "-1";
+            if (obj.elem.checked) {
+                state = "1";
+            }
+            else {
+                state = "0";
+            }
+            
+            var postdata =
+            {
+                JOBID: this.value,
+                STATE: state
+            };
+
+            admin.req({
+                type: "get",
+                url: setter.postjob,
+                data: postdata,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    layui.table.reload('LAY-tablelist-job'); //重载表格
+                }
+            });
+
+        });		
+
+	});
+</script>

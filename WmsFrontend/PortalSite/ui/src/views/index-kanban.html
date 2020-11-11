@@ -1,0 +1,35 @@
+<div class="layui-fluid">
+
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">显示看板</div>
+                <div class="layui-card-body" style="height: 600px;">
+                     <iframe id="iframe-kanban" src="" frameborder="0" class="layadmin-iframe"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util', 'mymod'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+       
+
+        var mymod = layui.mymod;
+        //mymod.hello('World!'); //弹出 Hello World!
+        //layer.msg(mymod.kanban);
+
+        $('#iframe-kanban').attr('src', mymod.kanban);
+
+        form.render();
+    })
+</script>

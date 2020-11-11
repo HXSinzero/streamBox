@@ -1,0 +1,579 @@
+<title>编辑物料</title>
+
+<form class="layui-form">
+    <div class="layui-form-item">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="1">物料基本属性</li>
+                <li lay-id="2">扩展属性组1</li>
+                <li lay-id="3">扩展属性组2</li>
+                <li lay-id="4">扩展属性组3</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">ID：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="ID" value="{{ d.params.ID || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">物料编号：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTNO" value="{{ d.params.PRODUCTNO || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">物料名称：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTNAME" value="{{ d.params.PRODUCTNAME || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">物料描述：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTDESC" value="{{ d.params.PRODUCTDESC || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">简称：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTSUBDESC" value="{{ d.params.PRODUCTSUBDESC || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">规格：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTSPEC" value="{{ d.params.PRODUCTSPEC || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">条码：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTBARCODE" value="{{ d.params.PRODUCTBARCODE || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">节点：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTNODECODE" value="{{ d.params.PRODUCTNODECODE || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">周转率：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="TURNOVERRATE" value="{{ d.params.TURNOVERRATE || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">ABC分类：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="ABC" value="{{ d.params.ABC || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">物料分类：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTCLASS" value="{{ d.params.PRODUCTCLASS || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">物料类型：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTTYPE" value="{{ d.params.PRODUCTTYPE || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">物料状态：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTTSTATE" value="{{ d.params.PRODUCTTSTATE || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">包装数量：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="QUANTITY_PACK" value="{{ d.params.QUANTITY_PACK || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">物料单位：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="MAINUNIT" value="{{ d.params.MAINUNIT || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">基础单位：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="BASICUNIT" value="{{ d.params.BASICUNIT || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">换算率：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="MAINTOBASICRATE" value="{{ d.params.MAINTOBASICRATE || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">换算率：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="MAINTOBASICDESC" value="{{ d.params.MAINTOBASICDESC || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">换算率：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="MAINTOBASICDESC" value="{{ d.params.MAINTOBASICDESC || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">创建人：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CREATEBY" value="{{ d.params.CREATEBY || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">创建时间：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CREATEDATE" value="{{ d.params.CREATEDATE || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">修改人：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="MODIFYBY" value="{{ d.params.MODIFYBY || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">修改时间：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="MODIFYDATE" value="{{ d.params.MODIFYDATE || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">备注：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="REMARK" value="{{ d.params.REMARK || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="layui-tab-item">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">品牌ID：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="BRANDID" value="{{ d.params.BRANDID || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">品牌名称：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="BRANDNAME" value="{{ d.params.BRANDNAME || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">供应商ID：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="VENDORID" value="{{ d.params.VENDORID || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">供应商名称：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="VENDORNAME" value="{{ d.params.VENDORNAME || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">生产厂家ID：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTERID" value="{{ d.params.PRODUCTERID || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">生产厂家名称：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTERNAME" value="{{ d.params.PRODUCTERNAME || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">市场价：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="MARKETPRICE" value="{{ d.params.MARKETPRICE || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">最低限价：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="LOWESTSALEPRICE" value="{{ d.params.LOWESTSALEPRICE || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">销售价：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="SELLPRICE" value="{{ d.params.SELLPRICE || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">易损品：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="ISDELICATE" value="{{ d.params.ISDELICATE || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">导入产品编号：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="IMPORTPRODUCT" value="{{ d.params.IMPORTPRODUCT || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">图片路径：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="IMAGEURL" value="{{ d.params.IMAGEURL || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="layui-tab-item">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">物料默认颜色：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="DEFAULTCOLOR" value="{{ d.params.DEFAULTCOLOR || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">空盘类型：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PALLETEMPLTY" value="{{ d.params.PALLETEMPLTY || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">实盘类型：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PALLETENTITY" value="{{ d.params.PALLETENTITY || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">长：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="SIZE_LENGTH" value="{{ d.params.SIZE_LENGTH || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">长：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="SIZE_WIDTH" value="{{ d.params.SIZE_WIDTH || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">高：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="SIZE_HEIGHT" value="{{ d.params.SIZE_HEIGHT || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">容量：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="VOLUME" value="{{ d.params.VOLUME || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">重量：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="WEIGHT" value="{{ d.params.WEIGHT || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">净重：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="NETWEIGHT" value="{{ d.params.NETWEIGHT || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">预警状态：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="WARNSTATE" value="{{ d.params.WARNSTATE || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">库存高位：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="INV_HIGH" value="{{ d.params.INV_HIGH || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                            <script type="text/html" template>
+                                <input type="text" name="INV_HIGH_COLOR" value="{{ d.params.INV_HIGH_COLOR || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">安全库存：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="INV_SAFE" value="{{ d.params.INV_SAFE || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                            <script type="text/html" template>
+                                <input type="text" name="INV_SAFE_COLOR" value="{{ d.params.INV_SAFE_COLOR || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">订单库存：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="INV_ORDER" value="{{ d.params.INV_ORDER || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                            <script type="text/html" template>
+                                <input type="text" name="INV_ORDER_COLOR" value="{{ d.params.INV_ORDER_COLOR || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">保质期：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="INV_HIVEDAYS" value="{{ d.params.INV_HIVEDAYS || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                            <script type="text/html" template>
+                                <input type="text" name="INV_HIVEDAYS_COLOR" value="{{ d.params.INV_HIVEDAYS_COLOR || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">库存下限：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="INV_LIMIT" value="{{ d.params.INV_LIMIT || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                            <script type="text/html" template>
+                                <input type="text" name="INV_LIMIT_COLOR" value="{{ d.params.INV_LIMIT_COLOR || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-tab-item">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性1：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CUSTOMCOL01" value="{{ d.params.CUSTOMCOL01 || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性2：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CUSTOMCOL02" value="{{ d.params.CUSTOMCOL02 || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性3：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CUSTOMCOL03" value="{{ d.params.CUSTOMCOL03 || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性4：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CUSTOMCOL04" value="{{ d.params.CUSTOMCOL04 || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性5：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CUSTOMCOL05" value="{{ d.params.CUSTOMCOL05 || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性6：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CUSTOMCOL06" value="{{ d.params.CUSTOMCOL06 || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性7：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CUSTOMCOL07" value="{{ d.params.CUSTOMCOL07 || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性8：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CUSTOMCOL08" value="{{ d.params.CUSTOMCOL08 || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性9：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CUSTOMCOL09" value="{{ d.params.CUSTOMCOL09 || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">属性10：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="CUSTOMCOL10" value="{{ d.params.CUSTOMCOL10 || '' }}" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="productFrom-submit">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>

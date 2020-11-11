@@ -1,0 +1,158 @@
+<title>显示屏看板</title>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li class="layui-this">看板1</li>
+                <li>看板101</li>
+            </ul>          
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table id="id-tablelist-kanban1" lay-filter="fillter-tablelist-kanban1"></table>
+                </div>
+                <div class="layui-tab-item">                   
+                    <div class="layui-card">
+                        <table id="id-tablelist-kanban101" lay-filter="fillter-tablelist-kanban101"></table>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        //数据列表
+        table.render({
+            title:'看板1',
+            elem: '#id-tablelist-kanban1',
+            url: setter.getscreenlist + '?ACTION=101&REPORTNO=QUERY_KANBAN1',
+            cols: [[
+                { field: 'LINENUM', title: '行号', hide: true, width: 100 }
+                , { field: 'LINEDESC', title: '', hide: false, width: 150 }
+                , { field: 'C01', title: '', hide: false, width: 150 }
+                , { field: 'C02', title: '', hide: false, width: 150 }
+                , { field: 'C03', title: '', hide: false, width: 150 }
+                , { field: 'C04', title: '', hide: false, width: 150 }
+                , { field: 'C05', title: '', hide: false, width: 150 }
+                , { field: 'C06', title: '', hide: false, width: 150 }
+                , { field: 'C07', title: '', hide: false, width: 150 }
+            ]],
+            page: false,
+            limit: 100,
+            height: 'full',
+            toolbar: false,
+            size: 'lg',
+            initSort: {
+                field: 'LINENUM' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        table.render({
+            title: '看板101',
+            elem: '#id-tablelist-kanban101',
+            url: setter.getscreenlist + '?ACTION=101&REPORTNO=QUERY_KANBAN101',
+            cols: [[
+                { field: 'LINENUM', title: '行号', hide: true, width: 100 }
+                , { field: 'LINEDESC', title: '', hide: false, width: 100 }
+                , { field: 'C01', title: '第1列', hide: false, width: 100 }
+                , { field: 'C02', title: '第2列', hide: false, width: 100 }
+                , { field: 'C03', title: '第3列', hide: false, width: 100 }
+                , { field: 'C04', title: '第4列', hide: false, width: 100 }
+                , { field: 'C05', title: '第5列', hide: false, width: 100 }
+                , { field: 'C06', title: '第6列', hide: false, width: 100 }
+                , { field: 'C07', title: '第7列', hide: false, width: 100 }
+                , { field: 'C07', title: '第7列', hide: false, width: 100 }
+                , { field: 'C08', title: '第8列', hide: false, width: 100 }
+                , { field: 'C09', title: '第9列', hide: false, width: 100 }
+                , { field: 'C10', title: '第10列', hide: false, width: 100 }
+                , { field: 'C11', title: '第11列', hide: false, width: 100 }
+                , { field: 'C12', title: '第12列', hide: false, width: 100 }
+                , { field: 'C13', title: '第13列', hide: false, width: 100 }
+                , { field: 'C14', title: '第14列', hide: false, width: 100 }
+                , { field: 'C15', title: '第15列', hide: false, width: 100 }
+                , { field: 'C16', title: '第16列', hide: false, width: 100 }
+                , { field: 'C17', title: '第17列', hide: false, width: 100 }
+                , { field: 'C18', title: '第18列', hide: false, width: 100 }
+                , { field: 'C19', title: '第19列', hide: false, width: 100 }
+                , { field: 'C20', title: '第20列', hide: false, width: 100 }
+                , { field: 'C21', title: '第21列', hide: false, width: 100 }
+                , { field: 'C22', title: '第22列', hide: false, width: 100 }
+                , { field: 'C23', title: '第23列', hide: false, width: 100 }
+                , { field: 'C24', title: '第24列', hide: false, width: 100 }
+                , { field: 'C25', title: '第25列', hide: false, width: 100 }
+                , { field: 'C26', title: '第26列', hide: false, width: 100 }
+                , { field: 'C27', title: '第27列', hide: false, width: 100 }
+                , { field: 'C28', title: '第28列', hide: false, width: 100 }
+                , { field: 'C29', title: '第29列', hide: false, width: 100 }
+                , { field: 'C30', title: '第30列', hide: false, width: 100 }
+                , { field: 'C31', title: '第31列', hide: false, width: 100 }
+                , { field: 'C32', title: '第32列', hide: false, width: 100 }
+                , { field: 'C33', title: '第33列', hide: false, width: 100 }
+                , { field: 'C34', title: '第34列', hide: false, width: 100 }
+                , { field: 'C35', title: '第35列', hide: false, width: 100 }
+                , { field: 'C36', title: '第36列', hide: false, width: 100 }
+                , { field: 'C37', title: '第37列', hide: false, width: 100 }
+                , { field: 'C38', title: '第38列', hide: false, width: 100 }
+                , { field: 'C39', title: '第39列', hide: false, width: 100 }
+                , { field: 'C40', title: '第40列', hide: false, width: 100 }
+                , { field: 'C41', title: '第41列', hide: false, width: 100 }
+                , { field: 'C42', title: '第42列', hide: false, width: 100 }
+                , { field: 'C43', title: '第43列', hide: false, width: 100 }
+                , { field: 'C44', title: '第44列', hide: false, width: 100 }
+                , { field: 'C45', title: '第45列', hide: false, width: 100 }
+                , { field: 'C46', title: '第46列', hide: false, width: 100 }
+                , { field: 'C47', title: '第47列', hide: false, width: 100 }
+                , { field: 'C48', title: '第48列', hide: false, width: 100 }
+                , { field: 'C49', title: '第49列', hide: false, width: 100 }
+                , { field: 'C50', title: '第50列', hide: false, width: 100 }
+                , { field: 'C51', title: '第51列', hide: false, width: 100 }
+                , { field: 'C52', title: '第52列', hide: false, width: 100 }
+                , { field: 'C53', title: '第53列', hide: false, width: 100 }
+                , { field: 'C54', title: '第54列', hide: false, width: 100 }
+                , { field: 'C55', title: '第55列', hide: false, width: 100 }
+                , { field: 'C56', title: '第56列', hide: false, width: 100 }
+                , { field: 'C57', title: '第57列', hide: false, width: 100 }
+                , { field: 'C58', title: '第58列', hide: false, width: 100 }
+                , { field: 'C59', title: '第59列', hide: false, width: 100 }
+                , { field: 'C60', title: '第60列', hide: false, width: 100 }
+                , { field: 'C61', title: '第61列', hide: false, width: 100 }
+                , { field: 'C62', title: '第62列', hide: false, width: 100 }
+                , { field: 'C63', title: '第63列', hide: false, width: 100 }
+                , { field: 'C64', title: '第64列', hide: false, width: 100 }
+                , { field: 'C65', title: '第65列', hide: false, width: 100 }
+                , { field: 'C66', title: '第66列', hide: false, width: 100 }
+                , { field: 'C67', title: '第67列', hide: false, width: 100 }
+                , { field: 'C68', title: '第68列', hide: false, width: 100 }
+                , { field: 'C69', title: '第69列', hide: false, width: 100 }
+                , { field: 'C70', title: '第70列', hide: false, width: 100 }
+                , { field: 'C71', title: '第71列', hide: false, width: 100 }
+                , { field: 'C72', title: '第72列', hide: false, width: 100 }
+                , { field: 'C73', title: '第73列', hide: false, width: 100 }
+                , { field: 'C74', title: '第74列', hide: false, width: 100 }
+                , { field: 'C75', title: '第75列', hide: false, width: 100 }
+                , { field: 'C76', title: '第76列', hide: false, width: 100 }
+                , { field: 'C77', title: '第77列', hide: false, width: 100 }
+                , { field: 'C78', title: '第78列', hide: false, width: 100 }
+                , { field: 'C79', title: '第79列', hide: false, width: 100 }
+                , { field: 'C80', title: '第80列', hide: false, width: 100 }
+            ]],
+            page: false,
+            limit: 100,
+            height: 'full',
+            toolbar: false,
+            size: 'lg'
+        });
+
+    });
+</script>

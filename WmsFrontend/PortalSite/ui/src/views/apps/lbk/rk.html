@@ -1,0 +1,258 @@
+<title>人工入库</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+        <form class="layui-form" lay-filter="rkFromfilter" style="padding: 20px 0px 20px 0px;">
+
+            <!--ACTION-->
+            <div class="layui-form-item" style="display:none;">
+                <div class="layui-input-block">
+                    <div class="layui-input-inline">
+                        <input type="text" id="ACTION" name="ACTION" autocomplete="off" class="layui-input" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <!--选择物料信息-->
+            <div class="layui-form-item">
+                <label class="layui-form-label">物料信息</label>
+                <div class="layui-input-block">
+                    <select id="idPRODUCTNO" name="PRODUCTNO" lay-verify="required" lay-filter="idPRODUCTNOChange">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 物料相关描述 -->
+            <div class="layui-form-item" style="color:pink">
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">物料ID:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="PRODUCTID" name="PRODUCTID" autocomplete="off" class="layui-input" disabled>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">物料编号:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="PRODUCTNO" name="PRODUCTNO" autocomplete="off" class="layui-input" disabled>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">物料描述:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="PRODUCTNAME" name="PRODUCTNAME" autocomplete="off" class="layui-input" disabled style="width:500px;font-size:24px;color:red;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 多个站台时，有一个站台则默认 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">站台编号：</label>
+                <div class="layui-input-block">
+                    <select id="idStationNo" name="StationNo" lay-verify="required">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 物料的件数 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">数量：</label>
+                <div class="layui-input-block">
+                    <input type="number" id="Quantity" name="Quantity" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <!-- 批次 -->
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">批次:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="BATCHNO" placeholder="请输入内容" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="rkFormAction">确认入库</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+            <!-- 操作返回消息 -->
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">消息：</label>
+                <div class="layui-input-block">
+                    <input type="text" id="idMsg" name="Remark" autocomplete="off" style="border:none;background-color:wheat;"
+                           class="layui-input">
+                </div>
+            </div>
+        </form>
+
+        <!--任务主表-->
+        <table id="id-rktasktablelist" lay-filter="rktasktasktablelistfilter"></table>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            element = layui.element;
+
+        form.render();
+
+        var bindlist = [];
+        //获取绑定列表
+        admin.req({
+            type: "get",
+            url: setter.product + "?ACTION=100",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+
+                bindlist = resultdata.data;
+                $("#idPRODUCTNO option").remove();
+                $.each(resultdata.data, function (index, item) {
+                    // 下拉菜单里添加元素
+                    $('#idPRODUCTNO').append(
+                        new Option(
+                            item.ID + "/" + item.PRODUCTNO + "/" + item.PRODUCTNAME
+                            ,
+                            item.ID));
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+        //获取站台列表
+        admin.req({
+            type: "get",
+            url: setter.getstnlist + "&STATIONTYPE=5",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                stnlist = resultdata.data;
+                $("#idStationNo option").remove();
+                $.each(resultdata.data, function (index, item) {
+                    $('#idStationNo').append(
+                        new Option(item.STATIONDESC, item.CONTROLNO));
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+        //选择列表时显示一些备注信息
+        form.on('select(idPRODUCTNOChange)', function (data) {
+
+            var item = bindlist.find(obj => obj.ID == data.value);
+
+            if (item) {
+
+                $('#PRODUCTID').val(item.ID);
+                $('#PRODUCTNO').val(item.PRODUCTNO);
+                $('#PRODUCTNAME').val(item.PRODUCTNAME);
+                $('#Quantity').val(item.QUANTITY_PACK);
+
+                form.render();
+            }
+
+        });
+
+        //监听提交
+        form.on('submit(rkFormAction)', function (data) {
+            console.log(data);
+            data.field.ACTION = 1011;
+            layer.msg(JSON.stringify(data.field));
+            var msg = "确认物料：【" + data.field.PRODUCTNAME + "】数量：【" + data.field.Quantity + "】从站台：【" + data.field.StationNo + "】入库吗？";
+            layer.confirm(msg, { icon: 3, title: '提示' }, function (index) {
+
+                admin.req({
+                    type: 'get',
+                    url: setter.projmoverequest,
+                    data: data.field,
+                    dataType: 'json', //返回的类型
+                    success: function (resultdata) {
+                        layer.alert(resultdata.msg);
+                        $('#idMsg').val(resultdata.msg);
+                        layui.table.reload('id-rktasktablelist'); //重载表格
+                    }
+                });
+
+                layer.close(index);
+            });
+
+            return false;
+        });
+
+        //任务数据列表
+        table.render({
+            elem: '#id-rktasktablelist',
+            url: setter.gettasklist + "?ACTION=100&TASKTCLASS=11",
+            //data:[],
+            cols: [[
+                { field: 'ID', title: 'ID', false: true, width: 100 }
+                , { field: 'TASKNO', title: '任务号', hide: false, width: 100 }
+                , { field: 'TASKDATE', title: '任务日期', hide: false, width: 120 }
+                , { field: 'TASKSTATE', title: '任务状态', hide: false, width: 100, templet: '#rktaskstateTpl' }
+                , { field: 'TASKDESC', title: '任务描述', hide: false, width: 400 }
+                , { field: 'SOURCE02', title: '源控制号', hide: false, width: 150, style: 'background-color: #007688; color: #fff;' }
+                , { field: 'DESTINATION01', title: '目标位置', hide: false, width: 150, style: 'background-color: #007688; color: #fff;' }
+                , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 180 }]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-520',
+            even: true,
+            toolbar: '#toolbarRK',
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //监听行工具事件
+        table.on('toolbar(rktasktasktablelistfilter)', function (obj) {
+            switch (obj.event) {
+                case 'toolbarRK-refresh':
+                    layui.table.reload('id-rktasktablelist'); //重载表格
+                    layer.msg('刷新成功！');
+                    break;
+
+            };
+        })
+
+    })
+</script>
+
+<!-- 工具栏模板-表格头部工具栏： -->
+<script type="text/html" id="toolbarRK">
+    <a class="layui-btn layui-btn-xs" lay-event="toolbarRK-refresh">刷新</a>
+</script>
+
+<!-- 任务状态：-->
+<script type="text/html" id="rktaskstateTpl">
+    {{#  if(d.TASKSTATE === '-1'){ }}
+    <span style="color: orange;">等待分配</span>
+    {{# } else if(d.TASKSTATE === '0'){ }}
+    <span style="color: skyblue;">新任务</span>
+    {{# } else if(d.TASKSTATE === '1'){ }}
+    <span style="color: blue;">装货完成</span>
+    {{# } else if(d.TASKSTATE === '3'){ }}
+    <span style="color: gold;">任务变更</span>
+    {{# } else if(d.TASKSTATE === '99'){ }}
+    <span style="color: green;">搬运完成</span>
+    {{# } else if(d.TASKSTATE === '4'){ }}
+    <span style="color: red;">任务取消</span>
+    {{#  } else { }}
+    {{ d.TASKSTATE }}
+    {{#  } }}
+</script>

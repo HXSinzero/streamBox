@@ -1,0 +1,362 @@
+<title>托盘管理</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">托盘状态：</label>
+                    <div class="layui-input-block">
+                        <select name="STOCKNO">
+                            <option value="">不限</option>
+                            <option value="1">初始创建</option>
+                            <option value="2">搬运锁定</option>
+                            <option value="3">搬运完成</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">托盘编号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="PALLETNO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">货位号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="LOCATIONNO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">计划单号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="PLANNO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn" lay-submit lay-filter="palletsearchfilter">
+                        <i class="layui-icon layui-icon-search"></i>
+                    </button>
+                </div>
+
+
+            </div>
+        </form>
+
+        <div class="layui-tab" lay-filter="palletTabfilter">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="1">托盘</li>
+                <li lay-id="2">详细明细</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item  layui-show">
+                    <!--主从表合并-->
+                    <table id="id-tablelist-querypallet" lay-filter="filter-tablelist-querypallet"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <!--主表-->
+                    <table id="id-tablelist-pallet" lay-filter="filter-tablelist-pallet"></table>
+                    <!--明细-->
+                    <table id="id-tablelist-palletdetail" lay-filter="filter-tablelist-palletdetail"></table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //主表+从表合并方便查看
+        table.render({
+            elem: '#id-tablelist-querypallet',
+            title: '托盘记录',
+            //url:  setter.projquery + "?ACTION=3001&KeyValue=QUERY_PALLETINFO1",
+            data: [],
+            cols: [[
+                { field: 'PALLETID', title: 'ID', hide: false, width: 100 }
+                , { field: 'PALLETNO', title: '托盘编号', hide: false, width: 100 }
+
+                , { field: 'LINENUM', title: '行号', hide: true, width: 100 }
+                , { field: 'PRODUCTID', title: '物料ID', hide: false, width: 100 }
+                , { field: 'PRODUCTNO', title: '物料编号', hide: false, width: 200 }
+                , { field: 'PRODUCTNAME', title: '物料名称', hide: false, width: 300 }
+                , { field: 'BATCHNO', title: '批次', hide: false, width: 200 }
+
+                , { field: 'QUANTITY_INIT', title: '初始数量', hide: true, width: 100 }
+                , { field: 'QUANTITY_COUNT', title: '件数', hide: true, width: 100 }
+                , { field: 'QUANTITY_LOAD', title: '载货数量', hide: false, width: 100 }
+                , { field: 'QUANTITY_WEIGHT', title: '实际称重', hide: true, width: 100 }
+                , { field: 'QUANTITY_OUT', title: '出库数量', hide: true, width: 100 }
+                , { field: 'QUANTITY_IN', title: '入库数量', hide: true, width: 100 }
+                , { field: 'QUANTITY_LEFT', title: '剩余数量', hide: true, width: 100 }
+                , { field: 'BASICUNIT', title: '基础单位', hide: false, width: 100 }
+
+                , { field: 'CREATEBY', title: '创建人', hide: false, width: 100 }
+                , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 180, templet: function (c) { return layui.util.toDateString(new Date(c.CREATEDATE).getTime(), 'yyyy-MM-dd HH:mm:ss') } }
+                , { field: 'STOCKNO', title: '仓库', hide: false, width: 100 }
+                , { field: 'SOURCE', title: '源位置', hide: false, width: 100 }
+                , { field: 'GROUPNO', title: '通道', hide: false, width: 120 }
+                , { field: 'LOCATIONNO', title: '货位', hide: false, width: 180 }
+                , { field: 'STATE', title: '状态', hide: false, width: 100 }
+
+                , { field: 'PLANNO', title: '计划号', hide: false, width: 180 }
+                , { field: 'OPMESSAGE', title: '操作消息', hide: false, width: 100 }
+                , { field: 'OPDATE', title: '操作时间', hide: false, width: 100 }
+                , { field: 'OPBY', title: '操作人', hide: false, width: 100 }
+            ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-250',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //主表
+        table.render({
+            elem: '#id-tablelist-pallet',
+            title: '托盘信息',
+            data: [],
+            cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'PALLETCLASS', title: '托盘分类', hide: false, width: 100 }
+                , { field: 'PALLETNO', title: '托盘编号', hide: false, width: 100 }
+                , { field: 'PALLETTYPE', title: '托盘类型', hide: false, width: 100 }
+                , { field: 'IFFULLLOAD', title: '满盘？', hide: true, width: 100 }
+                , { field: 'CREATEBY', title: '创建人', hide: false, width: 100 }
+                , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 180, templet: function (c) { return layui.util.toDateString(new Date(c.CREATEDATE).getTime(), 'yyyy-MM-dd HH:mm:ss') } }
+                , { field: 'MOVEINDATE', title: '移入时间', hide: true, width: 150 }
+                , { field: 'MOVEINTYPE', title: '移动类型', hide: true, width: 100 }
+                , { field: 'DYNAMICTYPE', title: '盘点类型', hide: true, width: 100 }
+                , { field: 'DYNAMICDATE', title: '盘点时间', hide: true, width: 150 }
+                , { field: 'STOCKNO', title: '仓库', hide: false, width: 100 }
+                , { field: 'SOURCE', title: '源位置', hide: false, width: 100 }
+                , { field: 'GROUPNO', title: '设备组', hide: false, width: 120 }
+                , { field: 'LOCATIONNO', title: '货位', hide: false, width: 180 }
+                , { field: 'STATE', title: '状态', hide: false, width: 100 }
+                , { field: 'PRODUCTDATE', title: '生产时间', hide: true, width: 100 }
+                , { field: 'SHIFTNO', title: '班次', hide: true, width: 100 }
+                , { field: 'TEAMNO', title: '班组', hide: true, width: 100 }
+                , { field: 'PLANNO', title: '计划号', hide: false, width: 180 }
+                , { field: 'ORDERNO', title: '订单号', hide: false, width: 100 }
+                , { field: 'RELATENO', title: '关联单号', hide: false, width: 100 }
+                , { field: 'OPMESSAGE', title: '操作消息', hide: false, width: 100 }
+                , { field: 'OPDATE', title: '操作时间', hide: false, width: 100 }
+                , { field: 'OPBY', title: '操作人', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL01', title: '扩展属性1', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL02', title: '扩展属性2', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL03', title: '扩展属性3', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL04', title: '扩展属性4', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL05', title: '扩展属性5', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL06', title: '扩展属性6', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL07', title: '扩展属性7', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL08', title: '扩展属性8', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL09', title: '扩展属性9', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL10', title: '扩展属性10', hide: true, width: 100 }
+
+                , { fixed: 'right', title: '操作', toolbar: '#opbarMain', width: 100 }
+            ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-420',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+        //明细
+        table.render({
+            elem: '#id-tablelist-palletdetail',
+            title: '托盘明细',
+            data: [],
+            cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'PALLETID', title: '托盘ID', hide: false, width: 100 }
+                , { field: 'LINENUM', title: '行号', hide: false, width: 100 }
+                , { field: 'BOMID', title: 'BOMID', hide: true, width: 100 }
+                , { field: 'BOMNO', title: 'BOM编号', hide: true, width: 100 }
+                , { field: 'BOMNAME', title: 'BOM名称', hide: true, width: 100 }
+                , { field: 'BOMBATCHNO', title: 'BOM批次', hide: true, width: 100 }
+                , { field: 'PRODUCTID', title: '物料ID', hide: false, width: 100 }
+                , { field: 'PRODUCTNO', title: '物料编号', hide: false, width: 100 }
+                , { field: 'PRODUCTNAME', title: '物料名称', hide: false, width: 100 }
+                , { field: 'PRODUCTSPEC', title: '物料规格', hide: false, width: 100 }
+                , { field: 'PRODUCTCLASS', title: '物料分类', hide: false, width: 100 }
+                , { field: 'PRODUCTTYPE', title: '物料类型', hide: false, width: 100 }
+                , { field: 'BATCHNO', title: '批次', hide: false, width: 100 }
+                , { field: 'BATCHNO01', title: '批次1', hide: true, width: 100 }
+                , { field: 'BATCHNO02', title: '批次2', hide: true, width: 100 }
+                , { field: 'BATCHNO03', title: '批次3', hide: true, width: 100 }
+                , { field: 'BATCHNO04', title: '批次4', hide: true, width: 100 }
+                , { field: 'BATCHNO05', title: '批次5', hide: true, width: 100 }
+                , { field: 'BATCHNO06', title: '批次6', hide: true, width: 100 }
+                , { field: 'BATCHNO07', title: '批次7', hide: true, width: 100 }
+                , { field: 'BATCHNO08', title: '批次8', hide: true, width: 100 }
+                , { field: 'BATCHNO09', title: '批次9', hide: true, width: 100 }
+                , { field: 'BATCHNO10', title: '批次10', hide: true, width: 100 }
+                , { field: 'QUANTITY_INIT', title: '初始数量', hide: true, width: 100 }
+                , { field: 'QUANTITY_COUNT', title: '件数', hide: true, width: 100 }
+                , { field: 'QUANTITY_LOAD', title: '载货数量', hide: false, width: 100 }
+                , { field: 'QUANTITY_WEIGHT', title: '实际称重', hide: true, width: 100 }
+                , { field: 'QUANTITY_OUT', title: '出库数量', hide: true, width: 100 }
+                , { field: 'QUANTITY_IN', title: '入库数量', hide: true, width: 100 }
+                , { field: 'QUANTITY_LEFT', title: '剩余数量', hide: true, width: 100 }
+                , { field: 'MAINUNIT', title: '主单位', hide: false, width: 100 }
+                , { field: 'BASICUNIT', title: '基础单位', hide: false, width: 100 }
+                , { field: 'SERIALNO', title: '序列号', hide: false, width: 100 }
+                , { field: 'ORDERNO', title: '订单号', hide: true, width: 100 }
+                , { field: 'ORDER_LINENUM', title: '订单行号', hide: true, width: 100 }
+                , { field: 'OVERDUEDATE', title: '过期时间', hide: true, width: 100 }
+                , { field: 'INVENTORYTYPE', title: '库存类型', hide: true, width: 100 }
+                , { field: 'QUALITYSTATE', title: '质量状态', hide: true, width: 100 }
+                , { field: 'INVENTORYSTATE', title: '库存状态', hide: true, width: 100 }
+                , { field: 'INVENTORYVISIBLE', title: '库存可见', hide: true, width: 100 }
+                , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 100 }
+                , { field: 'CREATEBY', title: '创建人', hide: false, width: 100 }
+                , { field: 'BOXNO', title: '箱号', hide: true, width: 100 }
+                , { field: 'PRODUCTDATE', title: '生产日期', hide: true, width: 100 }
+                , { field: 'SHIFTNO', title: '班次', hide: true, width: 100 }
+                , { field: 'TEAMNO', title: '班组', hide: true, width: 100 }
+                , { field: 'LINESTATE', title: '航状态', hide: true, width: 100 }
+                , { field: 'EXTENDID', title: '扩展ID', hide: true, width: 100 }
+                , { field: 'P01', title: '扩展属性1', hide: true, width: 100 }
+                , { field: 'P02', title: '扩展属性2', hide: true, width: 100 }
+                , { field: 'P03', title: '扩展属性3', hide: true, width: 100 }
+                , { field: 'P04', title: '扩展属性4', hide: true, width: 100 }
+                , { field: 'P05', title: '扩展属性5', hide: true, width: 100 }
+                , { field: 'P06', title: '扩展属性6', hide: true, width: 100 }
+                , { field: 'P07', title: '扩展属性7', hide: true, width: 100 }
+                , { field: 'P08', title: '扩展属性8', hide: true, width: 100 }
+                , { field: 'P09', title: '扩展属性9', hide: true, width: 100 }
+                , { field: 'P10', title: '扩展属性10', hide: true, width: 100 }
+                , { field: 'P11', title: '扩展属性11', hide: true, width: 100 }
+                , { field: 'P12', title: '扩展属性12', hide: true, width: 100 }
+                , { field: 'P13', title: '扩展属性13', hide: true, width: 100 }
+                , { field: 'P14', title: '扩展属性14', hide: true, width: 100 }
+                , { field: 'P15', title: '扩展属性15', hide: true, width: 100 }
+                , { field: 'P16', title: '扩展属性16', hide: true, width: 100 }
+                , { field: 'P17', title: '扩展属性17', hide: true, width: 100 }
+                , { field: 'P18', title: '扩展属性18', hide: true, width: 100 }
+                , { field: 'P19', title: '扩展属性19', hide: true, width: 100 }
+                , { field: 'P20', title: '扩展属性20', hide: true, width: 100 }
+
+                //, { fixed: 'right', title: '操作', toolbar: '#opbarMainDetail', width: 100 }
+            ]
+            ],
+            page: true,
+            limit: 100,
+            height: '200',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+        //监听行工具事件
+        table.on('tool(filter-tablelist-pallet)', function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case 'viewdetail':
+                    viewdetail(data);
+                    break;
+            };
+        });
+
+        viewdetail = function (data) {
+            //添加条件
+            var serviceurl = setter.pallet + '?ACTION=100101&PALLETID=' + data.ID;
+            layui.table.reload('id-tablelist-palletdetail', { url: serviceurl });
+            //切换到指定Tab项
+            element.tabChange('palletTabfilter', '2');
+        };
+
+        //监听行工具事件
+        table.on('tool(filter-tablelist-palletdetail)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'return') {
+                //切换到指定Tab项
+                element.tabChange('palletTabfilter', '1');
+            }
+        });
+
+        //监听提交
+        form.on('submit(palletsearchfilter)', function (data) {
+            //添加条件
+            var serviceurl1 = setter.pallet + '?ACTION=100';
+            layui.table.reload('id-tablelist-pallet', { url: serviceurl1, where: data.field });
+
+            var serviceurl2 = setter.pallet + '?ACTION=3001';
+            layui.table.reload('id-tablelist-querypallet', { url: serviceurl2, where: data.field });
+
+            return false;
+        });
+
+    });
+</script>
+
+<!-- 工具栏模板-主表行操作按钮： -->
+<script type="text/html" id="opbarMain">
+    <a class="layui-btn layui-btn-xs" lay-event="viewdetail">明细</a>
+</script>
+
+<!-- 工具栏模板-明细行操作按钮： -->
+<script type="text/html" id="opbarMainDetail">
+    <a class="layui-btn layui-btn-xs" lay-event="return">返回</a>
+</script>
+
+<!-- 托盘状态：-->
+<script type="text/html" id="palletstateTpl">
+    {{#  if(d.STATE === '0'){ }}
+    <span style="color: skyblue;">新任务</span>
+    {{# } else if(d.STATE === '1'){ }}
+    <span style="color: orange;">等待分配</span>
+    {{# } else if(d.STATE === '1'){ }}
+    {{#  } else { }}
+    {{ d.TASKSTATE }}
+    {{#  } }}
+</script>
+
+<!-- 托盘分类：-->
+<script type="text/html" id="palletclassTpl">
+    {{#  if(d.PALLETCLASS === '1'){ }}
+    <span style="color: green;">入库任务</span>
+    {{# } else if(d.PALLETCLASS === '2'){ }}
+    <span style="color: red;">出库任务</span>
+    {{# } else if(d.PALLETCLASS === '3'){ }}
+    <span style="color: red;">移动任务</span>
+    {{#  } else { }}
+    {{ d.PALLETCLASS }}
+    {{#  } }}
+</script>

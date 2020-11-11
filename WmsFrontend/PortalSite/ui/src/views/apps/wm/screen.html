@@ -1,0 +1,60 @@
+<title>显示屏管理</title>
+
+<div class="layui-fluid">
+
+	<div class="layui-card">
+
+		<div style="padding-bottom: 10px;">
+			<!-- <button class="layui-btn" data-type="add">添加</button> -->
+		</div>
+
+		<div class="layui-card-body">
+			<table id="LAY-tablelist-screen" lay-filter="LAY-tablelist"></table>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	layui.use(['admin', 'table', 'form'], function() {
+		var $ = layui.$,
+			setter = layui.setter,
+			admin = layui.admin,
+			table = layui.table,
+			form = layui.form,
+			element = layui.element;
+			
+			//数据列表
+			table.render({
+				elem: '#LAY-tablelist-screen',
+				url: setter.getscreenlist+ '?ACTION=100',
+				cols: [[
+					{field:'ID',title:'ID',hide:false,width:60}
+					,{field:'LEDCODE',title:'屏幕编号',hide:false,width:100}
+					,{field:'LEDNAME',title:'屏幕名称',hide:false,width:100}
+					,{field:'LEDTYPE',title:'屏幕类型',hide:false,width:100}
+					,{field:'PARA',title:'参数',hide:false,width:200}
+					,{field:'SHOWTYPE',title:'显示方式',hide:false,width:100}
+					,{field:'LOCATION',title:'位置',hide:false,width:160}
+					,{field:'MESSAGETITLE',title:'标题',hide:false,width:200}
+					,{field:'MESSAGECONTENT',title:'内容',hide:false,width:200}
+					,{field:'UPDATEDATETIME',title:'更新时间',hide:false,width:160}
+					,{field:'PICTUREPATH',title:'图片路径',hide:false,width:200}
+					,{field:'STATE',title:'状态',hide:false,width:100}
+					,{field:'REMARK',title:'备注',hide:false,width:100}
+					,{field:'KANBANNO',title:'看板编号',hide:false,width:100}
+				]],
+			page: true,
+			limit: 100,
+			height: 'full-150',
+			even: true,
+			toolbar: true,
+			cellMinWidth: 100 ,
+			initSort: {
+				field: 'ID', //排序字段，对应 cols 设定的各字段名					
+				type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+			}
+		});
+  
+});
+</script>

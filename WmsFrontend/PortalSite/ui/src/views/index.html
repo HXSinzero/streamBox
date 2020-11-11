@@ -1,0 +1,56 @@
+<div class="layui-fluid">
+    <div class="layui-card" 
+         style="height: 800px;width: 100%;
+        background-image: url(' /ui/src//views/bg1.jpg');
+        background-size: 100% 100%;">
+    </div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-row layui-col-space15">
+
+                <div class="layui-col-md12" style="display:none;">
+                    <div class="layui-card">
+                        <div class="layui-card-header">快捷方式</div>
+                        <div class="layui-card-body">
+
+                            <div class="layui-carousel layadmin-carousel layadmin-shortcut">
+                                <ul class="layui-row layui-col-space10">
+                                    <li class="layui-col-xs3">
+                                        <a lay-href="apps/wm/rk">
+                                            <i class="layui-icon layui-icon-up"></i>
+                                            <cite>入库作业</cite>
+                                        </a>
+                                    </li>
+                                    <li class="layui-col-xs3">
+                                        <a lay-href="apps/wm/ck">
+                                            <i class="layui-icon layui-icon-down"></i>
+                                            <cite>出库作业</cite>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util', 'mymod'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+    })
+</script>

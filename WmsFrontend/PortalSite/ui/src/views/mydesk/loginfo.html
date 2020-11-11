@@ -1,0 +1,118 @@
+<title>日志查询</title>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+          <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                <form class="layui-form" style="padding: 20px 0 0 0;">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">时间范围</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="datetimerange" class="layui-input" id="laydate-datetimerange-loginfo" autocomplete="off">
+                            </div>
+                        </div>
+                            
+                         <div class="layui-form-item">
+                            <label class="layui-form-label">关键字</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="keyvalue" class="layui-input" autocomplete="off">
+                            </div>
+                          </div>
+
+                        <div class="layui-form-item">
+                             <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="LAY-loginfo-front-search">
+                                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                                </button>
+                             </div>
+                        </div>
+                </form>
+    </div>
+    </div>
+
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+            <table id="LAY-tablelist-loginfo" lay-filter="LAY-tablelist"></table>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        var util = layui.util;
+
+        //日期时间范围
+        laydate.render({
+            elem: '#laydate-datetimerange-loginfo'
+            , type: 'datetime'
+            , range: true
+        });
+
+
+        //日志数据列表
+        table.render({
+            elem: '#LAY-tablelist-loginfo',
+            url: setter.getloginfolist + '?ACTION=100',
+            data: [],
+            cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'CATEGORYID', title: '分类', hide: false, width: 100 }
+                , { field: 'SOURCEOBJECTID', title: '源对象关键值', hide: false, width: 200 }
+                , { field: 'SOURCECONTENTJSON', title: '对象值', hide: false, width: 200 }
+                , { field: 'OPERATETIME', title: '操作时间', hide: false, width: 160, templet: function (d) { return util.toDateString(d.OPERATEACCOUNT, "yyyy-MM-dd HH:mm:ss") } }
+                , { field: 'OPERATEUSERID', title: '操作人ID', hide: false, width: 100 }
+                , { field: 'OPERATEACCOUNT', title: '操作人', hide: false, width: 100 }
+                , { field: 'OPERATETYPEID', title: '业务类型ID', hide: false, width: 200 }
+                , { field: 'OPERATETYPE', title: '业务类型', hide: false, width: 100 }
+                , { field: 'FUNCCODE', title: '功能编号', hide: false, width: 100 }
+                , { field: 'FUNCNAME', title: '功能名称', hide: false, width: 100 }
+                , { field: 'IPADDRESS', title: 'IP地址', hide: false, width: 100 }
+                , { field: 'IPADDRESSNAME', title: 'IP地址解析', hide: false, width: 100 }
+                , { field: 'HOST', title: '请求主机', hide: false, width: 100 }
+                , { field: 'BROWSER', title: '浏览器', hide: false, width: 300 }
+                , { field: 'EXECUTERESULT', title: '执行结果', hide: false, width: 100 }
+                , { field: 'EXECUTERESULTJSON', title: '执行结果对象', hide: false, width: 200 }
+                , { field: 'REMARK', title: '备注', hide: false, width: 100 }
+                , { fixed: 'right', title: '操作', toolbar: '#opbarloginfo', width: 80 }
+            ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-320',
+            text: '对不起，加载出现异常！',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+        //监听提交
+        form.on('submit(LAY-loginfo-front-search)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+
+            //添加条件
+            var serviceurl = setter.getloginfolist + '?ACTION=100';
+            layui.table.reload('LAY-tablelist-loginfo', { url: serviceurl,where:data.field });
+
+            return false;
+        });
+    });
+</script>
+
+<!-- 工具栏模板-表行操作按钮： -->
+<script type="text/html" id="opbarloginfo">
+    <a class="layui-btn layui-btn-xs" lay-event="viewdetail">详细</a>
+</script>

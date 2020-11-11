@@ -1,0 +1,164 @@
+<title>换班管理</title>
+
+<div class="layui-fluid">
+    <div class="layui-card-header">
+        <h1>请选择班次班组</h1>
+    </div>
+    <div class="layui-card">
+        <form class="layui-form" style="padding: 20px 0 0 0;">
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">操作码：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="ACTION" value="{{ d.params.ACTION || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">ID：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="ID" value="{{ d.params.ID || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly
+                                   style="width: 500px; ">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">工单号：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="WO_ID" value="{{ d.params.WO_ID || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly
+                                   style="width: 500px; height: 100px; ">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-inline" style="display:none;">
+                    <label class="layui-form-label">工单状态：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="WO_STATE" value="{{ d.params.WO_STATE || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">工单数：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="WOCOUNT" value="{{ d.params.WOCOUNT || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly
+                                   style="font-size:24px;">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-inline" style="display:none;">
+                    <label class="layui-form-label">设备号：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="EQU_ID" value="{{ d.params.EQU_ID || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+                        </script>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">当前班次：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="PRESHIFT_ID" value="{{ d.params.PRESHIFT_ID || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">当前班组：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="PRETEAM_ID" value="{{ d.params.PRETEAM_ID || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">下班班次：</label>
+                    <div class="layui-input-block">
+                        <select name="CURRSHIFT_ID" id="SHIFT_ID" lay-verify="required">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">下班班组：</label>
+                    <div class="layui-input-block">
+                        <select name="CURRTEAM_ID" id="TEAM_ID" lay-verify="required">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="tsswitch-submit">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        admin.req({
+            type: "get",
+            url: setter.projmesoprequest + "?ACTION=100101",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                itemlist = resultdata.data;
+                $("#SHIFT_ID option").remove();
+                $.each(resultdata.data, function (index, item) {
+                    $('#SHIFT_ID').append(new Option(item.SHIFT_ID + "-" + item.SHIFT_NAME, item.SHIFT_ID)); // 下拉菜单里添加元素
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+        admin.req({
+            type: "get",
+            url: setter.projmesoprequest + "?ACTION=100102",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                itemlist = resultdata.data;
+                $("#TEAM_ID option").remove();
+                $.each(resultdata.data, function (index, item) {
+                    $('#TEAM_ID').append(new Option(item.TEAM_ID + "-" + item.TEAM_NAME, item.TEAM_ID)); // 下拉菜单里添加元素
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+    });
+</script>

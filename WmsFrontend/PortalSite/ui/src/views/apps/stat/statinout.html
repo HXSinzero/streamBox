@@ -1,0 +1,103 @@
+<title>出入库统计</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <form class="layui-form" style="padding: 20px 0 0 0;">
+                <div class="layui-form-item">
+                    <div style="display: none;">
+                        <input type="text" name="ACTION" value="3004" class="layui-input" autocomplete="off">
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">时间范围：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="datetimerange" class="layui-input" id="laydate-datetimerange-statinout" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">场景编号：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="SCENENO" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">计划编号：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="PLANNO" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <button class="layui-btn" lay-submit lay-filter="LAY-statinout-front-search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="layui-card">
+        <h2 class="layui-colla-title">统计结果</h2>
+        <div class="layui-colla-content layui-show" id="divhtml"
+             style="height: 600px;">
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //日期时间范围
+        laydate.render({
+            elem: '#laydate-datetimerange-statinout'
+            , type: 'datetime'
+            , range: true
+        });
+
+        //监听提交
+        form.on('submit(LAY-statinout-front-search)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            stat(data.field);
+            return false;
+        });
+
+        stat = function (data) {
+            admin.req({
+                type: "get",
+                url: setter.postcarryplanmain,
+                data: data,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    $('#divhtml').html(resultdata.data);
+                }
+            });
+        };
+
+    });
+</script>

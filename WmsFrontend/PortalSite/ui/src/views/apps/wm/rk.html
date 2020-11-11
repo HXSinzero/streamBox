@@ -1,0 +1,202 @@
+<title>入库作业</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+        <form class="layui-form" lay-filter="rkFromfilter" style="padding: 20px 0px 20px 0px;">
+
+            <!--ACTION-->
+            <div class="layui-form-item" style="display:none;">
+                <div class="layui-input-block">
+                    <div class="layui-input-inline">
+                        <input type="text" id="ACTION" autocomplete="off" class="layui-input" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <!--选择计划编号-->
+            <div class="layui-form-item">
+                <label class="layui-form-label">计划编号</label>
+                <div class="layui-input-block">
+                    <select id="PlanNo" name="PlanNo" lay-verify="required" lay-filter="PlanNoselectChange">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 计划绑定的物料相关描述 -->
+            <div class="layui-form-item" style="color:pink">
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">物料:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="PRODUCTNAME" autocomplete="off" class="layui-input" disabled>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">数量:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="Q01" autocomplete="off" class="layui-input" disabled>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">单位:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="BASICUNIT" autocomplete="off" class="layui-input" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 多个站台时，有一个站台则默认 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">站台编号：</label>
+                <div class="layui-input-block">
+                    <select name="StationNo" id="StationNo" lay-verify="required">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 选择目标的存储通道 -->
+            <div class="layui-form-item" style="display:none">
+                <label class="layui-form-label">存储通道：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="Destination" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <!-- RF扫描托盘号 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">托盘号：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="PalletNo" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <!-- 物料的件数 -->
+            <div class="layui-form-item" style="display:none">
+                <label class="layui-form-label">件数：</label>
+                <div class="layui-input-block">
+                    <input type="number" name="Quantity" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <!-- 物料的重量 -->
+            <div class="layui-form-item" style="display:none">
+                <label class="layui-form-label">重量：</label>
+                <div class="layui-input-block">
+                    <input type="number" name="Weight" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <!-- 备注说明 -->
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="Remark" placeholder="请输入内容" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="rkFormAction">确认入库</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            element = layui.element;
+
+        form.render();
+
+        var planlist = [];
+        //获取确认的计划
+        admin.req({
+            type: "get",
+            url: setter.plandetail + "?ACTION=100&LINESTATE=1&PLANTYPE=RK",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+
+                planlist = resultdata.data;
+                $("#PlanNo option").remove();
+                $.each(resultdata.data, function (index, item) {
+                    // 下拉菜单里添加元素
+                    $('#PlanNo').append(
+                        new Option(
+                            item.PLANNO+ "/" + item.PRODUCTNO + "-" + item.BPNAME + "-" + item.PRODUCTNAME + "#" + item.REMARK1
+                            ,
+                            item.PLANNO));
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+        //选择计划时，显示一些备注信息
+        form.on('select(PlanNoselectChange)', function (data) {
+
+            var item = planlist.find(obj => obj.PLANNO == data.value);
+
+            if (item) {
+                var array = item.STATIONNO.split(",");
+                $("#StationNo option").remove();
+                $.each(array, function (index, item) {
+                    $('#StationNo').append(new Option(item));
+                });
+                layui.form.render("select");
+
+                $('#PRODUCTNAME').val(item.PRODUCTNAME);
+                $('#Q01').val(item.Q01);
+                $('#BASICUNIT').val(item.BASICUNIT);
+
+                form.render();
+            }
+
+        });
+
+        //监听提交
+        form.on('submit(rkFormAction)', function (data) {
+            //console.log(data);
+            data.field.ACTION = 101;
+            layer.msg(JSON.stringify(data.field));
+            var msg = "确认托盘：【" + data.field.PalletNo + "】重量：【" + data.field.Weight + "】从站台：【" + data.field.StationNo + "】入库吗？";
+            layer.confirm(msg, { icon: 3, title: '提示' }, function (index) {
+
+                admin.req({
+                    type: 'get',
+                    url: setter.projmoverequest,
+                    data: data.field,
+                    dataType: 'json', //返回的类型
+                    success: function (resultdata) {
+                        layer.alert(resultdata.msg);
+                    }
+                });
+
+                $('#PalletNo').val(null);
+                $('#Weight').val(null);
+
+                layer.close(index);
+            });
+
+            return false;
+        });
+       
+    })
+</script>

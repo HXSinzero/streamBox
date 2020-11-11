@@ -1,0 +1,218 @@
+<title>位置视图看板</title>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li class="layui-this">位置视图</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+
+                    <div class="layui-card">
+                        <form class="layui-form" style="padding: 0px 0px 0px 0px;">
+                            <div class="layui-inline">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="screenkanban-search">
+                                        <i class="layui-icon layui-icon-search">刷新</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="layui-card">
+                        <form class="layui-form" style="padding: 0px 0px 0px 0px;">
+                            <div class="layui-form-item">
+
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">选择的位置：</label>
+                                    <div class="layui-input-block">
+                                        <textarea type="text" id="CONTROLID" name="ListCONTROLID"
+                                                  lay-verify="required" autocomplete="off" class="layui-textarea"
+                                                  style="width: 500px; height: 30px; "></textarea>
+                                    </div>
+                                </div>
+
+                                <button class="layui-btn" lay-submit lay-filter="screenkanban-getcheck">
+                                    <i class="layui-icon layui-icon-cart">返回选中的位置</i>
+                                </button>
+
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <table id="id-tablelist-kanban101" class="layui-table" lay-filter="fillter-tablelist-kanban101"></table>
+
+                    <!--<div id="divhtml" class="layui-card"></div>-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+</style>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        table.render({
+            title: '看板101',
+            elem: '#id-tablelist-kanban101',
+            url: setter.getscreenlist + '?ACTION=101&REPORTNO=QUERY_KANBAN101',
+            cols: [[
+                { field: 'LINENUM', title: '行号', hide: true, width: 60 }
+                , { field: 'LINEDESC', title: '层号', hide: false, width: 70, style: 'background-color: green; color: #fff;' }
+                , { field: 'C01', title: '第1列', hide: false, width: 120 }
+                , { field: 'C02', title: '第2列', hide: false, width: 120 }
+                , { field: 'C03', title: '第3列', hide: false, width: 120 }
+                , { field: 'C04', title: '第4列', hide: false, width: 120 }
+                , { field: 'C05', title: '第5列', hide: false, width: 120 }
+                , { field: 'C06', title: '第6列', hide: false, width: 120 }
+                , { field: 'C07', title: '第7列', hide: false, width: 120 }
+                , { field: 'C08', title: '第8列', hide: false, width: 120 }
+                , { field: 'C09', title: '第9列', hide: false, width: 120 }
+                , { field: 'C10', title: '第10列', hide: false, width: 120 }
+                , { field: 'C11', title: '第11列', hide: false, width: 120 }
+                , { field: 'C12', title: '第12列', hide: false, width: 120 }
+                , { field: 'C13', title: '第13列', hide: false, width: 120 }
+                , { field: 'C14', title: '第14列', hide: false, width: 120 }
+                , { field: 'C15', title: '第15列', hide: false, width: 120 }
+                , { field: 'C16', title: '第16列', hide: false, width: 120 }
+                , { field: 'C17', title: '第17列', hide: false, width: 120 }
+                , { field: 'C18', title: '第18列', hide: false, width: 120 }
+                , { field: 'C19', title: '第19列', hide: false, width: 120 }
+                , { field: 'C20', title: '第20列', hide: false, width: 120 }
+                , { field: 'C21', title: '第21列', hide: false, width: 120 }
+                , { field: 'C22', title: '第22列', hide: false, width: 120 }
+                , { field: 'C23', title: '第23列', hide: false, width: 120 }
+                , { field: 'C24', title: '第24列', hide: false, width: 120 }
+                , { field: 'C25', title: '第25列', hide: false, width: 120 }
+                , { field: 'C26', title: '第26列', hide: false, width: 120 }
+                , { field: 'C27', title: '第27列', hide: false, width: 120 }
+                , { field: 'C28', title: '第28列', hide: false, width: 120 }
+                , { field: 'C29', title: '第29列', hide: false, width: 120 }
+                , { field: 'C30', title: '第30列', hide: false, width: 120 }
+                , { field: 'C31', title: '第31列', hide: false, width: 120 }
+                , { field: 'C32', title: '第32列', hide: false, width: 120 }
+                , { field: 'C33', title: '第33列', hide: false, width: 120 }
+                , { field: 'C34', title: '第34列', hide: false, width: 120 }
+                , { field: 'C35', title: '第35列', hide: false, width: 120 }
+                , { field: 'C36', title: '第36列', hide: false, width: 120 }
+                , { field: 'C37', title: '第37列', hide: false, width: 120 }
+                , { field: 'C38', title: '第38列', hide: false, width: 120 }
+                , { field: 'C39', title: '第39列', hide: false, width: 120 }
+                , { field: 'C40', title: '第40列', hide: false, width: 120 }
+                , { field: 'C41', title: '第41列', hide: false, width: 120 }
+                , { field: 'C42', title: '第42列', hide: false, width: 120 }
+                , { field: 'C43', title: '第43列', hide: false, width: 120 }
+                , { field: 'C44', title: '第44列', hide: false, width: 120 }
+                , { field: 'C45', title: '第45列', hide: false, width: 120 }
+                , { field: 'C46', title: '第46列', hide: false, width: 120 }
+                , { field: 'C47', title: '第47列', hide: false, width: 120 }
+                , { field: 'C48', title: '第48列', hide: false, width: 120 }
+                , { field: 'C49', title: '第49列', hide: false, width: 120 }
+                , { field: 'C50', title: '第50列', hide: false, width: 120 }
+                , { field: 'C51', title: '第51列', hide: false, width: 120 }
+                , { field: 'C52', title: '第52列', hide: false, width: 120 }
+                , { field: 'C53', title: '第53列', hide: false, width: 120 }
+                , { field: 'C54', title: '第54列', hide: false, width: 120 }
+                , { field: 'C55', title: '第55列', hide: false, width: 120 }
+                , { field: 'C56', title: '第56列', hide: false, width: 120 }
+                , { field: 'C57', title: '第57列', hide: false, width: 120 }
+                , { field: 'C58', title: '第58列', hide: false, width: 120 }
+                , { field: 'C59', title: '第59列', hide: false, width: 120 }
+                , { field: 'C60', title: '第60列', hide: false, width: 120 }
+                , { field: 'C61', title: '第61列', hide: false, width: 120 }
+                , { field: 'C62', title: '第62列', hide: false, width: 120 }
+                , { field: 'C63', title: '第63列', hide: false, width: 120 }
+                , { field: 'C64', title: '第64列', hide: false, width: 120 }
+                , { field: 'C65', title: '第65列', hide: false, width: 120 }
+                , { field: 'C66', title: '第66列', hide: false, width: 120 }
+                , { field: 'C67', title: '第67列', hide: false, width: 120 }
+                , { field: 'C68', title: '第68列', hide: false, width: 120 }
+                , { field: 'C69', title: '第69列', hide: false, width: 120 }
+                , { field: 'C70', title: '第70列', hide: false, width: 120 }
+                , { field: 'C71', title: '第71列', hide: false, width: 120 }
+                , { field: 'C72', title: '第72列', hide: false, width: 120 }
+                , { field: 'C73', title: '第73列', hide: false, width: 120 }
+                , { field: 'C74', title: '第74列', hide: false, width: 120 }
+                , { field: 'C75', title: '第75列', hide: false, width: 120 }
+                , { field: 'C76', title: '第76列', hide: false, width: 120 }
+                , { field: 'C77', title: '第77列', hide: false, width: 120 }
+                , { field: 'C78', title: '第78列', hide: false, width: 120 }
+            ]],
+            page: false,
+            limit: 100,
+            height: 'full',
+            skin: 'nob',
+            //size:'lg ',
+            toolbar: false
+        });
+
+
+        //查询按钮
+        form.on('submit(screenkanban-search)', function (data) {
+            var myurl = setter.projinvoprequest + '?ACTION=3001';
+
+            table.reload('id-tablelist-kanban101', {
+                url: myurl, where: data.field
+            });
+
+
+            /*admin.req({
+                type: "get",
+                url: myurl,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    $('#divhtml').html(resultdata.data);
+                }
+            });*/
+
+            return false;
+        });
+
+
+        table.on('tool(fillter-tablelist-kanban101)', function (obj) {
+            console.log(obj);
+            var data = obj.data;
+            if (obj.event === 'setSign') {
+                setSign(data);
+            }
+        });
+
+        var loclist = [];
+        myFunction = function (data) {
+            var id = '#' + data;
+            if ($(id).prop('checked')) {
+                $(id).prop('checked', false);
+                var index = loclist.indexOf(data);
+                if (index > -1) {
+                    loclist.splice(index, 1);
+                }
+            }
+            else {
+                $(id).prop('checked', true);
+                if (loclist.indexOf(data) == -1) {
+                    loclist.push(data);
+                }
+            }
+            console.log(id);
+            $('#CONTROLID').val(loclist);
+            form.render();
+        }
+
+    });
+</script>

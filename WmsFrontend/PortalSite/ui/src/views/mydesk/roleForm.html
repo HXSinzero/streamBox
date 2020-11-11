@@ -1,0 +1,64 @@
+<title>编辑角色</title>
+
+<form class="layui-form" lay-filter="layui-roleFrom-filter" style="padding: 20px 0 0 0;">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">ID</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="ID" value="{{ d.params.ID || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色编号：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="ROLECODE" value="{{ d.params.ROLECODE || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="ROLENAME" value="{{ d.params.ROLENAME || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色描述：</label>
+        <div class="layui-input-block">           
+            <script type="text/html" template>
+                <input type="text" name="ROLEREMARK" value="{{ d.params.ROLEREMARK || '' }}" 
+                placeholder="请输入……" autocomplete="off" 
+                class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="layui-roleFrom-submit">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(['admin', 'table', 'laydate'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            element = layui.element;
+
+
+
+    })
+</script>

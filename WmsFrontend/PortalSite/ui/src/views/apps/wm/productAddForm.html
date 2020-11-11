@@ -1,0 +1,128 @@
+<title>编辑物料</title>
+
+<form class="layui-form" lay-filter="productAddFormfilter">
+
+    <div class="layui-form-item">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">物料编号：</label>
+            <div class="layui-input-block">
+                <input type="text" name="PRODUCTNO" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">物料名称：</label>
+            <div class="layui-input-block">
+                <input type="text" name="PRODUCTNAME" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">物料类型：</label>
+            <div class="layui-input-block">
+                <select name="PRODUCTTYPE" lay-verify="required">
+                    <option value="0">无</option>
+                    <option value="1">毛茶</option>
+                    <option value="2">号茶</option>
+                    <option value="3">包材</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">茶号：</label>
+            <div class="layui-input-block">
+                <select name="PRODUCTCLASS" lay-verify="required">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">物流单位：</label>
+            <div class="layui-input-block">
+                <select name="MAINUNIT" lay-verify="required">
+                    <option value="KG">公斤</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">包装数量：</label>
+            <div class="layui-input-block">
+                <select name="QUANTITY_PACK" lay-verify="required">
+                    <option value="20">20公斤/件</option>
+                    <option value="50">50公斤/件</option>
+                </select>
+            </div>
+        </div>
+
+        <!--产地-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">产地：</label>
+            <div class="layui-input-block">
+                <select name="PRODUCTERNAME" id="PRODUCER" lay-verify="required">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">ABC分类：</label>
+            <div class="layui-input-block">
+                <select name="ABC">
+                    <option value="">无</option>
+                    <option value="A">A类</option>
+                    <option value="B">B类</option>
+                    <option value="C">C类</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
+                <input type="text" name="REMARK" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="productAddForm-submit">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(['admin', 'table'], function () {
+        var $ = layui.$
+            , setter = layui.setter
+            , admin = layui.admin
+            , table = layui.table
+            , form = layui.form
+            , element = layui.element;
+
+        form.render();
+
+        admin.req({
+            type: "get",
+            url: setter.basic + "?ACTION=100&BasicType=PRODUCER",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                stnlist = resultdata.data;
+                $.each(resultdata.data, function (index, item) {
+                    $('#PRODUCER').append(new Option(item.PRODUCERNAME, item.PRODUCERNAME)); // 下拉菜单里添加元素
+                });
+
+                layui.form.render("select");
+            }
+        });
+    })
+</script>

@@ -1,0 +1,868 @@
+<!--
+库存管理:菜单功能编号=2009,palletinfo1
+后台接口：
+1）数据列表：setter.projinvoprequest + '?ACTION=100'
+2）
+3）
+备注说明：INVENTORYSTATE：0=待检，1=正常，2=冻结
+-->
+
+<title>库存管理</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">货位号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="LOCATIONNO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">排的范围：</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="number" min="0" max="999" name="ROWNO_MIN" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid" style="width: 4px;">-</div>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="number" min="0" max="999" name="ROWNO_MAX" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">列的范围：</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="number" min="0" max="999" name="COLUMNNO_MIN" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid" style="width: 4px;">-</div>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="number" min="0" max="999" name="COLUMNNO_MAX" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">层的范围：</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="number" min="0" max="999" name="LAYERNO_MIN" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid" style="width: 4px;">-</div>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="number" min="0" max="999" name="LAYERNO_MAX" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">源站台:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="SOURCE" placeholder="请输入……" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">批次号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="BATCHNO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">放行状态：</label>
+                    <div class="layui-input-block">
+                        <select name="QCSTATE">
+                            <option value="">不限</option>
+                            <option value="Q">质检待检 Q</option>
+                            <option value="N">质检放行 N</option>
+                            <option value="S">质检锁定 S</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">库管状态：</label>
+                    <div class="layui-input-block">
+                        <select name="INVENTORYSTATE">
+                            <option value="">不限</option>
+                            <option value="0">待检 Q</option>
+                            <option value="1">合格 N</option>
+                            <option value="2">锁定 S</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="layui-form-item">
+
+                <!--时间范围-->
+                <div class="layui-inline" style="width:450px;">
+                    <label class="layui-form-label">时间范围：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="datetimerange" class="layui-input" id="palletinfo1-laydate-datetimerange1" autocomplete="off" style="width:380px;">
+                    </div>
+                </div>
+
+                <div class="layui-inline" style="width:550px;">
+                    <label class="layui-form-label">物料编号:</label>
+                    <div class="layui-input-block">
+                        <!--<input type="text" name="PRODUCTNO" placeholder="请输入……" autocomplete="off" class="layui-input">-->
+                        <select id="palletinfo1-PRODUCTNO" name="PRODUCTNO" style="width:480px;">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn" lay-submit lay-filter="palletinfo1-searchfilter">
+                        <i class="layui-icon layui-icon-search"></i>
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+
+            </div>
+
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-warm">
+                    出库条件说明：托盘状态=3，载货状态=100，货位使用=1，货位状态=normal，站台列范围，质检放行=N，库管状态=1，在指定的范围内按时间排序先进先出
+                </button>
+            </div>
+
+        </form>
+
+        <div class="layui-tab" lay-filter="palletinfo1Tabfilter">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="1">库存托盘明细</li>
+                <li lay-id="2">抽检站台明细</li>
+                <li lay-id="3">货位间搬移明细</li>
+                <li lay-id="4">货位维护管理</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item  layui-show">
+                    <!--联合视图-->
+                    <table id="id-palletinfo1-tableList" lay-filter="palletinfo1-tablelist"></table>
+                </div>
+                <div class="layui-tab-item">
+
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                            <!-- 站台列表 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">站台编号：</label>
+                                <div class="layui-input-block">
+                                    <select id="palletinfo1-StationNo" name="LOCATIONNO" lay-filter="palletinfo1-StationNoSelectChange">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">返库站台：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="palletinfo1-StationNoReturn" name="StationNo" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <button class="layui-btn" lay-submit lay-filter="palletinfo1-querypalletfilter">
+                                    查询
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <table id="palletinfo1-querypallet" lay-filter="palletinfo1-querypalletfilter"></table>
+                </div>
+                <!--页面3-->
+                <div class="layui-tab-item">
+
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所选托盘：</label>
+                                <div class="layui-input-block">
+                                    <textarea type="text" id="palletinfo1-PALLETID" name="ListPalletid"
+                                              lay-verify="required" autocomplete="off" class="layui-textarea"
+                                              style="width: 800px; height: 100px; "></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所选货位：</label>
+                                <div class="layui-input-block">
+                                    <textarea type="text" id="palletinfo1-CONTROLID" name="ListCONTROLID"
+                                              lay-verify="required" autocomplete="off" class="layui-textarea"
+                                              style="width: 800px; height: 10px; "></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label"></label>
+                            <button class="layui-btn" lay-submit lay-filter="palletinfo1-move">
+                                执行货间搬移
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+
+                <!--页面4-->
+                <div class="layui-tab-item">
+                    <!--货位维护-->
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">货位控制号：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="CONTROLID" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                              
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn layui-btn-danger" lay-submit lay-filter="palletinfo1-setemplty">
+                                    设置为空货位
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">物料自动编号：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="PRODUCTID" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" lay-submit lay-filter="palletinfo1-createplt">
+                                    在货位创建托盘
+                                </button>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 工具栏模板-表格头部工具栏： -->
+<script type="text/html" id="tableHeaderOPBtn-palletinfo1">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="setinvstate2s">批量冻结（Q/N->S）</button>
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="setinvstate2n">批量解冻（S->N）</button>
+        <button class="layui-btn layui-btn-sm layui-btn-checked" lay-event="check2stn">抽检出库到站台</button>
+        <button class="layui-btn layui-btn-sm" lay-event="move">货位间搬移</button>
+    </div>
+</script>
+
+<!-- 工具栏模板-表行操作按钮： -->
+<script type="text/html" id="palletinfo1Opbar1">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="check2stnReturn">返库入库</a>
+</script>
+
+<!-- 工具栏模板-表行操作按钮： -->
+<script type="text/html" id="palletinfo1Opbar2">
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="check2stnDeletePallet">直接删除</a>
+</script>
+
+<!--脚本-->
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        var util = layui.util;
+
+        form.render();
+
+
+        //日期时间范围
+        laydate.render({
+            elem: '#palletinfo1-laydate-datetimerange1'
+            , type: 'datetime'
+            , range: true
+        });
+
+        //获取绑定列表
+        admin.req({
+            type: "get",
+            url: setter.product + "?ACTION=100",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+
+                $("#palletinfo1-PRODUCTNO option").remove();
+                $('#palletinfo1-PRODUCTNO').append(new Option("不限", ""));
+                $.each(resultdata.data, function (index, item) {
+                    // 下拉菜单里添加元素
+                    $('#palletinfo1-PRODUCTNO').append(
+                        new Option(
+                            item.PRODUCTNO + "/" + item.PRODUCTNAME
+                            ,
+                            item.PRODUCTNO));
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+        //联合视图方便查看
+        table.render({
+            elem: '#id-palletinfo1-tableList',
+            title: '库存托盘视图1',
+            data: [],
+            cols: [[
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'ID', title: '托盘ID', hide: false, width: 100, sort: true }
+                , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 180, sort: true }
+                , { field: 'SOURCE', title: '源位置', hide: false, width: 100 }
+                , { field: 'GROUPNO', title: '机组号', hide: false, width: 100 }
+                , { field: 'LOCATIONNO', title: '位置编号', hide: false, width: 100, sort: true }
+                , { field: 'LOCATIONDESC', title: '位置描述', hide: false, width: 150 }
+
+                , { field: 'PRODUCTID', title: '物料ID', hide: false, width: 100, sort: true }
+                , { field: 'PRODUCTNO', title: '物料编号', hide: false, width: 120, sort: true }
+                , { field: 'PRODUCTNAME', title: '物料名称', hide: false, width: 300 }
+                , { field: 'BATCHNO', title: '批次号', hide: false, width: 200, sort: true }
+                , { field: 'QCSTATE', title: '质检放行状态', hide: false, width: 120, templet: '#palletinfo1-qcstateTpl' }
+                , { field: 'P01', title: '质检放行ID', hide: false, width: 100 }
+                , { field: 'P02', title: '质检放行时间', hide: false, width: 180 }
+                , { field: 'INVENTORYSTATE', title: '库管状态', hide: false, width: 100, templet: '#palletinfo1-inventorystateTpl' }
+                , { field: 'QUANTITY_LOAD', title: '数量', hide: false, width: 100 }
+                , { field: 'BASICUNIT', title: '单位', hide: false, width: 100 }
+
+                , { field: 'CONTROLID', title: '控制号', hide: false, width: 100 }
+                , { field: 'LOCATIONSTATE', title: '位置状态', hide: true, width: 100, templet: '#palletinfo1-locationstateTpl' }
+                , { field: 'USESTATE', title: '使用状态', hide: false, width: 100, templet: '#palletinfo1-usestateTpl' }
+                , { field: 'STORESTATE', title: '存储状态', hide: false, width: 100, templet: '#palletinfo1-storestateTpl' }
+                , { field: 'STATE', title: '托盘状态', hide: false, width: 100, templet: '#palletinfo1-palletstateTpl' }
+
+                , { field: 'STOCKNO', title: '仓库号', hide: false, width: 100 }
+                
+
+
+                , { field: 'SHIFTNO', title: '班次', hide: false, width: 100 }
+                , { field: 'TEAMNO', title: '班组', hide: false, width: 100 }
+                , { field: 'PRODUCTDATE', title: '生产日期', hide: false, width: 150 }
+            ]
+            ],
+            page: true,
+            limit: 1500,
+            height: 'full-250',
+            even: true,
+            toolbar: '#tableHeaderOPBtn-palletinfo1',
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(palletinfo1-tablelist)', function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case 'viewdetail':
+                    //viewdetail(data);
+                    break;
+            };
+        });
+
+        //监听提交
+        form.on('submit(palletinfo1-searchfilter)', function (data) {
+            //添加条件
+            var serviceurl1 = setter.projinvoprequest + '?ACTION=100';
+            layui.table.reload('id-palletinfo1-tableList', { url: serviceurl1, where: data.field });
+
+            return false;
+        });
+
+        //监听头工具栏事件
+        table.on('toolbar(palletinfo1-tablelist)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+            switch (obj.event) {
+                case 'setinvstate2s':
+                    setinvstate(2, data);
+                    break;
+                case 'setinvstate2n':
+                    setinvstate(1, data);
+                    break;
+                case 'check2stn':
+                    check2stn(data);
+                    break;
+                case 'move':
+                    move(data);
+                    break;
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+
+        setinvstate = function (state, data) {
+
+            if (data.length === 0) {
+                layer.alert("请勾选需要处理的行！");
+                return;
+            }
+
+            var msg = '确认批量更改库存状态？';
+            layer.confirm(msg, { icon: 3, title: '提示' }, function (index) {
+
+                var palletidlist = [];
+                $.each(data, function (index, item) {
+                    palletidlist.push(item.ID);
+                });
+
+                var postData =
+                {
+                    INVENTORYSTATE: state,
+                    ListPalletid: palletidlist.toString()
+                };
+
+                admin.req({
+                    type: "post",
+                    url: setter.projinvoprequest + '?ACTION=2011',
+                    data: postData,
+                    dataType: 'json', //返回的类型
+                    success: function (resultdata) {
+                        layui.table.reload('id-palletinfo1-tableList'); //重载表格
+                        layer.alert(resultdata.msg);
+                    }
+                });
+
+                layer.close(index);
+            });
+
+
+        }
+
+        check2stn = function (data) {
+            if (data.length === 0) {
+                layer.alert("请勾选需要处理的行！");
+                return;
+            }
+            var palletidlist = [];
+            $.each(data, function (index, item) {
+                palletidlist.push(item.ID);
+            });
+
+            var postData =
+            {
+                ListPalletid: palletidlist.toString()
+            };
+
+            //打开编辑窗口
+            admin.popup({
+                id: 'LAY-popup-palletinfo1dialog' //定义唯一ID，防止重复弹出
+                , title: '抽检出库站台选择'
+                , type: 1
+                , area: ['500px', '400px']
+                , success: function (layero, index) {
+
+                    layui.view(this.id).render('apps/lbk/palletinfo1dialog', postData)
+                        .done(function () {
+
+                            form.render(null, 'layui-palletinfo1dialog');
+
+                            //监听提交
+                            form.on('submit(palletinfo1dialogFormAction)', function (data) {
+                                var field = data.field; //获取提交的字段
+
+                                layer.msg(JSON.stringify(data.field));
+
+                                admin.req({
+                                    type: "post",
+                                    url: setter.projinvoprequest + '?ACTION=2012',
+                                    data: data.field,
+                                    dataType: 'json', //返回的类型
+                                    success: function (resultdata) {
+                                        layer.alert(resultdata.msg);
+                                    }
+                                });
+
+
+                                layer.close(index); //执行关闭
+
+
+                                return false;
+                            });
+
+                        });
+
+
+                }
+            });//弹窗结束
+
+        }
+
+
+        var stnlist = [];
+        //获取站台列表
+        admin.req({
+            type: "get",
+            url: setter.getstnlist + "&STATIONTYPE=5",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                stnlist = resultdata.data;
+                $("#palletinfo1-StationNo option").remove();
+                $('#palletinfo1-StationNo').append(
+                    new Option('无', '0'));
+                $.each(resultdata.data, function (index, item) {
+                    $('#palletinfo1-StationNo').append(
+                        new Option(item.STATIONDESC, item.STATIONNO));
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+        //主表+从表合并方便查看
+        table.render({
+            elem: '#palletinfo1-querypallet',
+            title: '托盘记录',
+            data: [],
+            cols: [[
+                { fixed: 'left', title: '操作', toolbar: '#palletinfo1Opbar1', width: 100 }
+                , { field: 'LOCATIONNO', title: '当前位置', hide: false, width: 180 }
+                , { field: 'SOURCE', title: '源站台', hide: false, width: 100 }
+                , { field: 'GROUPNO', title: '机组', hide: false, width: 100 }
+                , { field: 'CREATEDATETIME', title: '创建时间', hide: false, width: 180 }
+                , { field: 'PALLETID', title: '托盘ID', hide: false, width: 100 }
+                , { field: 'PRODUCTID', title: '物料ID', hide: false, width: 100 }
+                , { field: 'PRODUCTNO', title: '物料编号', hide: false, width: 150 }
+                , { field: 'PRODUCTNAME', title: '物料名称', hide: false, width: 300 }
+                , { field: 'BATCHNO', title: '批次', hide: false, width: 200 }
+                , { field: 'QUANTITY_LOAD', title: '数量', hide: false, width: 100 }
+                , { field: 'BASICUNIT', title: '基础单位', hide: false, width: 100 }
+                , { field: 'STATE', title: '状态', hide: false, width: 100 }
+                , { fixed: 'right', title: '操作', toolbar: '#palletinfo1Opbar2', width: 100 }
+            ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-250',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //监听提交
+        form.on('submit(palletinfo1-querypalletfilter)', function (data) {
+            //添加条件
+            var serviceurl1 = setter.pallet + '?ACTION=3001';
+            layui.table.reload('palletinfo1-querypallet', { url: serviceurl1, where: data.field });
+
+            return false;
+        });
+
+
+        //选择列表时显示一些备注信息
+        form.on('select(palletinfo1-StationNoSelectChange)', function (data) {
+
+            var item = stnlist.find(obj => obj.STATIONNO == data.value);
+            if (item) {
+                $('#palletinfo1-StationNoReturn').val(item.CONTROLNO);
+                form.render();
+            }
+
+        });
+
+        //监听行工具事件
+        table.on('tool(palletinfo1-querypalletfilter)', function (obj) {
+
+            var rowData = obj.data;
+            switch (obj.event) {
+                case 'check2stnReturn':
+                    check2stnReturn(rowData);
+                    break;
+                case 'check2stnDeletePallet':
+                    check2stnDeletePallet(rowData);
+                    break;
+            };
+        })
+
+        check2stnReturn = function (rowData) {
+
+            var palletid = rowData.PALLETID;
+            var stationno = $('#palletinfo1-StationNoReturn').val();
+            var msg = '确认' + palletid + '从站台' + stationno + '返库吗？';
+            layer.confirm(msg, { icon: 3, title: '提示' }, function (index) {
+                var listPalletid = [];
+                listPalletid.push(palletid);
+                var postData =
+                {
+                    ListPalletid: listPalletid.toString(),
+                    STATIONNO: stationno
+                };
+
+                admin.req({
+                    type: "post",
+                    url: setter.projinvoprequest + '?ACTION=2013',
+                    data: postData,
+                    dataType: 'json', //返回的类型
+                    success: function (resultdata) {
+                        layer.alert(resultdata.msg);
+                    }
+                });
+
+                layer.close(index);
+            });
+        }
+
+        check2stnDeletePallet = function (rowData) {
+
+            var palletid = rowData.PALLETID;
+            var stationno = rowData.LOCATIONNO;
+            var msg = '确认从站台' + stationno + '删除' + palletid + '的数据吗？';
+            layer.confirm(msg, { icon: 3, title: '提示' }, function (index) {
+                var listPalletid = [];
+                listPalletid.push(palletid);
+                var postData =
+                {
+                    ListPalletid: listPalletid.toString(),
+                    STATIONNO: stationno
+                };
+
+                admin.req({
+                    type: "post",
+                    url: setter.projinvoprequest + '?ACTION=2014',
+                    data: postData,
+                    dataType: 'json', //返回的类型
+                    success: function (resultdata) {
+                        layer.alert(resultdata.msg);
+                    }
+                });
+
+                layer.close(index);
+            });
+        }
+
+        move = function (data) {
+            if (data.length === 0) {
+                layer.alert("请勾选需要处理的行！");
+                return;
+            }
+            var palletidlist = [];
+            $.each(data, function (index, item) {
+                palletidlist.push(item.ID);
+            });
+
+            var postData =
+            {
+                ListPalletid: palletidlist.toString()
+            };
+
+            //打开编辑窗口
+            admin.popup({
+                id: 'LAY-popup-screenkanban' //定义唯一ID，防止重复弹出
+                , title: '空闲货位选择'
+                , type: 1
+                , area: ['800px', '600px']
+                , success: function (layero, index) {
+
+                    layui.view(this.id).render('apps/lbk/screenkanban', postData)
+                        .done(function () {
+
+                            form.render(null);
+
+                            //查询按钮
+                            form.on('submit(screenkanban-getcheck)', function (data) {
+
+                                var field = data.field; //获取提交的字段
+
+                                //layer.msg(JSON.stringify(data.field));
+                                $('#palletinfo1-PALLETID').val(palletidlist);
+                                $('#palletinfo1-CONTROLID').val(data.field.ListCONTROLID);
+                                layer.close(index); //执行关闭
+                                //切换到指定Tab项
+                                element.tabChange('palletinfo1Tabfilter', '3');
+                                return false;
+                            });
+
+                        });
+
+
+                }
+            });//弹窗结束
+        }
+
+
+        form.on('submit(palletinfo1-move)', function (data) {
+            //layer.alert(JSON.stringify(data.field));
+            var msg = '确认执行货间搬运任务？';
+            layer.confirm(msg, { icon: 3, title: '提示' }, function (index) {
+
+                admin.req({
+                    type: "post",
+                    url: setter.projinvoprequest + '?ACTION=2015',
+                    data: data.field,
+                    dataType: 'json', //返回的类型
+                    success: function (resultdata) {
+                        layer.alert(resultdata.msg);
+                    }
+                });
+
+            });          
+
+            return false;
+        });
+
+
+        form.on('submit(palletinfo1-setemplty)', function (data) {
+            //layer.alert(JSON.stringify(data.field));
+            if (data.field.CONTROLID == null || data.field.CONTROLID == "" || data.field.CONTROLID == undefined) {
+                layer.alert("请输入货位控制号！");
+                return false;
+            }
+            var msg = '确认设置为【' + data.field.CONTROLID + '】空货位？将清空货位的信息不可恢复！！！';
+            layer.confirm(msg, { icon: 3, title: '提示' }, function (index) {
+
+                admin.req({
+                    type: "post",
+                    url: setter.projinvoprequest + '?ACTION=2016',
+                    data: data.field,
+                    dataType: 'json', //返回的类型
+                    success: function (resultdata) {
+                        layer.alert(resultdata.msg);
+                    }
+                });
+
+            });
+
+            return false;
+        });
+
+
+        form.on('submit(palletinfo1-createplt)', function (data) {
+            //layer.alert(JSON.stringify(data.field));
+            if (data.field.CONTROLID == null || data.field.CONTROLID == "" || data.field.CONTROLID == undefined) {
+                layer.alert("请输入货位控制号！");
+                return false;
+            }
+            if (data.field.PRODUCTID == null || data.field.PRODUCTID == "" || data.field.PRODUCTID == undefined) {
+                layer.alert("请输入物料自动编号！");
+                return false;
+            }
+            var msg = '确认在位置' + data.field.CONTROLID + '上创建' + data.field.PRODUCTID + '托盘？';
+            layer.confirm(msg, { icon: 3, title: '提示' }, function (index) {
+
+                admin.req({
+                    type: "post",
+                    url: setter.projinvoprequest + '?ACTION=2017',
+                    data: data.field,
+                    dataType: 'json', //返回的类型
+                    success: function (resultdata) {
+                        layer.alert(resultdata.msg);
+                    }
+                });
+
+            });
+
+            return false;
+        });
+
+    });
+</script>
+
+<!-- 质检放行状态：-->
+<script type="text/html" id="palletinfo1-qcstateTpl">
+    {{#  if(d.QCSTATE === 'Q'){ }}
+    <span style="font-size:18px; color: blue;">质检待检</span>
+    {{# } else if(d.QCSTATE === 'N'){ }}
+    <span style="font-size:18px; color: green;">质检放行</span>
+    {{# } else if(d.QCSTATE === 'S'){ }}
+    <span style="font-size:18px; color: red;">质检冻结</span>
+    {{#  } else { }}
+    {{ d.QCSTATE }}
+    {{#  } }}
+</script>
+
+<!-- 库管状态：-->
+<script type="text/html" id="palletinfo1-inventorystateTpl">
+    {{#  if(d.INVENTORYSTATE === '0'){ }}
+    <span style="font-size: 18px; color: blue;">待检</span>
+    {{# } else if(d.INVENTORYSTATE === '1'){ }}
+    <span style="font-size:18px; color: green;">正常</span>
+    {{# } else if(d.INVENTORYSTATE === '2'){ }}
+    <span style="font-size:18px; color: red;">冻结</span>
+    {{#  } else { }}
+    {{ d.INVENTORYSTATE }}
+    {{#  } }}
+</script>
+
+<!-- 位置载货状态：-->
+<script type="text/html" id="palletinfo1-storestateTpl">
+    {{#  if(d.STORESTATE === '0'){ }}
+    <span style="color: green;">空闲</span>
+    {{# } else if(d.STORESTATE === '1'){ }}
+    <span style="color: orange;">入库分配</span>
+    {{# } else if(d.STORESTATE === '2'){ }}
+    <span style="color: deeppink;">出库分配</span>
+    {{# } else if(d.STORESTATE === '100'){ }}
+    <span style="color: gold;">载货</span>
+    {{#  } else { }}
+    {{ d.STORESTATE }}
+    {{#  } }}
+</script>
+
+<script type="text/html" id="palletinfo1-locationstateTpl">
+    {{#  if(d.LOCATIONSTATE === 'normal'){ }}
+    <span style="color: green;">正常</span>
+    {{# } else if(d.LOCATIONSTATE === 'error'){ }}
+    <span style="color: red;">故障</span>
+    {{#  } else { }}
+    {{ d.LOCATIONSTATE }}
+    {{#  } }}
+</script>
+
+<script type="text/html" id="palletinfo1-locationstateTpl">
+    {{#  if(d.LOCATIONSTATE === 'normal'){ }}
+    <span style="color: green;">正常</span>
+    {{# } else if(d.LOCATIONSTATE === 'error'){ }}
+    <span style="color: red;">故障</span>
+    {{#  } else { }}
+    {{ d.LOCATIONSTATE }}
+    {{#  } }}
+</script>
+
+<script type="text/html" id="palletinfo1-usestateTpl">
+    {{#  if(d.USESTATE === '1'){ }}
+    <span style="color: green;">正常</span>
+    {{# } else if(d.USESTATE === '0'){ }}
+    <span style="color: red;">禁用</span>
+    {{#  } else { }}
+    {{ d.USESTATE }}
+    {{#  } }}
+</script>
+
+<!-- 托盘状态：-->
+<script type="text/html" id="palletinfo1-palletstateTpl">
+    {{#  if(d.STATE === '1'){ }}
+    <span style="color: skyblue;">新创建</span>
+    {{# } else if(d.STATE === '2'){ }}
+    <span style="color: red;">搬运锁定</span>
+    {{# } else if(d.STATE === '3'){ }}
+    <span style="color: orange;">搬运完成</span>
+    {{#  } else { }}
+    {{ d.STATE }}
+    {{#  } }}
+</script>

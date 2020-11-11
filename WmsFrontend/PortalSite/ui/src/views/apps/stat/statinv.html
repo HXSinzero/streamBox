@@ -1,0 +1,110 @@
+<title>库存统计</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <form class="layui-form" style="padding: 20px 0 0 0;">
+                <div class="layui-form-item">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">物料信息：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="key01" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <button class="layui-btn" lay-submit lay-filter="statinv-front-search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+
+                </div>
+            </form>
+        </div>
+
+        <table id="statinvTable" lay-filter="statinvTablefilter"></table>
+    </div>
+
+    <div class="layui-card">
+        <!--<h2 class="layui-colla-title">统计结果</h2>
+        <div class="layui-colla-content layui-show" id="divhtml"
+             style="height: 600px;">
+
+        </div>-->
+    </div>
+</div>
+
+
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //数据列表
+        table.render({
+            elem: '#statinvTable'
+            , title: '库存统计'
+            , data: []
+            , cols: [[
+                , { field: 'PRODUCTNO', title: '物料编号', hide: false, width: 200 }
+                , { field: 'PRODUCTNAME', title: '物料描述', hide: false, width: 500 }
+                , { field: 'BATCHNO', title: '批次', hide: false, width: 100 }
+                , { field: 'QUANTITY_LOAD', title: '标准重量', hide: false, width: 100 }
+                , { field: 'QUANTITY_WEIGHT', title: '实际重量', hide: false, width: 100 }
+                , { field: 'BASICUNIT', title: '单位', hide: false, width: 100 }
+            ]]
+            , page: false
+            , limit: 100
+            , toolbar: true
+            , height: 'full-150',
+            even: true,
+            initSort: {
+                field: 'PRODUCTNO' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+        //监听提交
+        form.on('submit(statinv-front-search)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+
+            var myurl = setter.projquery + "?ACTION=3001&KeyValue=QUERY_INV1";
+            table.reload('statinvTable', {
+                url: myurl, where: data.field
+            });
+
+            return false;
+        });
+
+        stat = function (data) {
+            admin.req({
+                type: "get",
+                url: setter.projquery + "?ACTION=3001&KeyValue=QUERY_INV1",
+                data: data,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    $('#divhtml').html(resultdata.data);
+                }
+            });
+        };
+
+    });
+</script>

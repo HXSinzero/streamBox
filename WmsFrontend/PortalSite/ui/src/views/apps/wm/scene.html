@@ -1,0 +1,167 @@
+<title>场景管理</title>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+            <table id="id-tablelist-scene" lay-filter="filter-tablelist-scene"></table>
+        </div>
+
+    </div>
+</div>
+
+<!-- 工具栏模板： -->
+<script type="text/html" id="opbtnbar-sence">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="switchsence">切换</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+</script>
+
+<!-- 状态值： -->
+<script type="text/html" id="sencestateTpl">
+    {{#  if(d.SCENESTATE === '0'){ }}
+    <span style="color: red;">禁用</span>
+    {{# } else if(d.SCENESTATE === '1'){ }}
+    <span style="color: green;">当前场景</span>
+    {{#  } else { }}
+    {{ d.SCENESTATE }}
+    {{#  } }}
+</script>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+
+        //位置数据列表
+        table.render({
+            elem: '#id-tablelist-scene'
+            , url: setter.getscenelist + '?ACTION=100'
+            , cols: [[
+                { field: 'ID', title: 'ID', width: 60, sort: true }
+                , { field: 'SCENENO', title: '场景编号', width: 100 }
+                , { field: 'SCENENAME', title: '场景名称', width: 100 }
+                , { field: 'SCENEDESC', title: '描述', width: 380 }
+                , { field: 'SCENESTATE', title: '场景状态', width: 100, templet: '#sencestateTpl' }
+                , { field: 'SCENEPARA', title: '场景参数', width: 100 }
+                , { field: 'RULEID_IN', title: '入库规则', width: 100 }
+                , { field: 'RULEID_OUT', title: '出库规则', width: 100 }
+                , { field: 'EXCEPTIONHANDLE', title: '异常处理', width: 100 }
+                , { field: 'EMERGENCYEXIT', title: '紧急出口', width: 100 }
+                , { field: 'OPMESSAGE', title: '操作信息', width: 200 }
+                , { field: 'OPDATE', title: '操作日期', width: 160 }
+                , { field: 'OPBY', title: '操作人', width: 100 }
+                , { field: 'P01', title: '属性1', width: 100 }
+                , { field: 'P02', title: '属性2', width: 100 }
+                , { field: 'P03', title: '属性3', width: 100 }
+                , { field: 'P04', title: '属性4', width: 100 }
+                , { field: 'P05', title: '属性5', width: 100 }
+                , { field: 'P06', title: '属性6', width: 100 }
+                , { field: 'P07', title: '属性7', width: 100 }
+                , { field: 'P08', title: '属性8', width: 100 }
+                , { field: 'P09', title: '属性9', width: 100 }
+                , { field: 'P10', title: '属性10', width: 200 }
+
+                , { title: '操作', width: 150, align: 'center', fixed: 'right', toolbar: '#opbtnbar-sence' }
+
+            ]]
+            , page: true
+            , limit: 100
+            , height: 'full-150',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+
+        //监听行工具事件
+        table.on('tool(filter-tablelist-scene)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+
+            //获得 lay-event 对应的值
+            switch (obj.event) {
+                case 'switchsence':
+                    switchsence(data);
+                    break;
+                case 'edit':
+                    edit(data);
+                    break;
+            }
+
+        });
+
+        switchsence = function (data) {
+            admin.req({
+                type: "get",
+                url: setter.getscenelist + '?ACTION=101&ID=' + data.ID + '&SCENENO=' + data.SCENENO,
+                data: data.field,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    layui.table.reload('id-tablelist-scene'); //重载表格
+                }
+            });
+        }
+
+
+        edit = function (rowdata) {
+            //打开编辑窗口
+            admin.popup({
+                id: 'LAY-popup-sceneForm' //定义唯一ID，防止重复弹出
+                , title: '编辑场景管理'
+                , type: 1
+                , area: ['800px', '600px']
+                , success: function (layero, index) {
+
+                    layui.view(this.id).render('apps/wm/sceneForm', rowdata)
+                        .done(function () {
+
+                            form.render(null, 'layui-sceneForm');
+
+                            //监听提交
+                            form.on('submit(layui-sceneForm-submit)', function (data) {
+                                var field = data.field; //获取提交的字段
+
+                                var postData = {
+                                    ACTION: 3,
+                                    ID: field.ID,
+                                    ULDScene: field,
+                                    PostData: JSON.stringify(field)
+                                };
+
+                                console.log(JSON.stringify(postData));
+
+                                admin.req({
+                                    type: "post",
+                                    url: setter.getscenelist + '?ACTION=3',
+                                    data: postData,
+                                    dataType: 'json', //返回的类型
+                                    success: function (resultdata) {
+                                        layer.alert(resultdata.msg);
+                                        layui.table.reload('id-tablelist-scene'); //重载表格
+                                        layer.close(index);
+                                    },
+                                    error: function (resultdata) {
+                                        layer.alert(resultdata.msg);
+                                    }
+                                });
+                                return false;
+                            });//From-submit结束
+                        });
+
+                }
+            });//popup方法结束
+        }
+
+    });
+</script>

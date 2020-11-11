@@ -1,0 +1,103 @@
+<title>编辑物料</title>
+
+<form class="layui-form" lay>
+    <div class="layui-form-item">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="1">物料基本属性</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">ID：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="ID" value="{{ d.params.ID || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">物料编号：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTNO" value="{{ d.params.PRODUCTNO || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">物料名称：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTNAME" value="{{ d.params.PRODUCTNAME || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">物料状态：</label>
+                        <div class="layui-input-block">
+                            <script type="text/html" template>
+                                <input type="text" name="PRODUCTTSTATE" value="{{ d.params.PRODUCTTSTATE || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">默认颜色：</label>
+                            <div class="layui-input-block">
+                                <script type="text/html" template>
+                                    <input type="text" id="productFormDefaultcolor" name="DEFAULTCOLOR" value="{{ d.params.DEFAULTCOLOR || '' }}" autocomplete="off" class="layui-input">
+                                </script>
+
+                            </div>
+                        </div>
+                        <div class="layui-inline" style="left: -11px;">
+                            <div id="colorpickerFrom"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="productFrom-submit">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(['admin', 'table', 'colorpicker'], function () {
+        var $ = layui.$
+            , setter = layui.setter
+            , admin = layui.admin
+            , table = layui.table
+            , form = layui.form
+            , element = layui.element
+            , colorpicker = layui.colorpicker;
+        //渲染
+        colorpicker.render({
+            elem: '#colorpickerFrom'  //绑定元素
+            , predefine: true // 开启预定义颜色
+        });
+
+        //表单赋值
+        colorpicker.render({
+            elem: '#colorpickerFrom'
+            , color: '#1c97f5'
+            , done: function (color) {
+                $('#productFormDefaultcolor').val(color);
+            }
+        });
+
+    });
+
+</script>

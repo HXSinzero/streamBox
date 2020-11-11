@@ -1,0 +1,264 @@
+<title>货位管理</title>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <form class="layui-form" style="padding: 20px 0 0 0;">
+            
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">仓库：</label>
+                    <div class="layui-input-block">
+                        <select id="loc-StockNo" name="STOCKNO">
+                            <option value="0">不限</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">通道号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="GROUPNO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">位置类别</label>
+                    <div class="layui-input-block">
+                        <select name="LOCATIONTYPE">
+                            <option value="0">不限</option>
+                            <option value="B">穿梭板货架</option>
+                            <option value="R">人工货架</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">使用状态</label>
+                    <div class="layui-input-block">
+                        <select name="USESTATE">
+                            <option value="">不限</option>
+                            <option value="1">正常</option>
+                            <option value="0">禁用</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">存储状态</label>
+                    <div class="layui-input-block">
+                        <select name="STORESTATE">
+                            <option value="">不限</option>
+                            <option value="0">空闲</option>
+                            <option value="1">入库分配</option>
+                            <option value="2">出库锁定</option>
+                            <option value="100">载货</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">货位状态</label>
+                    <div class="layui-input-block">
+                        <select name="LOCATIONSTATE">
+                            <option value="">不限</option>
+                            <option value="normal">正常</option>
+                            <option value="error">故障</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="loc-search">
+                            <i class="layui-icon layui-icon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="layui-card-body">
+            <table id="LAY-tablelist-loc" lay-filter="LAY-tablelist"></table>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table'], function () {
+        var $ = layui.$
+            , setter = layui.setter
+            , admin = layui.admin
+            , table = layui.table
+            , form = layui.form
+            , element = layui.element;
+
+        form.render();
+
+        //仓库列表
+        admin.req({
+            type: "get",
+            url: setter.basic + "?ACTION=100&BasicType=STOCK",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                $.each(resultdata.data, function (index, item) {
+                    $('#loc-StockNo').append(new Option(item.STOCKNO + " " + item.STOCKNAME, item.STOCKNO)); // 下拉菜单里添加元素
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+        //位置数据列表
+        table.render({
+            elem: '#LAY-tablelist-loc'
+            //, url: setter.getlocationlist
+            ,data: []
+            , cols: [[
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'LOCATIONNO', title: '位置编号', hide: false, width: 100 }
+                , { field: 'LOCATIONTYPE', title: '位置类型', hide: false, width: 150 , templet: '#locationtypeTpl' }
+                , { field: 'LOCATIONDESC', title: '位置描述', hide: false, width: 220 }
+                , { field: 'LOCATIONBARCODE', title: '位置条码', hide: true, width: 100 }
+                , { field: 'CAPACITY', title: '总容量', hide: true, width: 100, style: 'background-color: #007688; color: #fff;' }
+                , { field: 'USECAPACITY', title: '已使用容量', hide: true, width: 100, style: 'background-color: #009688; color: #fff;' }
+                , { field: 'AREANO', title: '楼层', hide: false, width: 100 }
+                , { field: 'LOGICAREANO', title: '逻辑编号', hide: true, width: 100 }
+                , { field: 'PHISICALNO', title: '物理编号', hide: true, width: 100 }
+                , { field: 'CONTROLID', title: '控制ID', hide: false, width: 150, style: 'background-color: #007688; color: #fff;' }
+                , { field: 'ROWNO', title: '排', hide: true, width: 100 }
+                , { field: 'COLUMNNO', title: '列', hide: true, width: 100 }
+                , { field: 'LAYERNO', title: '层', hide: true, width: 100 }
+                , { field: 'GROUPNO', title: '通道号', hide: false, width: 150, style: 'background-color: #009688; color: #fff;' }
+                , { field: 'GROUPNOSEQ', title: '顺序号', hide: false, width: 100 }
+                , { field: 'PARENTNODE', title: '父编号', hide: true, width: 100 }
+                , { field: 'LANENO', title: '巷道号', hide: true, width: 100 }
+                , { field: 'LOCATIONX', title: '坐标X', hide: true, width: 100 }
+                , { field: 'LOCATIONY', title: '坐标Y', hide: true, width: 100 }
+                , { field: 'LOCATIONZ', title: '坐标Z', hide: true, width: 100 }
+                , { field: 'LEFTORRIGHT', title: '左右标识', hide: true, width: 100 }
+                , { field: 'INSORTVALUE', title: '入库排序值', hide: true, width: 100 }
+                , { field: 'REPORTSORTVALUE', title: '报表排序值', hide: true, width: 100 }
+                , { field: 'LOCATIONSTATE', title: '位置状态', hide: false, width: 100, templet: '#locationstateTpl' }
+                , { field: 'STORESTATE', title: '存储状态', hide: false, width: 100, templet: '#storestateTpl' }
+                , { field: 'USESTATE', title: '使用状态', hide: false, width: 100, templet: '#usestateTpl' }
+                , { field: 'OPMESSAGE', title: '操作信息', hide: false, width: 100 }
+                , { field: 'OPDATE', title: '操作日期', hide: false, width: 160 }
+                , { field: 'OPBY', title: '操作人', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL01', title: '扩展属性1', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL02', title: '扩展属性2', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL03', title: '扩展属性3', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL04', title: '扩展属性4', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL05', title: '扩展属性5', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL06', title: '扩展属性6', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL07', title: '扩展属性7', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL08', title: '扩展属性8', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL09', title: '扩展属性9', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL10', title: '扩展属性10', hide: true, width: 100 }
+                , { field: 'MASTERNO', title: '货主编号', hide: true, width: 100 }
+                , { field: 'MASTERNAME', title: '货主名称', hide: true, width: 100 }
+
+                , { field: 'EMEXIT', title: '紧急出口', hide: true, width: 100 }
+                , { field: 'CONTROLMODE', title: '控制模式', hide: true, width: 100 }
+                , { field: 'ISCLOSE', title: '依赖关闭', hide: true, width: 100 }
+
+                //, { title: '操作', width: 150, align: 'center', fixed: 'right', toolbar: '#table-opbtn' }
+            ]]
+            , page: true
+            , limit: 100
+            , height: 'full-250',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+        //监听开关操作
+        form.on('switch(usestateSwitch)', function (obj) {
+            var state = "-1";
+            if (obj.elem.checked) {
+                state = "1";
+            }
+            else {
+                state = "0";
+            }
+
+            var postdata =
+            {
+                LOCATIONNO: this.value,
+                USESTATE: state
+            };
+
+            admin.req({
+                type: "get",
+                url: setter.locationop + '?ACTION=1011',
+                data: postdata,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    layui.table.reload('LAY-tablelist-loc'); //重载表格
+                }
+            });
+
+        });
+
+
+        //查询按钮
+        form.on('submit(loc-search)', function (data) {
+            var myurl = setter.getlocationlist;
+            //var myurl = setter.getlocationlist + "&LOCATIONTYPE=" + data.field.LOCATIONTYPE;
+            //layer.msg(JSON.stringify(data.field));
+            table.reload('LAY-tablelist-loc', {
+                url: myurl, where:data.field
+            });
+            return false;
+        });
+
+
+    });
+</script>
+
+<!--使用状态开关-->
+<script type="text/html" id="usestateTpl">
+    <input type="checkbox" name="USESTATE" value="{{d.LOCATIONNO}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="usestateSwitch" {{ d.USESTATE == 1 ? 'checked' : '' }}>
+</script>
+
+<script type="text/html" id="locationstateTpl">
+    {{#  if(d.LOCATIONSTATE === 'normal'){ }}
+    <span style="color: green;">正常</span>
+    {{# } else if(d.LOCATIONSTATE === 'error'){ }}
+    <span style="color: red;">故障</span>
+    {{#  } else { }}
+    {{ d.LOCATIONSTATE }}
+    {{#  } }}
+</script>
+
+<script type="text/html" id="storestateTpl">
+    {{#  if(d.STORESTATE === '0'){ }}
+    <span style="color: green;">空闲</span>
+    {{# } else if(d.STORESTATE === '1'){ }}
+<span style="color: orange;">入库分配</span>
+    {{# } else if(d.STORESTATE === '2'){ }}
+<span style="color: deeppink;">出库分配</span>
+    {{# } else if(d.STORESTATE === '100'){ }}
+    <span style="color: gold;">载货</span>
+    {{#  } else { }}
+    {{ d.STORESTATE }}
+    {{#  } }}
+</script>
+
+<script type="text/html" id="locationtypeTpl">
+    {{#  if(d.LOCATIONTYPE === 'A'){ }}
+    <span style="color: green;">穿梭板货架A面</span>
+     {{# } else if(d.LOCATIONTYPE === 'B'){ }}
+    <span style="color: blue;">穿梭板货架B面</span>
+    {{# } else if(d.LOCATIONTYPE === 'R'){ }}
+    <span style="color: red;">人工货架</span>
+    {{#  } else { }}
+    {{ d.LOCATIONTYPE }}
+    {{#  } }}
+</script>

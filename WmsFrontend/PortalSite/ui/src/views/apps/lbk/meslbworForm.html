@@ -1,0 +1,213 @@
+<!--
+工单编辑:菜单功能编号=2010
+后台接口：
+1）机台列表：setter.projmesoprequest + '?ACTION=100104'
+2）物料列表：setter.product + "?ACTION=100"
+3）保存方法：setter.projmesoprequest + '?ACTION=101'，AffirmSaveMeslbwor
+备注说明：将页面的数据转换为json字符串赋值到PostData，服务端解析为json对象
+-->
+<title>工单编辑</title>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <form class="layui-form" style="padding: 20px 0 0 0;">
+
+            <div class="layui-form-item">
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">工单类型：</label>
+                    <div class="layui-input-block">
+                        <select name="WOR_TYPE" lay-filter="meslbworFormWOR_TYPE">
+                            <option value=""></option>
+                            <option value="CX">成型机工单</option>
+                            <option value="FS">发射机工单</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">机台号：</label>
+                    <div class="layui-input-block">
+                        <select name="EQU_ID" id="meslbworFormEQU_ID">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">牌号：</label>
+                    <div class="layui-input-block">
+                        <select name="PH_ID" id="meslbworFormPH_ID">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">计划数量：</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="number" min="0" max="999" name="PLAN_QUANTITY" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">计划日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="PLAN_DATE" class="layui-input" id="meslbworFormPLAN_DATE" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">工单号后缀：</label>
+                    <div class="layui-input-block">
+                        <select name="WOR_SUFFIX" lay-filter="meslbworFormWOR_SUFFIX">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">批次号前缀：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="BATCHNO_PREFIX" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="meslbworForm-create">
+                                <i class="layui-icon layui-icon-add-circle">创建工单</i>
+                            </button>
+                        </div>
+                    </div>
+                
+
+</form>
+
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        form.on('select(meslbworFormWOR_TYPE)', function (data) {
+            //layui.layer.msg(data.value);
+            $('#meslbworFormEQU_ID').empty();
+            $('#meslbworFormEQU_ID').append(new Option("", ""));
+            if (data.value == "") {
+                return;
+            }
+            $.ajax({
+                url: setter.projmesoprequest + '?ACTION=100104&equ_type=' + data.value,
+                dataType: 'json',
+                type: 'get',
+                success: function (data) {
+                    //layui.layer.msg(data.msg);
+                    $.each(data.data, function (idx,item) {
+                        //console.log(item.EQU_ID);
+                        $('#meslbworFormEQU_ID').append(new Option(item.EQU_NAME + "  " + item.EQU_ID, item.EQU_ID));// 下拉菜单里添加元素
+                    });
+                    layui.form.render("select");
+
+                    //重新渲染 固定写法
+                }
+            });
+        });
+
+        //获取牌号列表
+        $.ajax({
+            url: setter.product + "?ACTION=100&PRODUCTTYPE=2",
+            dataType: 'json',
+            type: 'get',
+            success: function (data) {
+                $.each(data.data, function (idx, item) {
+                    //console.log(item.PRODUCTNAME);
+                    $('#meslbworFormPH_ID').append(new Option(item.ID + "/" + item.PRODUCTNO + "/" + item.PRODUCTNAME, item.PRODUCTNO));// 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+            }
+        });
+        //时间控件
+        laydate.render({
+            elem: '#meslbworFormPLAN_DATE'  //指定元素
+            , type: 'date'
+        });
+
+        form.on('submit(meslbworForm-create)', function (data) {
+            if (data.field["EQU_ID"] == "") {
+                layer.alert("请选择机台！");
+                return false;
+            }
+            if (data.field["PH_ID"] == "") {
+                layer.alert("请选择牌号！");
+                return false;
+            }
+            if (data.field["PLAN_QUANTITY"] == "") {
+                layer.alert("计划数量！");
+                return false;
+            }
+            if (data.field["PLAN_DATE"] == "") {
+                layer.alert("请选择计划日期！");
+                return false;
+            }
+
+            //录入牌号描述
+            try {
+                //ph_name_orginal：由  ID/编号/名称  组成
+                var ph_name_orginal = $('#meslbworFormPH_ID').find("option:selected").text();
+                var after_remove_firs_part = ph_name_orginal.substring(ph_name_orginal.indexOf("/") + 1)
+                var after_remove_second_part = after_remove_firs_part.substring(after_remove_firs_part.indexOf("/") + 1)
+                data.field["PH_NAME"] = after_remove_second_part;
+            } catch (error) {
+                alert("解析牌号出错");
+                return false;
+            }
+            
+            data.field["WO_ID"] = data.field["PLAN_DATE"].replace("-", "").replace("-", "") + "RG" + data.field["EQU_ID"] + "-" + data.field["WOR_SUFFIX"];
+            data.field["PLAN_STARTTIME"] = data.field["PLAN_DATE"] + " 7:30";
+            data.field["PLAN_ENDTIME"] = data.field["PLAN_DATE"] + " 23:59";
+            data.field["UNIT"] = "WZI";
+            var reqData = { "PostData": JSON.stringify(data.field) };
+
+            admin.req({
+                type: 'post',
+                url: setter.projmesoprequest + '?ACTION=101',
+                data: reqData,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    if (resultdata.code != -1) {
+                        layer.alert("成功创建工单，工单号为：" + data.field["WO_ID"]);
+                    }
+                },
+                error: function (resultdata) {
+                    layer.alert(resultdata.msg);
+                }
+            });
+            //不刷新，否则看不到返回结果弹窗
+            return false;
+            
+        });
+
+
+
+    });
+</script>

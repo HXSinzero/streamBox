@@ -1,0 +1,55 @@
+<title>序列管理</title>
+
+<div class="layui-fluid">
+
+	<div class="layui-card">
+
+		<div class="layui-card-body">
+			<table id="LAY-tablelist-seq" lay-filter="LAY-tablelist"></table>
+		</div>
+
+	</div>
+</div>
+
+<script>
+	layui.use(['admin', 'table'], function() {
+		var $ = layui.$,
+			setter = layui.setter,
+			admin = layui.admin,
+			table = layui.table,
+			element = layui.element;
+
+
+		//日志数据列表
+		table.render({
+			elem: '#LAY-tablelist-seq',
+			url: setter.getseqlist,
+			cols: [[
+				{field:'ID',title:'ID',hide:false,width:80}
+				,{field:'SEQTYPEPREFIX',title:'前缀',hide:false,width:80}
+				,{field:'SEQTYPE',title:'序列类别',hide:false,width:150}
+				,{field:'SEQTYPEDESC',title:'描述',hide:false,width:100}
+				,{field:'SEQSTATE',title:'状态',hide:false,width:60}
+				,{field:'MIN_VALUE',title:'最小值',hide:false,width:100}
+				,{field:'STEP_VALUE',title:'步长值',hide:false,width:100}
+				,{field:'MAX_VALUE',title:'最大值',hide:false,width:100}
+				,{field:'CURR_VALUE',title:'当前值',hide:false,width:100}
+				,{field:'IFCYCLE',title:'是否循环',hide:false,width:100}
+				,{field:'CREATERULE',title:'创建规则',hide:true,width:100}
+				,{field:'VALUEFORMAT',title:'格式化',hide:false,width:100}
+				,{field:'SEQVALUE',title:'当前序列值',hide:false,width:150}
+				,{field:'MODIFYDATE',title:'修改时间',hide:false,width:160}]
+			],
+			page: true,
+			limit: 100,
+			height: 'full-150',
+			text: '对不起，加载出现异常！',
+			even: true,
+			initSort: {
+				field: 'ID' //排序字段，对应 cols 设定的各字段名
+				,type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+			}
+		});
+
+	});
+</script>

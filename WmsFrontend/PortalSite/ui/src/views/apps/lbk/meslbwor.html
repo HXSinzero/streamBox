@@ -1,0 +1,401 @@
+<title>MES工单</title>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <form class="layui-form" id="meslbwor-form" style="padding: 20px 0 0 0;">
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">时间范围：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="datetimerange" class="layui-input" id="meslbwor-laydate-datetimerange1" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">机台号：</label>
+                    <div class="layui-input-block">
+                        <select id="id-meslbwor-EQU" name="EQU_ID">
+                            <option value="">不限</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">工单号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="WO_ID" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">工单状态：</label>
+                    <div class="layui-input-block">
+                        <select name="WO_STATE">
+                            <option value="0">不限</option>
+                            <option value="11">新工单</option>
+                            <option value="111">预处理</option>
+                            <option value="2">执行中</option>
+                            <option value="4">结束</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="meslbwor-search">
+                            <i class="layui-icon layui-icon-search">查询</i>
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="layui-card-body">
+            <table id="meslbworTablelist" lay-filter="meslbworTablelistfilter"></table>
+        </div>
+    </div>
+</div>
+
+<!-- 工具栏模板-表格头部工具栏： -->
+<script type="text/html" id="meslbwor-tableHeaderOPBtn">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm  layui-btn-normal" lay-event="meslbworop1">预处理</button>
+        <button class="layui-btn layui-btn-sm" lay-event="meslbworop2">工单执行</button>
+        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="meslbworop3">换班</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="meslbworop4">工单结束</button>
+        <button class="layui-btn layui-btn-sm layui-btn-primary" lay-event="meslbworop5">工单编辑</button>
+    </div>
+</script>
+
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //日期时间范围
+        laydate.render({
+            elem: '#meslbwor-laydate-datetimerange1'
+            , type: 'date'
+            , range: true
+        });
+
+        admin.req({
+            type: "get",
+            url: setter.projmesoprequest + "?ACTION=100104",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                itemlist = resultdata.data;
+                $("#id-meslbwor-EQU option").remove();
+                $.each(resultdata.data, function (index, item) {
+                    $('#id-meslbwor-EQU').append(new Option(item.EQU_NAME + "  " + item.EQU_ID, item.EQU_ID)); // 下拉菜单里添加元素
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+
+        //位置数据列表
+        table.render({
+            elem: '#meslbworTablelist'
+            , data: []
+            , cols: [[
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , {
+                    field: 'EQU_ID', title: '机台ID', hide: false, width: 100, sort: true, templet: '#meslbwor_equidTpl'
+                }
+                , { field: 'WO_STATE', title: '工单状态', hide: false, width: 100, templet: '#meslbwor_wostateTpl' }
+                , { field: 'WO_ID', title: '工单号', hide: false, width: 200 }
+                , { field: 'BATCHNO_PREFIX', title: '生产批次号前缀', hide: false, width: 200 }
+                , { field: 'LOT_ID', title: '作业号', hide: true, width: 180 }
+                , { field: 'MOD_ID', title: '模块号', hide: true, width: 200 }
+                , { field: 'PH_ID', title: '品牌编号', hide: false, width: 150, sort: true }
+                , { field: 'PH_NAME', title: '品牌名称', hide: false, width: 300 }
+
+                , { field: 'PLAN_QUANTITY', title: '计划数量', hide: false, width: 100 }
+                , { field: 'UNIT', title: '单位', hide: false, width: 100 }
+                , { field: 'PLAN_STARTTIME', title: '计划开始时间', hide: false, width: 180 }
+                , { field: 'PLAN_ENDTIME', title: '计划结束时间', hide: false, width: 180 }
+                , { field: 'SUPPLY_TIME', title: '下达时间', hide: false, width: 180, sort: true }
+                , { field: 'TEAM_ID', title: '班组ID', hide: false, width: 100 }
+                , { field: 'SHIFT_ID', title: '班次ID', hide: false, width: 100 }
+                , { field: 'TSSWITCH_COUNT', title: '换班次数', hide: false, width: 100 }
+                , { field: 'TSSWITCH_TIME', title: '换班时间', hide: false, width: 180, style: 'background-color: #009688; color: #fff;' }
+                , { field: 'START_TIME', title: '开始时间', hide: false, width: 180 }
+                , { field: 'END_TIME', title: '结束时间', hide: false, width: 180 }
+                , { field: 'SUPPLY_TIME_FEEDBACK', title: '反馈时间', hide: true, width: 100 }
+                , { field: 'ENTERBY', title: '创建人', hide: true, width: 100 }
+                , { field: 'REMARK', title: '备注', hide: true, width: 100 }
+                , { field: 'OPERATE_ID', title: '操作人ID', hide: true, width: 100 }
+                , { field: 'OPERATE_NM', title: '操作人', hide: true, width: 100 }
+                , { field: 'EXT1', title: '属性1', hide: false, width: 100 }
+                , { field: 'EXT2', title: '属性2', hide: false, width: 100 }
+                , { field: 'EXT3', title: '属性3', hide: false, width: 100 }
+                , { field: 'EXT4', title: '属性4', hide: false, width: 100 }
+                , { field: 'EXT5', title: '属性5', hide: false, width: 100 }
+                , { field: 'MESSAGE', title: '消息', hide: false, width: 200 }
+            ]]
+            , page: true
+            , limit: 100
+            , height: 'full-250',
+            even: true,
+            toolbar: '#meslbwor-tableHeaderOPBtn',
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //查询按钮
+        form.on('submit(meslbwor-search)', function (data) {
+            return query(data);
+        });
+
+        query = function (data) {
+            var myurl = setter.projmesoprequest + '?ACTION=100';
+            //layer.msg(JSON.stringify(data.field));
+            table.reload('meslbworTablelist', {
+                url: myurl, where: data.field
+            });
+            return false;
+        }
+
+        //监听头工具栏事件
+        table.on('toolbar(meslbworTablelistfilter)', function (obj) {
+           
+            var checkStatus = table.checkStatus(obj.config.id);
+
+            var dataRows = checkStatus.data;  //获取选中行数据
+            if (dataRows.length === 0) {
+                layer.alert("请选选择工单！");
+                return;
+            }
+            console.log(checkStatus);
+            
+            switch (obj.event) {
+                case 'meslbworop1':
+                    affirmop(2011, dataRows);
+                    break;
+                case 'meslbworop2':
+                    affirmop(2012, dataRows);
+                    break;
+                case 'meslbworop3':
+                    affirmop(2013, dataRows);
+                    break;
+                case 'meslbworop4':
+                    affirmop(2014, dataRows);
+                    break;
+                case 'meslbworop5':
+                    affirmop(1011, dataRows);
+                    break;
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+
+        editMesWor = function (dataRows) {
+            if (dataRows.length != 1) {
+                layer.alert("单次编辑工单数量必须为1");
+                return;
+            }
+            var data = dataRows[0];
+            layer.msg("into edit");
+            admin.popup({
+                id: 'LAY-popup-right-mesWorEditForm' //定义唯一ID，防止重复弹出
+                , title: '编辑-工单设置'
+                , type: 1
+                , area: ['600px', '500px']
+                , success: function (layero, index) {
+
+                    layui.view(this.id).render('apps/lbk/mesWorEditForm', data)
+                        .done(function () {
+                            form.render(null, 'layui-mesWorEditForm');
+
+                            //监听提交
+                            form.on('submit(layui-mesWorEditForm-submit)', function (new_data) {
+                                var new_equ_id = new_data.field.NEWEQU_ID;
+
+                                //layer.msg(new_equ_id);
+                                if (new_equ_id == "000") {
+                                    layer.alert("未选择机台号");
+                                    return false;
+                                }
+                                if (new_equ_id == data.EQU_ID) {
+                                    layer.alert("修改后机台号与原机台号一致，无需修改");
+                                    return false;
+                                }
+                                
+
+                                //console.log(JSON.stringify(data.field));
+                                //提交 Ajax 成功后，关闭当前弹层并重载表格
+
+                                var postData =
+                                {
+                                    ACTION: 1011,
+                                    WO_ID: data.WO_ID,
+                                    EQU_ID: data.EQU_ID,
+                                    NEWEQU_ID: new_equ_id
+                                };
+
+                                admin.req({
+                                    type: "post",
+                                    url: setter.projmesoprequest,
+                                    data: postData,
+                                    dataType: 'json', //返回的类型
+                                    success: function (resultdata) {
+                                        layer.alert(resultdata.msg);
+                                        //data.EQU_ID = new_equ_id;
+                                        //layui.table.reload('meslbworTablelistfilter');
+                                        var formData = new FormData(document.querySelector('#meslbwor-form'));
+                                        //console.log(JSON.stringify(formData));
+                                        query(formData); 
+                                    }
+                                });
+
+                                layer.close(index); //执行关闭
+                                return false;
+                            });
+
+                        });
+
+
+                }
+            });//pop up
+        }
+
+        affirmop = function (action, dataRows) {
+
+            var strID = "";
+            var strWO_ID = "";
+            var strWO_STATE = "";
+            var strEQU_ID = "";
+            for (var i = 0; i < dataRows.length; i++) {
+                strID += dataRows[i].ID + " ";
+                strWO_ID += dataRows[i].WO_ID + " ";
+                strWO_STATE += dataRows[i].WO_STATE + " ";
+                strEQU_ID += dataRows[i].EQU_ID + " ";
+            }
+
+            var postData =
+            {
+                ACTION: action,
+                ID: strID,
+                WO_ID: strWO_ID,
+                WO_STATE: strWO_STATE,
+                EQU_ID: strEQU_ID,
+                WOCOUNT: dataRows.length,
+                PRESHIFT_ID: dataRows[0].SHIFT_ID,
+                PRETEAM_ID: dataRows[0].TEAM_ID
+            };
+            
+            if (action == 2011 || action == 2013) {
+                //打开编辑窗口
+                admin.popup({
+                    id: 'LAY-popup-tsswitch' //定义唯一ID，防止重复弹出
+                    , title: '班次班组选择'
+                    , type: 1
+                    , area: ['800px', '600px']
+                    , success: function (layero, index) {
+
+                        layui.view(this.id).render('apps/lbk/tsswitch', postData)
+                            .done(function () {
+
+                                form.render(null, 'layui-tsswitch');
+
+                                //监听提交
+                                form.on('submit(tsswitch-submit)', function (data) {
+                                    var field = data.field; //获取提交的字段
+
+                                    layer.msg(JSON.stringify(data.field));
+
+                                    admin.req({
+                                        type: "post",
+                                        url: setter.projmesoprequest,
+                                        data: data.field,
+                                        dataType: 'json', //返回的类型
+                                        success: function (resultdata) {
+                                            layer.alert(resultdata.msg);
+                                        }
+                                    });
+
+
+                                    layer.close(index); //执行关闭
+
+
+                                    return false;
+                                });
+
+                            });
+                    }
+                });//弹窗结束
+            }
+            else {
+                if (action == 2012) {
+                    msg = '确认执行工单' + strWO_ID + '？';
+                }
+                if (action == 2014) {
+                    msg = '确认结束工单' + strWO_ID + '？';
+                }
+                if (action == 1011) {
+                    //工单编辑界面
+                    editMesWor(dataRows);
+                    return;
+                }
+                layer.confirm(msg, { icon: 3, title: '提示' }, function (index) {
+
+                    admin.req({
+                        type: "post",
+                        url: setter.projmesoprequest,
+                        data: postData,
+                        dataType: 'json', //返回的类型
+                        success: function (resultdata) {
+                            layer.alert(resultdata.msg);
+                        }
+                    });
+
+                    layer.close(index);
+                });
+
+
+            }
+        }
+
+
+    });
+</script>
+
+<script type="text/html" id="meslbwor_wostateTpl">
+    {{#  if(d.WO_STATE === '11'){ }}
+    <span style="color: darkkhaki;">接收成功</span>
+    {{# } else if(d.WO_STATE === '111'){ }}
+    <span style="color: blue;">预处理</span>
+    {{# } else if(d.WO_STATE === '2'){ }}
+    <span style="color: green;">工单开始</span>
+    {{# } else if(d.WO_STATE === '3'){ }}
+    <span style="color: hotpink;">工单换班</span>
+    {{# } else if(d.WO_STATE === '4'){ }}
+    <span style="color: gold;">工单结束</span>
+    {{#  } else { }}
+    {{ d.WO_STATE }}
+    {{#  } }}
+</script>
+
+<script type="text/html" id="meslbwor_equidTpl">
+    <span style="color: red;font-size:18px;"> {{ d.EQU_ID }}</span>
+</script>

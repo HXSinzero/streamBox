@@ -1,0 +1,112 @@
+<title>编辑-站台设置</title>
+
+<form class="layui-form" lay-filter="layui-stnFrom" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">站台编号：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="STATIONNO" value="{{ d.params.STATIONNO || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">控制编号：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="CONTROLNO" value="{{ d.params.CONTROLNO || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">站台列号：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="LOCATIONX" value="{{ d.params.LOCATIONX || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">可分配列：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="P03" value="{{ d.params.P03 || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">批次限定：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="P04" value="{{ d.params.P04 || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">优先级别：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="PRIORITY" value="{{ d.params.PRIORITY || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">任务数上限：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="TASKCOUNT" value="{{ d.params.TASKCOUNT || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="layui-stnFrom-submit">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+
+
+<script>
+    layui.use(['admin', 'table', 'laydate'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            element = layui.element;
+       
+
+        aa = function () {
+            refresh($('#WORNO').val());
+        }
+
+        //刷新获取下拉列表
+        refresh = function (planno) {
+
+            //获取列表
+            admin.req({
+                type: "get",
+                url: setter.getcarryplanlist101 + '&PLANNO=' + planno,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+
+                    $.each(resultdata.data, function (index, item) {
+                        $('#idP01').append(new Option(item.FLIGHTNO + ' ' + item.ARRIVETO + ' ' + item.KEYVALUE, item.FLIGHTNO + '-' + item.ARRIVETO + '-' + item.KEYVALUE)); // 下拉菜单里添加元素
+                    });
+
+                    layui.form.render("select");
+                }
+            });
+        }
+
+    })
+</script>

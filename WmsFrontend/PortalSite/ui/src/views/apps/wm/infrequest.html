@@ -1,0 +1,197 @@
+<!--
+接口请求管理:菜单功能编号=2034，/apps/wm/infrequest.html
+后台接口：
+    setter.projinfrequest,
+    action:100,100101,100102,2011
+1）
+2）
+3）
+备注说明：对infrequest,infrequestdata,infrequestpara查询，对infrequest状态维护
+    单只可以对自动响应请求重置处理，手动请求不可以重置处理
+
+
+
+-->
+<title>接口请求管理</title>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <form class="layui-form" style="padding: 20px 0 0 0;">
+
+            <div class="layui-inline">
+                <label class="layui-form-label">接口类型：</label>
+                <div class="layui-input-block">
+                    <select name="INFCODE" id="infrequestINFCODE">
+                        <option value="">不限</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">时间范围：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="datetimerange" class="layui-input" id="infrequestdatetimerange" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="infrequest-search">查询</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="layui-card-body">
+            <table id="infrequestLAY-tablelist" lay-filter="infrequestLAY-tablelist"></table>
+        </div>
+    </div>
+</div>
+
+<!-- 工具栏模板： -->
+<script type="text/html" id="infrequest-opbtnbar">
+    <a class="layui-btn layui-btn-xs" lay-event="reset">重置状态</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="infdata">查看数据</a>
+</script>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            util = layui.util,
+            element = layui.element;
+
+        //时间控件
+        laydate.render({
+            elem: '#infrequestdatetimerange'  //指定元素
+            , type: 'date'
+            , range: "~"
+        });
+
+        admin.req({
+            type: 'get',
+            url: setter.projinfrequest + "?ACTION=100102",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                $.each(resultdata.data, function (idx, item) {
+                    $('#infrequestINFCODE').append(new Option(item.INFNAME + " " + item.INFCODE, item.INFCODE));// 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+            }
+        });
+
+        //查询
+        form.on('submit(infrequest-search)', function (data) {
+            var myurl = setter.projinfrequest + '?ACTION=100';
+
+            table.reload('infrequestLAY-tablelist', {
+                url: myurl, where: data.field
+            });
+            return false;
+        });
+
+        //表格定义
+        table.render({
+            elem: '#infrequestLAY-tablelist',
+            data: [],
+            cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 100 }
+
+                , { field: 'INFCODE', title: '接口编码', hide: false, width: 250 }
+                , { field: 'INFNAME', title: '接口描述', hide: true, width: 200 }
+
+                , { field: 'STATUS', title: '状态码', hide: false, width: 180, templet: '#infrequest-statusTpl' }
+                , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 180 }
+                , { field: 'RESPONDDATE', title: '响应时间', hide: false, width: 180 }
+                , { field: 'RESPONDMSG', title: '响应信息', hide: false, width: 300 }
+                , { field: 'KEYVALUE', title: '关键值', hide: false, width: 200 }
+
+                , { field: 'SENDER', title: '调用平台', hide: false, width: 100 }
+                , { field: 'SENDERURL', title: '调用平台地址', hide: false, width: 100 }
+               
+                , { field: 'CREATEBY', title: '调用人', hide: false, width: 100 }
+                , { field: 'REMARK1', title: '备注1', hide: false, width: 100 }
+                , { field: 'RESPONDCOUNT', title: '响应次数', hide: false, width: 100 }
+             
+                , { field: 'SENDERIPADR', title: '发送方', hide: false, width: 160 }
+                , { field: 'MODIFYDATE', title: '修改时间', hide: true, width: 160 }
+                , { field: 'MODIFYBY', title: '修改人', hide: true, width: 160 }
+                , { field: 'REMARK2', title: '备注2', hide: true, width: 160 }
+                , { title: '操作', width: 200, align: 'center', fixed: 'right', toolbar: '#infrequest-opbtnbar' }
+
+            ]],
+            page: true,
+            limit: 100,
+            height: 'full-150',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(infrequestLAY-tablelist)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                , layEvent = obj.event; //获得 lay-event 对应的值
+            if (layEvent === 'reset') {
+                handleEventReset(data);
+            }
+            else if (layEvent === 'infdata') {
+                handleEventInfData(data);
+            }
+
+        });
+
+        function handleEventReset(event_data) {
+            admin.req({
+                type: 'get',
+                url: setter.projinfrequest + "?ACTION=2011",
+                data: { "ID": event_data.ID },
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    layui.table.reload('infrequestLAY-tablelist');
+                }
+            });
+        }
+
+        function handleEventInfData(event_data) {
+            admin.req({
+                type: 'get',
+                url: setter.projinfrequest + "?ACTION=100101&ID=" + event_data.ID,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    if (resultdata.count == 1) {
+                        layer.open({
+                            title: "接口消息内容",
+                            type: 1,
+                            content: util.escape(resultdata.data.DATA1)
+                        });
+                    } else {
+                        layer.alert("获取接口消息数据失败");
+
+                    }
+
+                }
+            });
+        }
+
+    });
+</script>
+
+<script type="text/html" id="infrequest-statusTpl">
+    {{#  if(d.STATUS === 0){ }}
+    <span style="color: yellow;">新请求【0】</span>
+    {{# } else if(d.STATUS === 1){ }}
+    <span style="color: green;">处理成功【1】</span>
+    {{# } else if(d.STATUS === 9){ }}
+    <span style="background-color: red;color:white;font-size:18px;">处理失败【9】</span>
+    {{#  } else { }}
+    {{ d.STATUS }}
+    {{#  } }}
+</script>

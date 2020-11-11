@@ -1,0 +1,250 @@
+<title>统计查询</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+
+        <div class="layui-tab" lay-filter="palletinfo1Tabfilter">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="1">库存</li>
+                <li lay-id="2">入库</li>
+                <li lay-id="3">出库</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item  layui-show">
+                    <form class="layui-form" style="padding: 20px 0 0 0;">
+                        <div class="layui-form-item">
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">物料信息：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="key01" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <button class="layui-btn" lay-submit lay-filter="statinv-front-search">
+                                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <!--库存-->
+                    <table id="statinvTable" lay-filter="statinvTablefilter"></table>
+                </div>
+                <div class="layui-tab-item">
+
+                    <form class="layui-form" style="padding: 20px 0 0 0;">
+                        <div class="layui-form-item">
+
+                            <div class="layui-inline" style="width:500px;">
+                                <label class="layui-form-label">时间范围：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="datetimerange" class="layui-input" id="statquery-laydate-datetimerange1" lay-verify="required" autocomplete="off" style="width:400px;">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <button class="layui-btn" lay-submit lay-filter="statrk-front-search">
+                                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="layui-form-item">
+
+                        </div>
+                    </form>
+
+                    <!--入库-->
+                    <table id="statrkTable" lay-filter="statrkTablefilter"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <form class="layui-form" style="padding: 20px 0 0 0;">
+                        <div class="layui-form-item">
+
+                            <div class="layui-inline" style="width:500px;">
+                                <label class="layui-form-label">时间范围：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="datetimerange" class="layui-input" id="statquery-laydate-datetimerange2" lay-verify="required" autocomplete="off" style="width:400px;">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <button class="layui-btn" lay-submit lay-filter="statck-front-search">
+                                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="layui-form-item">
+
+                        </div>
+                    </form>
+                    <!--出库-->
+                    <table id="statckTable" lay-filter="statckTablefilter"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //日期时间范围
+        laydate.render({
+            elem: '#statquery-laydate-datetimerange1'
+            , type: 'datetime'
+            , range: true
+        });
+
+        //日期时间范围
+        laydate.render({
+            elem: '#statquery-laydate-datetimerange2'
+            , type: 'datetime'
+            , range: true
+        });
+
+
+        //数据列表
+        table.render({
+            elem: '#statinvTable'
+            , title: '库存统计'
+            , data: []
+            , cols: [[
+                { field: 'PRODUCTNO', title: '物料编号', hide: false, width: 200 }
+                , { field: 'PRODUCTNAME', title: '物料描述', hide: false, width: 500 }
+                , { field: 'QUANTITY_COUNT', title: '托盘组数', hide: false, width: 100, totalRow: true }
+                , { field: 'QUANTITY_LOAD', title: '数量', hide: false, width: 100, totalRow: true }
+                , { field: 'BASICUNIT', title: '单位', hide: false, width: 100 },
+                , { field: 'STOCKNO', title: '仓库编号', hide: false, width: 100 }
+            ]]
+            , page: false
+            , limit: 1000
+            , toolbar: true
+            , height: 'full-250',
+            totalRow: true,
+            //even: true,
+            initSort: {
+                field: 'PRODUCTNO' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //数据列表
+        table.render({
+            elem: '#statrkTable'
+            , title: '入库统计'
+            , data: []
+            , cols: [[
+                { field: 'EQU_ID', title: '机台编号', hide: false, width: 100 }
+                , { field: 'EQU_NAME', title: '机台名称', hide: false, width: 200 }
+                , { field: 'PRODUCTID', title: '物料ID', hide: false, width: 200 }
+                , { field: 'PRODUCTNO', title: '物料编号', hide: false, width: 200 }
+                , { field: 'PRODUCTNAME', title: '物料描述', hide: false, width: 500 }
+                , { field: 'Q01', title: '数量', hide: false, width: 100, totalRow: true }
+                , { field: 'BASICUNIT', title: '单位', hide: false, width: 100 }
+            ]]
+            , page: false
+            , limit: 1000
+            , toolbar: true
+            , height: 'full-250',
+            totalRow: true,
+            //even: true,
+            initSort: {
+                field: 'EQU_ID,EQU_NAME' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //数据列表
+        table.render({
+            elem: '#statckTable'
+            , title: '出库统计'
+            , data: []
+            , cols: [[
+                { field: 'EQU_ID', title: '机台编号', hide: false, width: 100 }
+                , { field: 'EQU_NAME', title: '机台名称', hide: false, width: 200 }
+                , { field: 'PRODUCTID', title: '物料ID', hide: false, width: 200 }
+                , { field: 'PRODUCTNO', title: '物料编号', hide: false, width: 200 }
+                , { field: 'PRODUCTNAME', title: '物料描述', hide: false, width: 500 }
+                , { field: 'Q01', title: '数量', hide: false, width: 100, totalRow: true }
+                , { field: 'BASICUNIT', title: '单位', hide: false, width: 100 }
+            ]]
+            , page: false
+            , limit: 1000
+            , toolbar: true
+            , height: 'full-250',
+            totalRow: true,
+            //even: true,
+            initSort: {
+                field: 'EQU_ID,EQU_NAME' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+        //监听提交
+        form.on('submit(statinv-front-search)', function (data) {
+
+            var myurl1 = setter.projinvoprequest + "?ACTION=3002&STATTYPE=QUERY_INV1";
+            table.reload('statinvTable', {
+                url: myurl1, where: data.field
+            });
+
+            return false;
+        });
+
+        //监听提交
+        form.on('submit(statrk-front-search)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            var myurl2 = setter.projinvoprequest + "?ACTION=3002&STATTYPE=QUERY_RK1";
+            table.reload('statrkTable', {
+                url: myurl2, where: data.field
+            });
+
+            return false;
+        });
+
+        //监听提交
+        form.on('submit(statck-front-search)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            var myurl3 = setter.projinvoprequest + "?ACTION=3002&STATTYPE=QUERY_CK1";
+            table.reload('statckTable', {
+                url: myurl3, where: data.field
+            });
+
+            return false;
+        });
+
+        stat = function (data) {
+            admin.req({
+                type: "get",
+                url: setter.projquery + "?ACTION=3001&KeyValue=QUERY_INV1",
+                data: data,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    $('#divhtml').html(resultdata.data);
+                }
+            });
+        };
+
+    });
+</script>

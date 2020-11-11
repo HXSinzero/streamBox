@@ -1,0 +1,172 @@
+<title>布局视图</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+
+    </div>
+
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+            <table id="LAY-tablelist-viewlayout" lay-filter="LAY-tablelist"></table>
+        </div>
+
+    </div>
+</div>
+
+<!-- 工具栏模板： -->
+<script type="text/html" id="toolbarViewlayout">
+    <div id="layui-btn-container" class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="reFresh">刷新</button>
+    </div>
+</script>
+
+<script>
+    layui.use(['admin', 'table'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            layer = layui.layer,
+            element = layui.element;
+
+
+        //viewlayout数据列表
+        table.render({
+            elem: '#LAY-tablelist-viewlayout',
+            url: setter.getviewlayoutlist,
+            cols: [[
+                { field: 'ID', title: 'ID', hide: true, width: 60 }
+                , { field: 'LEVEL', title: '层级', hide: true, width: 100 }
+                , { field: 'LINENUM', title: '行号', hide: false, width: 60 }
+                , { field: 'LINEDESC', title: '描述', hide: true, width: 100 }
+                , { field: 'C01', title: 'X1', hide: false, width: 100 }
+                , { field: 'C02', title: 'X2', hide: false, width: 100 }
+                , { field: 'C03', title: 'X3', hide: false, width: 100 }
+                , { field: 'C04', title: 'X4', hide: false, width: 100 }
+                , { field: 'C05', title: 'X5', hide: false, width: 100 }
+                , { field: 'C06', title: 'X6', hide: false, width: 100 }
+                , { field: 'C07', title: 'X7', hide: false, width: 100 }
+                , { field: 'C08', title: 'X8', hide: false, width: 100 }
+                , { field: 'C09', title: 'X9', hide: false, width: 100 }
+                , { field: 'C10', title: 'X10', hide: false, width: 100 }
+                , { field: 'C11', title: 'X11', hide: false, width: 100 }
+                , { field: 'C12', title: 'X12', hide: false, width: 100 }
+                , { field: 'C13', title: 'X13', hide: false, width: 100 }
+                , { field: 'C14', title: 'X14', hide: false, width: 100 }
+                , { field: 'C15', title: 'X15', hide: false, width: 100 }
+                , { field: 'C16', title: 'X16', hide: false, width: 100 }
+                , { field: 'C17', title: 'X17', hide: true, width: 100 }
+                , { field: 'C18', title: 'X18', hide: true, width: 100 }
+                , { field: 'C19', title: 'X19', hide: true, width: 100 }
+                , { field: 'C20', title: 'X20', hide: true, width: 160 }
+                , { field: 'C21', title: 'X21', hide: true, width: 100 }
+                , { field: 'C22', title: 'X22', hide: true, width: 100 }
+                , { field: 'C23', title: 'X23', hide: true, width: 100 }
+                , { field: 'C24', title: 'X24', hide: true, width: 100 }
+                , { field: 'C25', title: 'X25', hide: true, width: 100 }
+                , { field: 'C26', title: 'X26', hide: true, width: 100 }
+                , { field: 'C27', title: 'X27', hide: true, width: 100 }
+                , { field: 'C28', title: 'X28', hide: true, width: 100 }
+                , { field: 'C29', title: 'X29', hide: true, width: 100 }
+                , { field: 'C30', title: 'X30', hide: true, width: 100 }
+                , { field: 'C31', title: 'X31', hide: true, width: 100 }
+                , { field: 'C32', title: 'X32', hide: true, width: 100 }
+                , { field: 'C33', title: 'X33', hide: true, width: 100 }
+                , { field: 'C34', title: 'X34', hide: true, width: 100 }
+                , { field: 'C35', title: 'X35', hide: true, width: 100 }
+                , { field: 'C36', title: 'X36', hide: true, width: 100 }
+                , { field: 'C37', title: 'X37', hide: true, width: 100 }
+                , { field: 'C38', title: 'X38', hide: true, width: 100 }
+                , { field: 'C39', title: 'X39', hide: true, width: 100 }
+                , { field: 'C40', title: 'X40', hide: true, width: 100 }
+                , { field: 'C41', title: 'X41', hide: true, width: 100 }
+                , { field: 'C42', title: 'X42', hide: true, width: 100 }
+                , { field: 'C43', title: 'X43', hide: true, width: 100 }
+                , { field: 'C44', title: 'X44', hide: true, width: 100 }
+                , { field: 'C45', title: 'X45', hide: true, width: 100 }
+                , { field: 'C46', title: 'X46', hide: true, width: 100 }
+                , { field: 'C47', title: 'X47', hide: true, width: 100 }
+                , { field: 'C48', title: 'X48', hide: true, width: 100 }
+                , { field: 'C49', title: 'X49', hide: true, width: 100 }
+                , { field: 'C50', title: 'X50', hide: true, width: 100 }
+                , { field: 'C51', title: 'X51', hide: true, width: 100 }
+                , { field: 'C52', title: 'X52', hide: true, width: 100 }
+                , { field: 'C53', title: 'X53', hide: true, width: 100 }
+                , { field: 'C54', title: 'X54', hide: true, width: 100 }
+                , { field: 'C55', title: 'X55', hide: true, width: 100 }
+                , { field: 'C56', title: 'X56', hide: true, width: 100 }
+                , { field: 'C57', title: 'X57', hide: true, width: 100 }
+                , { field: 'C58', title: 'X58', hide: true, width: 100 }
+                , { field: 'C59', title: 'X59', hide: true, width: 100 }
+                , { field: 'C60', title: 'X60', hide: true, width: 100 }
+                , { field: 'C61', title: 'X61', hide: true, width: 100 }
+                , { field: 'C62', title: 'X62', hide: true, width: 100 }
+                , { field: 'C63', title: 'X63', hide: true, width: 100 }
+                , { field: 'C64', title: 'X64', hide: true, width: 100 }
+                , { field: 'C65', title: 'X65', hide: true, width: 100 }
+                , { field: 'C66', title: 'X66', hide: true, width: 100 }
+                , { field: 'C67', title: 'X67', hide: true, width: 100 }
+                , { field: 'C68', title: 'X68', hide: true, width: 100 }
+                , { field: 'C69', title: 'X69', hide: true, width: 100 }
+                , { field: 'C70', title: 'X70', hide: true, width: 100 }
+                , { field: 'C71', title: 'X71', hide: true, width: 100 }
+                , { field: 'C72', title: 'X72', hide: true, width: 100 }
+                , { field: 'C73', title: 'X73', hide: true, width: 100 }
+                , { field: 'C74', title: 'X74', hide: true, width: 100 }
+                , { field: 'C75', title: 'X75', hide: true, width: 100 }
+                , { field: 'C76', title: 'X76', hide: true, width: 100 }
+                , { field: 'C77', title: 'X77', hide: true, width: 100 }
+                , { field: 'C78', title: 'X78', hide: true, width: 100 }
+                , { field: 'C79', title: 'X79', hide: true, width: 100 }
+                , { field: 'C80', title: 'X80', hide: true, width: 100 }
+                , { field: 'C81', title: 'X81', hide: true, width: 100 }
+                , { field: 'C82', title: 'X82', hide: true, width: 100 }
+                , { field: 'C83', title: 'X83', hide: true, width: 100 }
+                , { field: 'C84', title: 'X84', hide: true, width: 100 }
+                , { field: 'C85', title: 'X85', hide: true, width: 100 }
+                , { field: 'C86', title: 'X86', hide: true, width: 100 }
+                , { field: 'C87', title: 'X87', hide: true, width: 100 }
+                , { field: 'C88', title: 'X88', hide: true, width: 100 }
+                , { field: 'C89', title: 'X89', hide: true, width: 100 }
+                , { field: 'C90', title: 'X90', hide: true, width: 100 }
+                , { field: 'C91', title: 'X91', hide: true, width: 100 }
+                , { field: 'C92', title: 'X92', hide: true, width: 100 }
+                , { field: 'C93', title: 'X93', hide: true, width: 100 }
+                , { field: 'C94', title: 'X94', hide: true, width: 100 }
+                , { field: 'C95', title: 'X95', hide: true, width: 100 }
+                , { field: 'C96', title: 'X96', hide: true, width: 100 }
+                , { field: 'C97', title: 'X97', hide: true, width: 100 }
+                , { field: 'C98', title: 'X98', hide: true, width: 100 }
+                , { field: 'C99', title: 'X99', hide: true, width: 100 }
+
+            ]
+            ],
+            page: false,
+            limit: 100,
+            height: 'full',
+            even: false,
+            skin: 'nob',
+            size: 'lg', //小尺寸的表格
+            toolbar: '#toolbarViewlayout',
+            initSort: {
+                field: 'LINENUM' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+
+        //监听事件
+        table.on('toolbar(LAY-tablelist)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'reFresh':
+                    layui.table.reload('LAY-tablelist-viewlayout');
+                    break;
+                    break;
+            };
+        });
+    });
+</script>

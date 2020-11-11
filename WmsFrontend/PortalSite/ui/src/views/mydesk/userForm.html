@@ -1,0 +1,192 @@
+<title>编辑用户</title>
+
+<form class="layui-form" id="layui-myuserForm" style="padding: 20px 0 0 0;">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">ID</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="ID" value="{{ d.params.ID || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户编号：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="USERCODE" value="{{ d.params.USERCODE || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名称：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="USERNAME" value="{{ d.params.USERNAME || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码：</label>
+        <div class="layui-input-inline">
+            <script type="text/html" template>
+                <input type="password" name="PASSWORDHASH" value="{{ d.params.PASSWORDHASH || '' }}"
+                       lay-verify="pass" placeholder="请输入……" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+        <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系电话：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="PHONENUMBER" value="{{ d.params.PHONENUMBER || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                        lay-verify="phone"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮件：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="EMAIL" value="{{ d.params.EMAIL || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                       lay-verify="email"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <!--
+     lay-verify="phone"
+     lay-verify="email"
+    -->
+
+     <div class="layui-form-item" style="display: none;">
+        <label class="layui-form-label">用户状态：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="USERSTATE" value="{{ d.params.USERSTATE || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+     <div class="layui-form-item" style="display: none;">
+        <label class="layui-form-label">安全码：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="SECURITYSTAMP" value="{{ d.params.SECURITYSTAMP || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+     <div class="layui-form-item" style="display: none;">
+        <label class="layui-form-label">确认邮件：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="EMAILCONFIRMED" value="{{ d.params.EMAILCONFIRMED || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="display: none;">
+        <label class="layui-form-label">确认联系电话：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="PHONENUMBERCONFIRMED" value="{{ d.params.PHONENUMBERCONFIRMED || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="display: none;">
+        <label class="layui-form-label">锁定状态：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="LOCKOUTENABLED" value="{{ d.params.LOCKOUTENABLED || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="display: none;">
+        <label class="layui-form-label">访问失败次数：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="ACCESSFAILEDCOUNT" value="{{ d.params.ACCESSFAILEDCOUNT || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="display: none;">
+        <label class="layui-form-label">最后登陆时间：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="LASTLOGINDATE" value="{{ d.params.LASTLOGINDATE || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="display: none;">
+        <label class="layui-form-label">登陆次数：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="LOGINCOUNT" value="{{ d.params.LOGINCOUNT || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+     <div class="layui-form-item" style="display: none;">
+        <label class="layui-form-label">级别：</label>
+        <div class="layui-input-block">
+            <script type="text/html" template>
+                <input type="text" name="USERLEVEL" value="{{ d.params.USERLEVEL || '' }}"
+                       placeholder="请输入……" autocomplete="off"
+                       class="layui-input">
+            </script>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="myuserFrom-submit">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(['admin', 'table', 'laydate','layedit'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            element = layui.element;
+
+
+
+    })
+</script>

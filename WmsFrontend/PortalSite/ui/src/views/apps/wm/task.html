@@ -1,0 +1,428 @@
+<title>任务管理</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+
+        <div class="layui-tab" lay-filter="filter-tab-task">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="1">任务</li>
+                <li lay-id="2">任务执行步骤</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+
+                    <form class="layui-form" action="">
+
+                        <div class="layui-form-item">
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">任务类别</label>
+                                <div class="layui-input-block">
+                                    <select name="TASKTCLASS">
+                                        <option value="0">不限</option>
+                                        <option value="1">入库任务</option>
+                                        <option value="2">出库任务</option>
+                                        <option value="3">移动任务</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">任务号:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="TASKNO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">容器编号:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="PALLETNO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">关联单号:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="RelateNo" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">起始站台:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="SourceNo" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">目标站台:</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="DescNo" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">查历史记录？</label>
+                                <div class="layui-inline">
+                                    <input type="checkbox" id="task-IsHistory" value="0" name="IsHistory" lay-skin="switch"
+                                           lay-filter="taskIsHistorySwitch"
+                                           {{ d.IsHistory == '1' ? 'checked' : '' }}>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <button class="layui-btn" lay-submit lay-filter="tasksearchfilter">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                </button>
+                            </div>
+
+
+                        </div>
+                    </form>
+
+                    <!--任务主表-->
+                    <table id="id-tablelist-task" lay-filter="filter-tasktablelist"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <!--任务子表-->
+                    <table id="id-tablelist-taskstep" lay-filter="filter-tasksteptablelist"></table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //任务数据列表
+        table.render({
+            elem: '#id-tablelist-task',
+            url: setter.gettasklist + "?ACTION=100",
+            //data:[],
+            cols: [[
+                { field: 'ID', title: 'ID', false: true, width: 100 }
+
+                , { field: 'TASKNO', title: '任务号', hide: false, width: 100 }
+                , { field: 'TASKDATE', title: '任务日期', hide: false, width: 120 }
+                , { field: 'TASKTCLASS', title: '任务分类', hide: false, width: 100, templet: '#taskclassTpl' }
+                , { field: 'TASKTYPE', title: '任务类型', hide: false, width: 100 }
+                , { field: 'TASKSTATE', title: '任务状态', hide: false, width: 100, templet: '#taskstateTpl' }
+
+                , { field: 'PRIORITY', title: '优先级', hide: true, width: 100 }
+                , { field: 'RELATENO', title: '关联单号', hide: false, width: 150 }
+                , { field: 'PALLETNO', title: '托盘号', hide: false, width: 100 }
+                , { field: 'TASKGROUPNO', title: '任务组号', hide: true, width: 100 }
+                , { field: 'TASKDESC', title: '任务描述', hide: false, width: 200, style: 'background-color: green; color: #fff;' }
+                , { field: 'PRETASKNO', title: '前序任务', hide: true, width: 100 }
+                , { field: 'STRATEGYID01', title: '源策略ID', hide: true, width: 100 }
+                , { field: 'STRATEGYNAME01', title: '源策略名称', hide: true, width: 100 }
+                , { field: 'SOURCEAREA', title: '源区域', hide: false, width: 150, style: 'background-color: #007688; color: #fff;' }
+                , { field: 'SOURCE01', title: '源位置', hide: false, width: 150, style: 'background-color: #007688; color: #fff;' }
+                , { field: 'SOURCE02', title: '源控制号', hide: false, width: 150, style: 'background-color: #007688; color: #fff;' }
+                , { field: 'STRATEGYID02', title: '目标策略ID', hide: true, width: 100 }
+                , { field: 'STRATEGYNAME02', title: '目标策略名称', hide: true, width: 100 }
+                , { field: 'DESTINATIONAREA', title: '目标区域', hide: false, width: 150, style: 'background-color: #000088; color: #fff;' }
+                , { field: 'DESTINATION01', title: '目标位置', hide: false, width: 150, style: 'background-color: #000088; color: #fff;' }
+                , { field: 'DESTINATION02', title: '目标控制号', hide: false, width: 150, style: 'background-color: #000088; color: #fff;' }
+                , { field: 'TASKORDERDATA', title: '下达信息', hide: true, width: 100 }
+                , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 180 }
+                , { field: 'CREATEBY', title: '创建人', hide: false, width: 230 }
+                , { field: 'STARTDATE', title: '开始时间', hide: false, width: 180 }
+                , { field: 'ENDDATE', title: '结束时间', hide: false, width: 180 }
+                , { field: 'CANCELDATE', title: '取消时间', hide: false, width: 180 }
+                , { field: 'CANCELREASON', title: '取消原因', hide: false, width: 150 }
+
+
+                , { field: 'TASKMESSAGE', title: '任务消息', hide: false, width: 200 }
+
+                , { field: 'EVENTID', title: '事件ID', hide: false, width: 100 }
+
+                , { field: 'BILLID', title: '单据ID', hide: false, width: 100 }
+                , { field: 'BILLID_LINENUM', title: '单据行号', hide: false, width: 100 }
+
+                , { field: 'PALLETID', title: '托盘ID', hide: false, width: 100 }
+                , { field: 'PALLETID_LINENUM', title: '托盘行号', hide: false, width: 100 }
+                , { field: 'PALLETTYPE', title: '托盘类型', hide: false, width: 100 }
+
+                , { field: 'TRUCKNO_PLAN', title: '运单计划号', hide: true, width: 100 }
+                , { field: 'TRUCKNO_OPUSER', title: '操作人计划号', hide: true, width: 100 }
+                , { field: 'TRUCKNO', title: '车辆编号', hide: false, width: 100 }
+                , { field: 'OPUSER', title: '操作人', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL01', title: '属性1', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL02', title: '属性2', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL03', title: '属性3', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL04', title: '属性4', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL05', title: '属性5', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL06', title: '属性6', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL07', title: '属性7', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL08', title: '属性8', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL09', title: '属性9', hide: false, width: 100 }
+                , { field: 'CUSTOMCOL10', title: '属性10', hide: false, width: 100 }
+                , { fixed: 'right', title: '操作', toolbar: '#opbarTask', width: 300 }
+            ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-320',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+        //子任务数据列表
+        table.render({
+            elem: '#id-tablelist-taskstep',
+            data: [],
+            cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'TASKID', title: '任务ID', hide: false, width: 100 }
+                , { field: 'TASKNO', title: '任务号', hide: false, width: 100 }
+                , { field: 'CREATEDATE', title: '创建日期', hide: true, width: 160 }
+                , { field: 'CREATEBY', title: '创建人', hide: true, width: 100 }
+                , { field: 'STEPNAME', title: '步骤', hide: false, width: 200 }
+                , { field: 'STEPSTATE', title: '状态', hide: false, width: 200, templet: '#taskstepstateTpl' }
+                , { field: 'STEPMESSAGE', title: '消息', hide: true, width: 100 }
+                , { field: 'STN_FROM', title: '站台1', hide: false, width: 100 }
+                , { field: 'STN_TO', title: '站台2', hide: false, width: 100 }
+
+                , { fixed: 'right', title: '操作', toolbar: '#opbarTaskstep', width: 100 }
+            ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-900',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+
+        //监听行工具事件
+        table.on('tool(filter-tasktablelist)', function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case 'over':
+
+                    //if (data.TASKSTATE != '1') {
+                    //    return;
+                    //}
+
+                    layer.confirm('确认结束' + data.TASKNO + '任务？', function (index) {
+                        taskover(data);
+                    });
+
+                    break;
+
+                case 'cancel':
+
+                    //if (data.TASKSTATE != '1') {
+                    //    return;
+                    //}
+
+                    layer.confirm('确认下达取消DCS执行吗？' + data.TASKNO + '任务？', function (index) {
+                        taskcancel(data);
+                    });
+
+                    break;
+                 case 'order':
+
+                    if (data.TASKSTATE != '0') {
+                        return;
+                    }
+
+                    layer.confirm('确认重新下达DCS执行吗？' + data.TASKNO + '任务？', function (index) {
+                        taskorder(data);
+                    });
+
+                    break;
+                case 'viewdetail':
+
+                    viewdetail(data);
+                    break;
+            };
+        });
+
+        taskover = function (data) {
+            var postData = {
+                ACTION: 101,
+                TASKNO: data.TASKNO,
+                TASKOPACTION: 'Over'
+            };
+
+            admin.req({
+                type: "get",
+                url: setter.taskop,
+                data: postData,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    layui.table.reload('id-tablelist-task'); //重载表格
+                }
+            });
+        };
+
+        taskcancel = function (data) {
+            var postData = {
+                ACTION: 101,
+                TASKNO: data.TASKNO,
+                TASKOPACTION: 'Cancel'
+            };
+
+            admin.req({
+                type: "get",
+                url: setter.taskop,
+                data: postData,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    layui.table.reload('id-tablelist-task'); //重载表格
+                }
+            });
+        };
+
+         taskorder = function (data) {
+            var postData = {
+                ACTION: 101,
+                TASKNO: data.TASKNO,
+                TASKOPACTION: 'OrderDCS'
+            };
+
+            admin.req({
+                type: "get",
+                url: setter.taskop,
+                data: postData,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    layui.table.reload('id-tablelist-task'); //重载表格
+                }
+            });
+        };
+
+        viewdetail = function (data) {
+            //添加条件
+            var serviceurl = setter.gettasklist + '?ACTION=1001&TASKNO=' + data.TASKNO;
+            layui.table.reload('id-tablelist-taskstep', { url: serviceurl });
+            //切换到指定Tab项
+            element.tabChange('filter-tab-task', '2');
+        };
+
+
+        //监听行工具事件
+        table.on('tool(filter-tasksteptablelist)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'return') {
+                //切换到指定Tab项
+                element.tabChange('filter-tab-task', '1');
+            }
+        });
+
+        //监听指定开关
+        form.on('switch(taskIsHistorySwitch)', function (data) {
+            if (data.elem.checked) {
+                data.elem.value = "1";
+            }
+            else {
+                data.elem.value = "0";
+            }
+        });
+
+        //监听提交
+        form.on('submit(tasksearchfilter)', function (data) {
+            //layer.msg(JSON.stringify(data.field));
+            //layer.msg(data.field.TASKTCLASS);
+            data.field.IsHistory = $('#task-IsHistory').val();
+            //添加条件
+            var serviceurl = setter.gettasklist + '?ACTION=100';
+            layui.table.reload('id-tablelist-task', { url: serviceurl, where: data.field });
+
+            //table.reload('id-tablelist-task');
+            return false;
+        });
+
+    });
+</script>
+
+<!-- 工具栏模板-主表行操作按钮： -->
+<script type="text/html" id="opbarTask">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="over">结束</a>
+    <a class="layui-btn layui-btn-xs" lay-event="viewdetail">步骤明细</a>
+    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="order">重新下达DCS</a>
+    <!--<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="cancel">下达DCS取消执行</a>-->
+</script>
+
+<!-- 工具栏模板-明细行操作按钮： -->
+<script type="text/html" id="opbarTaskstep">
+    <a class="layui-btn layui-btn-xs" lay-event="return">返回</a>
+</script>
+
+<!-- 任务状态：-->
+<script type="text/html" id="taskstateTpl">
+    {{#  if(d.TASKSTATE === '-1'){ }}
+    <span style="color: orange;">等待分配</span>
+    {{# } else if(d.TASKSTATE === '0'){ }}
+    <span style="color: skyblue;">新任务</span>
+    {{# } else if(d.TASKSTATE === '1'){ }}
+    <span style="color: blue;">装货完成</span>
+    {{# } else if(d.TASKSTATE === '3'){ }}
+    <span style="color: gold;">任务变更</span>
+    {{# } else if(d.TASKSTATE === '99'){ }}
+    <span style="color: green;">搬运完成</span>
+    {{# } else if(d.TASKSTATE === '4'){ }}
+    <span style="color: red;">任务取消</span>
+    {{#  } else { }}
+    {{ d.TASKSTATE }}
+    {{#  } }}
+</script>
+
+<!-- 任务分类：-->
+<script type="text/html" id="taskclassTpl">
+    {{#  if(d.TASKTCLASS === '1'){ }}
+    <span style="color: green;">入库任务</span>
+    {{# } else if(d.TASKTCLASS === '2'){ }}
+    <span style="color: red;">出库任务</span>
+    {{# } else if(d.TASKTCLASS === '3'){ }}
+    <span style="color: red;">移动任务</span>
+    {{#  } else { }}
+    {{ d.TASKTCLASS }}
+    {{#  } }}
+</script>
+
+<!-- 任务状态：-->
+<script type="text/html" id="taskstepstateTpl">
+    {{#  if(d.STEPSTATE === '0'){ }}
+    <span style="color: skyblue;">新任务</span>
+    {{# } else if(d.STEPSTATE === '1'){ }}
+    <span style="color: blue;">已下达</span>
+    {{# } else if(d.STEPSTATE === '2'){ }}
+    <span style="color: green;">装货完成</span>
+    {{# } else if(d.STEPSTATE === '3'){ }}
+    <span style="color: skyblue;">任务结束</span>
+    {{# } else if(d.STEPSTATE === '4'){ }}
+    <span style="color: red;">取消</span>
+    {{#  } else { }}
+    {{ d.STEPSTATE }}
+    {{#  } }}
+</script>

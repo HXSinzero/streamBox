@@ -1,0 +1,240 @@
+<title>编辑场景管理</title>
+
+<form class="layui-form" lay-filter="layui-sceneForm" style="padding: 0 0 0 0;">
+
+    <div class="layui-tab" lay-filter="filter-sceneFormtab">
+        <ul class="layui-tab-title">
+            <li class="layui-this" lay-id="1">场景管理</li>
+            <li lay-id="2">扩展属性</li>
+        </ul>
+        <div class="layui-tab-content">
+
+            <div id="tab1" class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">ID：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="ID" value="{{ d.params.ID || '' }}" autocomplete="off" class="layui-input" readonly>
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">场景编号：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="SCENENO" value="{{ d.params.SCENENO || '' }}" autocomplete="off" class="layui-input" readonly>
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">场景名称：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="SCENENAME" value="{{ d.params.SCENENAME || '' }}" autocomplete="off" class="layui-input" readonly>
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">场景描述：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="SCENEDESC" value="{{ d.params.SCENEDESC || '' }}" autocomplete="off" class="layui-input" readonly>
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">场景状态：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="SCENESTATE" value="{{ d.params.SCENESTATE || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">场景参数：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="SCENEPARA" value="{{ d.params.SCENEPARA || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">入库规则：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="RULEID_IN" value="{{ d.params.RULEID_IN || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">出库规则：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="RULEID_OUT" value="{{ d.params.RULEID_OUT || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">异常处理：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="EXCEPTIONHANDLE" value="{{ d.params.EXCEPTIONHANDLE || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">紧急出口：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="EMERGENCYEXIT" value="{{ d.params.EMERGENCYEXIT || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">操作消息：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="OPMESSAGE" value="{{ d.params.OPMESSAGE || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">操作日期：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="OPDATE" value="{{ d.params.OPDATE || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">操作人：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="OPBY" value="{{ d.params.OPBY || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+
+            </div>
+
+            <div  id="tab2" class="layui-tab-item">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性1：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="P01" value="{{ d.params.P01 || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性2：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="P02" value="{{ d.params.P02 || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性3：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="P03" value="{{ d.params.P03 || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性4：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="P04" value="{{ d.params.P04 || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性5：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="P05" value="{{ d.params.P05 || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性6：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="P06" value="{{ d.params.P06 || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性7：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="P07" value="{{ d.params.P07 || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性8：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="P08" value="{{ d.params.P08 || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性9：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="P09" value="{{ d.params.P09 || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性10：</label>
+                    <div class="layui-input-block">
+                        <script type="text/html" template>
+                            <input type="text" name="P10" value="{{ d.params.P10 || '' }}" autocomplete="off" class="layui-input">
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="layui-sceneForm-submit">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(['admin', 'table', 'laydate'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            element = layui.element;
+
+
+
+
+    })
+</script>

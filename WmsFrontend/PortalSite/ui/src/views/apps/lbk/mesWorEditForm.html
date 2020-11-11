@@ -1,0 +1,51 @@
+<title>编辑-工单设置</title>
+
+<form class="layui-form" lay-filter="layui-mesWorEditForm" style="padding: 20px 0 0 0;">
+    <div class="layui-inline">
+        <label class="layui-form-label">机台号：</label>
+        <div class="layui-input-block">
+            <select id="mesWorEditForm-EQU" name="NEWEQU_ID">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="layui-mesWorEditForm-submit">保存</button>
+        </div>
+    </div>
+</form>
+
+
+
+<script>
+    layui.use(['admin', 'table', 'laydate'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            element = layui.element;
+
+        //获取机台号列表
+        admin.req({
+            type: "get",
+            url: setter.projmesoprequest + "?ACTION=100104",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                itemlist = resultdata.data;
+                $("#mesWorEditForm-EQU option").remove();
+                $.each(resultdata.data, function (index, item) {
+                    $('#mesWorEditForm-EQU').append(new Option(item.EQU_NAME + "  " + item.EQU_ID, item.EQU_ID)); // 下拉菜单里添加元素
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+       
+    })
+</script>

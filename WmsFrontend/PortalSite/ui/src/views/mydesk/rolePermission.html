@@ -1,0 +1,129 @@
+<title>角色权限分配</title>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <form class="layui-form" lay-filter="rolePermissionfilter" style="padding: 0px 0px 20px 0px;">
+            <div class="layui-form-item">
+                <label class="layui-form-label">角色ID:</label>
+                <div class="layui-input-block">
+                    <script type="text/html" template>
+                        <input id="ROLEID" type="text" name="ID" value="{{ d.params.ID || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+                    </script>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">角色名称:</label>
+                <div class="layui-input-block">
+                    <script type="text/html" template>
+                        <input type="text" name="ROLENAME" value="{{ d.params.ROLENAME || '' }}" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+                    </script>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div id="transfer1"></div>
+            </div>
+            <!-- 操作按钮 -->
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="rolePermissionFormAction">确认保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="layui-card">
+       
+    </div>
+</div>
+
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util', 'transfer'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element,
+            transfer = layui.transfer;
+
+        form.render();
+
+        var funcTreeList = [];
+        var roleHaveList = [];
+
+        //获取功能树列表
+        admin.req({
+            type: "get",
+            url: setter.getrolelist + "?ACTION=2012",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                funcTreeList = resultdata.data;
+
+                //layer.msg($('#ROLEID').val());
+                //获取已授权列表
+                admin.req({
+                    type: "get",
+                    url: setter.getrolelist + "?ACTION=2011&RoleID=" + $('#ROLEID').val(),
+                    dataType: 'json', //返回的类型
+                    success: function (resultdata) {
+                        $.each(resultdata.data, function (index, item) {
+                            roleHaveList.push(item.PKEY);
+                        });
+
+                        //初始右侧数据
+                        transfer.render({
+                            elem: '#transfer1'
+                            , title: ["功能列表", "已授权列表"]
+                            , showSearch: true
+                            , width: 300
+                            //, height: 500
+                            , data: funcTreeList
+                            , value: roleHaveList
+                            , id: 'id-transfer1' //定义唯一索引
+                        });
+
+                    }
+                });
+                
+            }
+        });
+
+
+        //监听提交
+        form.on('submit(rolePermissionFormAction)', function (data) {
+            
+            var getData = transfer.getData('id-transfer1'); //获取右侧数据
+            //layer.msg(JSON.stringify(getData));
+            var postData =
+            {
+                RoleID: $('#ROLEID').val(),
+                PKEYLIST: JSON.stringify(getData)
+            }
+
+            //layer.msg(JSON.stringify(postData));
+            console.log(postData);
+
+            //保存角色授权
+            admin.req({
+                type: "get",
+                url: setter.getrolelist + "?ACTION=2013",
+                data: postData,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.alert(resultdata.msg);                  
+                    //layer.close(index); //执行关闭
+                }
+            });
+
+            return false;
+        });
+
+    });
+</script>

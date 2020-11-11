@@ -1,0 +1,387 @@
+<title>计划管理</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+        <div class="layui-tab" lay-filter="plandetailTabfilter">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="1">计划明细</li>
+                <li lay-id="2">计划托盘明细</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <!--计划明细-->
+                    <form class="layui-form" style="padding: 20px 0 0 0;">
+                        <div class="layui-form-item">
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">时间范围：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="datetimerange" class="layui-input" id="laydate-datetimerange-plandetail" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">物料描述：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="PRODUCTNAME" placeholder="请输入……" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="plandetail-search">
+                                        <i class="layui-icon layui-icon-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <div class="layui-card-body">
+                        <table id="plandetailTable" lay-filter="plandetailTablefilter"></table>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <!--计划托盘明细-->
+                    <div class="layui-card-body">
+                        <table id="plandetailpalletTable" lay-filter="plandetailpalletTablefilter"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 工具栏模板-表格头部工具栏： -->
+<script type="text/html" id="tableHeaderOPBtn-plandetail">
+    <div class="layui-btn-container">
+        <!--<button class="layui-btn layui-btn-sm" lay-event="add">添加</button>-->
+
+        <a class="layui-btn layui-btn-sm" lay-event="affirm">确认</a>
+        <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="cancel">取消</a>
+        <a class="layui-btn layui-btn-sm layui-btn-warm" lay-event="over">完成</a>
+    </div>
+</script>
+
+<!-- 工具栏模板-明细行操作按钮： -->
+<script type="text/html" id="tableRowsOPBtn-plandetail">
+    <a class="layui-btn layui-btn-xs" lay-event="viewpallet">查看托盘明细</a>
+</script>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //日期时间范围
+        laydate.render({
+            elem: '#laydate-datetimerange-plandetail'
+            , type: 'datetime'
+            , range: true
+        });
+
+        //数据列表
+        table.render({
+            elem: '#plandetailTable'
+            , title: '计划明细'
+            , data: []
+            , cols: [[
+                { type: 'radio', fixed: 'left' }
+                , { field: 'ID', title: 'ID', hide: true, width: 100 }
+                , { field: 'PLANID', title: '计划ID', hide: true, width: 100 }
+                , { field: 'PLANNO', title: '计划号', hide: false, width: 250 }
+                , { field: 'PLANTYPE', title: '计划类型', hide: false, width: 100 }
+                , { field: 'LINENUM', title: '行号', hide: false, width: 100 }
+                , { field: 'LINESTATE', title: '行状态', hide: false, width: 100, templet: '#linestateTpl' }
+                , { field: 'BPNO', title: '业务编号', hide: false, width: 100 }
+                , { field: 'BPNAME', title: '业务名称', hide: false, width: 150 }
+                , { field: 'STATIONNO', title: '站台编号', hide: false, width: 100, style: 'background-color: #009688; color: #fff;' }
+                , { field: 'MODIFYBY', title: '修改人', hide: false, width: 100 }
+                , { field: 'MODIFYDATE', title: '修改时间', hide: false, width: 180, templet: function (c) { return layui.util.toDateString(new Date(c.MODIFYDATE).getTime(), 'yyyy-MM-dd HH:mm:ss') } }
+                , { field: 'BOMID', title: 'BOMID', hide: true, width: 100 }
+                , { field: 'BOMNO', title: 'BOM编号', hide: true, width: 100 }
+                , { field: 'BOMNAME', title: 'BOM名称', hide: true, width: 100 }
+                , { field: 'BOMBATCHNO', title: 'BOM批次', hide: true, width: 100 }
+                , { field: 'PRODUCTID', title: '物料ID', hide: false, width: 100 }
+                , { field: 'PRODUCTNO', title: '物料编号', hide: false, width: 100 }
+                , { field: 'PRODUCTNAME', title: '物料名称', hide: false, width: 100 }
+                , { field: 'PRODUCTSPEC', title: '规格', hide: true, width: 100 }
+                , { field: 'PRODUCTCLASS', title: '物料分类', hide: true, width: 100 }
+                , { field: 'PRODUCTTYPE', title: '物料类别', hide: false, width: 100, templet: '#producttypeTpl' }
+                , { field: 'BATCHNO', title: '批次', hide: false, width: 100 }
+                , { field: 'Q01', title: '数量1', hide: false, width: 120 }
+                , { field: 'Q02', title: '数量2', hide: false, width: 150, style: 'background-color: #009688; color: #fff;' }
+                , { field: 'Q03', title: '数量3', hide: false, width: 100 }
+                , { field: 'Q04', title: '数量4', hide: false, width: 100 }
+                , { field: 'Q05', title: '数量5', hide: false, width: 100 }
+                , { field: 'Q06', title: '数量6', hide: false, width: 150 }
+                , { field: 'MAINUNIT', title: '物料单位', hide: false, width: 100 }
+                , { field: 'BASICUNIT', title: '基础单位', hide: true, width: 100 }
+
+                , { field: 'P01', title: '属性1', hide: false, width: 200 }
+                , { field: 'P02', title: '属性2', hide: false, width: 100 }
+                , { field: 'P03', title: '属性3', hide: false, width: 100 }
+                , { field: 'P04', title: '属性4', hide: false, width: 100 }
+                , { field: 'P05', title: '属性5', hide: false, width: 100 }
+                , { field: 'P06', title: '属性6', hide: false, width: 100 }
+                , { field: 'P07', title: '属性7', hide: false, width: 100 }
+                , { field: 'P08', title: '属性8', hide: false, width: 100 }
+                , { field: 'P09', title: '属性9', hide: false, width: 100 }
+                , { field: 'P10', title: '属性10', hide: false, width: 100 }
+                , { field: 'P11', title: '属性11', hide: true, width: 100 }
+                , { field: 'P12', title: '属性12', hide: true, width: 100 }
+                , { field: 'P13', title: '属性13', hide: true, width: 100 }
+                , { field: 'P14', title: '属性14', hide: true, width: 100 }
+                , { field: 'P15', title: '属性15', hide: true, width: 100 }
+                , { field: 'P16', title: '属性16', hide: true, width: 100 }
+                , { field: 'P17', title: '属性17', hide: true, width: 100 }
+                , { field: 'P18', title: '属性18', hide: true, width: 100 }
+                , { field: 'P19', title: '属性19', hide: true, width: 100 }
+                , { field: 'P20', title: '属性20', hide: true, width: 100 }
+
+                , { field: 'REMARK1', title: '备注说明', hide: false, width: 150 }
+                , { field: 'REMARK2', title: '备注2', hide: true, width: 100 }
+                , { title: '操作', width: 100, align: 'center', fixed: 'right', toolbar: '#tableRowsOPBtn-plandetail' }
+            ]]
+            , page: true
+            , limit: 20
+            , height: 'full-250',
+            even: true,
+            toolbar: '#tableHeaderOPBtn-plandetail',
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //监听头工具栏事件
+        table.on('toolbar(plandetailTablefilter)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            var dataRows = checkStatus.data;  //获取选中行数据
+            //console.log(obj);
+            var data = dataRows[0];
+            //console.log(data);
+            var msg = "提示";
+            //layer.msg(JSON.stringify(data));
+            /*
+           * 新计划=0,确认=1，取消=4，完成=5;
+           * 只有0的可以确认，只有0或1的可以取消，只有1的可以结束
+           * */
+            switch (obj.event) {
+                case 'add':
+                    edit(data);
+                    break;
+                case 'affirm':
+                    if (data == null) {
+                        layer.msg("请选中需要操作的行！");
+                        return;
+                    }
+                    if (data.LINESTATE === 0) {
+                        msg = '确认执行计划' + data.PLANNO + '？';
+                        layer.confirm(msg, { icon: 3, title: '执行计划' }, function (index) {
+                            changeState(2011, data);
+                            layer.close(index);
+                        });
+                    }
+                    else {
+                        layer.msg("当前状态不支持该操作！");
+                    }
+                    break;
+                case 'cancel':
+                    if (data == null) {
+                        layer.msg("请选中需要操作的行！");
+                        return;
+                    }
+                    if (data.LINESTATE === 0 || data.LINESTATE === 1) {
+                        msg = '确认强制取消计划' + data.PLANNO + '？';
+                        layer.confirm(msg, { icon: 3, title: '取消计划' }, function (index) {
+                            changeState(2012, data);
+                            layer.close(index);
+                        });
+                    }
+                    else {
+                        layer.msg("当前状态不支持该操作！");
+                    }
+
+                    break;
+                case 'over':
+                    if (data == null) {
+                        layer.msg("请选中需要操作的行！");
+                        return;
+                    }
+                    if (data.LINESTATE === 1) {
+                        msg = '确认手动结束计划' + data.PLANNO + '？';
+                        layer.confirm(msg, { icon: 3, title: '手动结束计划' }, function (index) {
+                            changeState(2013, data);
+                            layer.close(index);
+                        });
+                    }
+                    else {
+                        layer.msg("当前状态不支持该操作！");
+                    }
+
+                    break;
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+
+        //查询按钮
+        form.on('submit(plandetail-search)', function (data) {
+            var myurl = setter.plandetail + "?ACTION=100";
+
+            table.reload('plandetailTable', {
+                url: myurl, where: data.field
+            });
+            return false;
+        });
+
+        edit = function (formData) {
+            //打开编辑窗口
+            admin.popup({
+                id: 'popup-plandetailAddForm' //定义唯一ID，防止重复弹出
+                , title: '编辑物料'
+                , type: 1
+                , area: ['800px', '600px']
+                , success: function (layero, index) {
+
+                    layui.view(this.id).render('apps/wm/plandetailAddForm', formData)
+                        .done(function () {
+
+                            form.render(null, 'plandetailAddFormfilter');
+
+                            //监听提交
+                            form.on('submit(plandetailAddForm-submit)', function (data) {
+                                var field = data.field; //获取提交的字段
+                                //console.log(data);
+                                var postData = {
+                                    ACTION: 1,
+                                    PostData: JSON.stringify(data.field)
+                                };
+                                //console.log(JSON.stringify(postData));
+                                admin.req({
+                                    type: "get",
+                                    url: setter.plandetail,
+                                    data: postData,
+                                    dataType: 'json', //返回的类型
+                                    success: function (resultdata) {
+                                        layer.msg(resultdata.msg);
+                                        layui.table.reload('plandetailTable'); //重载表格
+                                        layer.close(index); //执行关闭
+                                    }
+                                });
+
+                                return false;
+                            });//From-submit结束
+
+
+                        });
+
+                }
+            });//popup方法结束
+        }
+
+
+        //监听行工具事件
+        table.on('tool(plandetailTablefilter)', function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case 'viewpallet':
+                    viewpallet(100101, data);
+                    break;
+            };
+        });
+
+        changeState = function (action, data) {
+
+            var postData = {
+                ACTION: action,
+                ID: data.ID
+            };
+
+            admin.req({
+                type: "get",
+                url: setter.projplandetail,
+                data: postData,
+                dataType: 'json', //返回的类型
+                success: function (resultdata) {
+                    layer.msg(resultdata.msg);
+                    layui.table.reload('plandetailTable'); //重载表格
+                }
+            });
+        }
+
+        viewpallet = function (action, data) {
+            //添加条件
+            var serviceurl = setter.plandetail + '?ACTION=' + action;
+            layui.table.reload('plandetailpalletTable', { url: serviceurl, where: data });
+            //切换到指定Tab项
+            element.tabChange('plandetailTabfilter', '2');
+        }
+
+
+        //数据列表
+        table.render({
+            elem: '#plandetailpalletTable'
+            , data: []
+            , cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'PLANNO', title: '计划编号', hide: false, width: 150 }
+                , { field: 'PALLETNO', title: '托盘编号', hide: false, width: 100 }
+                , { field: 'ITEMNAME', title: '物料信息', hide: false, width: 200 }
+                , { field: 'ITEMVALUE', title: '数量', hide: false, width: 100 }
+                , { field: 'BATCHNO', title: '批次', hide: false, width: 200 }
+                , { field: 'PALLETCREATEDATE', title: '托盘创建时间', hide: false, width: 180 }
+                , { field: 'OPMESSAGE', title: '操作消息', hide: false, width: 200 }
+                , { field: 'OPDATE', title: '操作日期', hide: false, width: 180 }
+                , { field: 'OPBY', title: '操作人', hide: false, width: 200 }
+            ]]
+            , page: false
+            , limit: 100
+            , height: 'full-250',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+    });
+</script>
+
+<script type="text/html" id="producttypeTpl">
+    {{#  if(d.PRODUCTTYPE === '1'){ }}
+    <span style="color: green;">空盘</span>
+    {{# } else if(d.PRODUCTTYPE === '2'){ }}
+    <span style="color: red;">材料</span>
+    {{#  } else { }}
+    {{ d.PRODUCTTYPE }}
+    {{#  } }}
+</script>
+
+<script type="text/html" id="linestateTpl">
+    {{#  if(d.LINESTATE === 0){ }}
+    <span style="color: red;">新计划</span>
+    {{# } else if(d.LINESTATE === 1){ }}
+    <span style="color: green;">确认执行</span>
+    {{# } else if(d.LINESTATE === 4){ }}
+    <span style="color: grey;">取消</span>
+    {{# } else if(d.LINESTATE === 5){ }}
+    <span style="color: blue;">完成</span>
+    {{#  } else { }}
+    {{ d.LINESTATE }}
+    {{#  } }}
+</script>

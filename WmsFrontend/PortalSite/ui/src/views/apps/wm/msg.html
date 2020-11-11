@@ -1,0 +1,148 @@
+<title>预警消息</title>
+
+<div class="layui-fluid">
+
+	<div class="layui-card">
+
+		<div style="padding-bottom: 10px;">
+			<!-- <button class="layui-btn" data-type="add">添加</button> -->
+		</div>
+
+		<div class="layui-form layui-card-header layuiadmin-card-header-auto">
+			<form class="layui-form" action="">
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+                        <label class="layui-form-label">时间范围：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="datetimerange" class="layui-input" id="laydate-datetimerange-msg" placeholder="yyyy-MM-dd" autocomplete="off">
+                        </div>
+                    </div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">消息内容:</label>
+						<div class="layui-input-block">
+							<input type="text" name="MSGTEXT" placeholder="请输入……" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+
+					<div class="layui-inline">
+                        <label class="layui-form-label">消息类型</label>
+                        <div class="layui-input-block">
+                            <select name="MSGTYPE">
+                                <option value="0">不限</option>
+                                <option value="1">出口预警</option>
+                                <option value="2">设备故障</option>
+                                <option value="9">其他预警</option>
+                            </select>
+                        </div>
+                    </div>
+
+					<div class="layui-inline">
+						<button class="layui-btn" lay-submit lay-filter="msgsearch">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="layui-card-body">
+			<table id="LAY-tablelist-msg" lay-filter="LAY-tablelist"></table>
+		</div>
+	</div>
+</div>
+
+<!-- 消息分类：-->
+<script type="text/html" id="msgtypeTpl">
+    {{#  if(d.MSGTYPE === '1'){ }}
+    <span style="color: skyblue;">出口预警</span>
+    {{# } else if(d.MSGTYPE === '2'){ }}
+    <span style="color: red;">设备故障</span>
+    {{# } else if(d.MSGTYPE === '9'){ }}
+    <span style="color: yellow;">其他预警</span>   
+    {{#  } else { }}
+    {{ d.MSGTYPE }}
+    {{#  } }}
+</script>
+
+<!-- 消息状态：-->
+<script type="text/html" id="msgstateTpl">
+    {{#  if(d.MSGSTATE === '1'){ }}
+    <span style="color: skyblue;">新消息</span>
+    {{# } else if(d.MSGSTATE === '2'){ }}
+    <span style="color: red;">已确认</span>
+    {{#  } else { }}
+    {{ d.MSGSTATE }}
+    {{#  } }}
+</script>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+			 //日期时间范围
+        laydate.render({
+            elem: '#laydate-datetimerange-msg'
+            , type: 'date'
+            , range: true
+        });
+           form.render();
+
+			//数据列表
+			table.render({
+				elem: '#LAY-tablelist-msg',
+                url: setter.getmsglist +"?ACTION=100",
+				cols: [[
+					 {type: 'checkbox', fixed: 'left',hide:true,with:80}
+					,{field:'ID',title:'ID',hide:false,with:80}
+					,{field:'MSGTYPE',title:'消息类别',hide:false,with:100,templet:'#msgtypeTpl'}
+					,{field:'CREATEDATE',title:'创建时间',hide:false,with:180}
+					,{field:'MSGSTATE',title:'消息状态',hide:false,with:100,templet:'#msgstateTpl'}
+					,{field:'MSGTEXT',title:'消息内容',hide:false,with:300}
+					,{field:'REMINDER',title:'提醒谁',hide:true,with:100}
+					,{field:'REMINDERROLE',title:'提醒角色',hide:true,with:100}
+					,{field:'CONFIRMSTATE',title:'确认状态',hide:true,with:100}
+					,{field:'CONFIRMDATE',title:'确认时间',hide:true,with:100}
+					,{field:'P01',title:'属性1',hide:true,with:100}
+					,{field:'P02',title:'属性2',hide:true,with:100}
+					,{field:'P03',title:'属性3',hide:true,with:100}
+					,{field:'P04',title:'属性4',hide:true,with:100}
+					,{field:'P05',title:'属性5',hide:true,with:100}
+					,{field:'P06',title:'属性6',hide:true,with:100}
+					,{field:'P07',title:'属性7',hide:true,with:100}
+					,{field:'P08',title:'属性8',hide:true,with:100}
+					,{field:'P09',title:'属性9',hide:true,with:100}
+					,{field:'P10',title:'属性10',hide:true,with:100}
+				]],
+			page: true,
+			limit: 10,
+			height: 'full-200',
+			even: true,
+			toolbar: true
+		});
+  
+
+		  //监听搜索
+		  form.on('submit(msgsearch)', function(data) {
+			var field = data.field;
+
+			//执行重载
+			table.reload('LAY-tablelist-msg', {
+				where: field
+			});
+
+			return false;
+
+		});
+  
+});
+</script>
+

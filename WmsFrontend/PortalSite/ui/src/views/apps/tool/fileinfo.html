@@ -1,0 +1,211 @@
+<title>导入数据</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-row layui-col-space15">
+
+                <div class="layui-col-md8">
+                    <div class="layui-card">
+                        <div class="layui-card-header">1、拖拽上传</div>
+                        <div class="layui-card-body">
+                            <div class="layui-upload-drag" id="test-upload-drag">
+                                <i class="layui-icon"></i>
+                                <p>点击上传或将文件拖拽到此处</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="layui-col-md4">
+                    <div class="layui-card">
+                        <div class="layui-card-header">2、选择模板类型</div>
+                        <div class="layui-card-body">
+                            <select name="mytempletname" id="mytemplet" lay-verify="required">
+                                <option value="0">ULD搬运计划</option>
+                            </select>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="layui-col-md4">
+                    <div class="layui-card">
+                        <div class="layui-card-header">2、执行上传</div>
+                        <div class="layui-card-body">
+                            <button type="button" class="layui-btn" id="fileinfo-upload-action">开始上传</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!--数据表格-->
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+            <table id="LAY-tablelist-fileinfo" lay-filter="LAY-tablelist"></table>
+        </div>
+
+    </div>
+</div>
+
+<!--工具栏-->
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="imp">导入</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="rest">重置状态</a>
+</script>
+
+<!--状态开关-->
+<script type="text/html" id="handlestateTpl">
+    <!-- 这里的 checked 的状态只是演示 -->
+    <!--<input type="checkbox" name="HANDLESTATE" value="{{d.ID}}" lay-skin="switch" lay-text="未处理|已处理" lay-filter="handlestateSwitch" {{ d.HANDLESTATE == 1 ? 'checked' : '' }} readonly> -->
+    {{#  if(d.HANDLESTATE === '0'){ }}
+    <span style="color: red;">未处理</span>
+    {{# } else if(d.HANDLESTATE === '1'){ }}
+    <span style="color: green;">处理成功</span>
+    {{# } else if(d.HANDLESTATE === 'error'){ }}
+    <span style="color: #FF5722;font-size: 16px;">处理失败</span>
+    {{#  } else { }}
+    {{ d.HANDLESTATE || '' }}
+    {{#  } }}
+</script>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'upload'], function () {
+
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            laydate = layui.laydate,
+            form = layui.form,
+            layer = layui.layer,
+            upload = layui.upload,
+            element = layui.element;
+
+        //获取下拉列表
+        /*admin.req({
+            type: "get",
+            url: setter.getfileinfolist + "?ACTION=100",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+
+                $.each(resultdata.data, function (index, item) {
+                    $('#mytemplet').append(new Option(item.TEMPLATEFILE, item.ID)); // 下拉菜单里添加元素
+                });
+
+                layui.form.render("select");
+            }
+        });*/
+
+        //数据列表
+        table.render({
+            elem: '#LAY-tablelist-fileinfo',
+            url: setter.getfileinfolist + "?ACTION=101",
+            cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'FILENAME', title: '文件名称', hide: false, width: 300 }
+                , { field: 'HANDLESTATE', title: '处理状态', hide: false, width: 100, templet: '#handlestateTpl' }
+                , { field: 'HANDLEMESSAGE', title: '处理消息', hide: false, width: 200 }
+                , { field: 'EXTENSION', title: '文件扩展名', hide: false, width: 100 }
+                , { field: 'FILESIZEBYTES', title: '文件大小', hide: false, width: 100 }
+                , { field: 'SAVEPATH', title: '存储路径', hide: true, width: 200 }
+                , { field: 'MODIFIEDDATE', title: '修改时间', hide: false, width: 160 }
+                , { field: 'MODIFIEDBY', title: '修改人', hide: false, width: 100 }
+                , { field: 'TEMPLATEFILE', title: '模板名称', hide: false, width: 150 }
+                , { field: 'TEMPLATEPARA', title: '模板参数', hide: false, width: 100 }
+                , { field: 'HANDLEDATE', title: '处理时间', hide: false, width: 160 }
+                , { field: 'HANDLEBY', title: '处理人', hide: false, width: 100 }
+
+                , { title: '操作', width: 150, align: 'center', fixed: 'right', toolbar: '#barDemo' }
+            ]
+            ],
+            page: true,
+            limit: 10,
+            height: 'full-330',
+            text: '对不起，加载出现异常！',
+            even: true,
+            toolbar: true,
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //拖拽上传
+        upload.render({
+            elem: '#test-upload-drag'
+            , url: setter.postfile //必填项
+            , method: 'post'  //可选项。HTTP类型，默认post
+            , accept: 'file'
+            , exts: 'xls|xlsx'
+            , auto: false //选择文件后不自动上传
+            , bindAction: '#fileinfo-upload-action' //指向一个按钮触发上传
+            , size: 1024 //最大允许上传的文件大小
+            , done: function (res) {
+                console.log(res)
+                layer.alert(res.msg);
+                layui.table.reload('LAY-tablelist-fileinfo'); //重载表格
+            }
+            , error: function (res) {
+                layer.msg(res.msg);
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(LAY-tablelist)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                , layEvent = obj.event; //获得 lay-event 对应的值
+            if (layEvent === 'imp') {
+
+                layer.confirm('确认执行导入吗？', function (index) {
+                    if (data.HANDLESTATE === '0') {
+                        admin.req({
+                            type: "get",
+                            url: setter.getfileinfolist + "?ACTION=102&ID=" + data.ID,
+                            dataType: 'json', //返回的类型
+                            success: function (resultdata) {
+                                layer.alert(resultdata.msg);
+
+                                layui.table.reload('LAY-tablelist-fileinfo'); //重载表格
+                            }
+                        });
+                    }
+                    else {
+                        layer.msg('ID：' + data.ID + ' 文件已处理或已取消！');
+                    }
+                });
+
+
+            }
+            else if (layEvent === 'rest') {
+
+                layer.confirm('确认重置状态？', function (index) {
+                    if (data.HANDLESTATE != '0') {
+                        admin.req({
+                            type: "get",
+                            url: setter.getfileinfolist + "?ACTION=103&ID=" + data.ID,
+                            dataType: 'json', //返回的类型
+                            success: function (resultdata) {
+                                layer.alert(resultdata.msg);
+
+                                layui.table.reload('LAY-tablelist-fileinfo'); //重载表格
+                            }
+                        });
+                    }
+                });
+
+
+
+            }
+        });
+
+    });
+</script>

@@ -1,0 +1,188 @@
+<title>角色管理</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+            <table id="id-tablelist-role" lay-filter="filter-tablelist-role"></table>
+        </div>
+
+    </div>
+</div>
+
+<!-- 工具栏模板-表格头部工具栏： -->
+<script type="text/html" id="toolbarRole">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+    </div>
+</script>
+
+<!-- 工具栏模板-明细行操作按钮： -->
+<script type="text/html" id="opbarRole">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="permission">角色功能分配</a>
+</script>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        //数据列表
+        table.render({
+            elem: '#id-tablelist-role',
+            url: setter.getrolelist + "?ACTION=100",
+            cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 80 }
+                , { field: 'ROLECODE', title: '角色编号', hide: false, width: 150 }
+                , { field: 'ROLENAME', title: '角色名称', hide: false, width: 280 }
+                , { field: 'ROLEREMARK', title: '备注说明', hide: false, width: 450 }
+                , { field: 'ROLELEVEL', title: '级别', hide: false, width: 100 }
+                , { fixed: 'right', title: '操作', toolbar: '#opbarRole', width: 250 }
+            ]],
+            page: true,
+            limit: 100,
+            height: 'full-100',
+            text: '对不起，加载出现异常！',
+            even: true,
+            toolbar: '#toolbarRole',
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //头工具栏事件
+        table.on('toolbar(filter-tablelist-role)', function (obj) {
+            switch (obj.event) {
+                case 'add':
+                    edit(null);
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(filter-tablelist-role)', function (obj) {
+            var data = obj.data;
+
+            if (obj.event === 'edit') {
+                edit(data);
+                return false;
+            }
+            else if (obj.event === 'permission') {
+                permission(data);
+                return false;
+            }
+            else if (obj.event === 'del') {
+                if (data.ROLELEVEL == 0) {
+                    layer.msg("系统内置,不允许删除！");
+                    return;
+                }
+                del(data);
+                return false;
+            }
+        });
+
+        edit = function (formData) {
+            var ACTION = 0;
+            if (formData == null) {
+                ACTION = 1;//添加
+            }
+            else {
+                ACTION = 3;//更新
+            }
+
+            //打开编辑窗口
+            admin.popup({
+                id: 'LAY-popup-roleForm' //定义唯一ID，防止重复弹出
+                , title: '编辑角色'
+                , type: 1
+                , area: ['800px', '600px']
+                , success: function (layero, index) {
+
+                    layui.view(this.id).render('mydesk/roleForm', formData)
+                        .done(function () {
+
+                            form.render(null, 'layui-roleFrom');
+
+                            //监听提交
+                            form.on('submit(layui-roleFrom-submit)', function (data) {
+                                var field = data.field; //获取提交的字段
+
+                                var postData = {
+                                    ACTION: ACTION,
+                                    PostData: data.field
+                                };
+                                console.log(JSON.stringify(postData));
+                                admin.req({
+                                    type: "post",
+                                    url: setter.postrole,
+                                    data: JSON.stringify(postData),
+                                    dataType: 'json', //返回的类型
+                                    contentType: "application/json;charset=utf-8",
+                                    success: function (resultdata) {
+                                        layer.msg(resultdata.msg);
+                                        layui.table.reload('id-tablelist-role'); //重载表格
+
+                                        layer.close(index); //执行关闭
+                                    }
+                                });
+
+                                return false;
+                            });//From-submit结束
+                        });
+                }
+            });//popup方法结束
+        }
+
+        del = function (formData) {
+            var msg = "确认删除[" + formData.ID + "]角色？删除角色将该角色已授权的其他信息！";
+            layer.confirm(msg, function (index) {
+                var ACTION = 2;
+                var postData = {
+                    ACTION: ACTION,
+                    PostData: formData
+                };
+                admin.req({
+                    type: "post",
+                    url: setter.postrole,
+                    data: JSON.stringify(postData),
+                    dataType: 'json', //返回的类型
+                    contentType: "application/json;charset=utf-8",
+                    success: function (resultdata) {
+                        layer.msg(resultdata.msg);
+                        layui.table.reload('id-tablelist-role'); //重载表格
+
+                        layer.close(index); //执行关闭
+                    }
+                });
+            });
+        }
+
+        permission = function (formData) {
+            //打开编辑窗口
+            admin.popup({
+                id: 'LAY-popup-rolePermission' //定义唯一ID，防止重复弹出
+                , title: '角色权限分配'
+                , type: 1
+                , area: ['800px', '650px']
+                , success: function (layero, index) {
+
+                    layui.view(this.id).render('mydesk/rolePermission', formData)
+                        .done(function () {
+                            form.render(null, 'rolePermissionfilter');
+                        });
+                }
+            });//popup方法结束
+
+        }
+    });
+</script>

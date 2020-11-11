@@ -1,0 +1,385 @@
+<title>设备接口</title>
+<div class="layui-fluid">
+
+    <div class="layui-card">
+
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">日期：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="idCREATEDATE" name="CREATEDATE" placeholder="yyyy-MM-dd">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">设备编号:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="EQUIPMENTID" placeholder="请输入……" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">任务编号:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="JOBID" placeholder="请输入……" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">状   态:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="STATUS" placeholder="请输入……" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <button class="layui-btn" lay-submit lay-filter="keysearch">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this">设备申请信息</li>
+                <li>设备任务下达</li>
+                <li>任务执行反馈</li>
+                <li>设备状态</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table id="LAY-tablelist-infeqprequest" lay-filter="LAY-tablelist"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <table id="LAY-tablelist-inftaskorder" lay-filter="LAY-tablelist"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <table id="LAY-tablelist-inftaskfeedback" lay-filter="LAY-tablelist"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <table id="LAY-tablelist-infeqpstatus" lay-filter="LAY-tablelist"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'form', 'util', 'laydate'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            util = layui.util,
+            laydate = layui.laydate,
+            element = layui.element;
+
+        //常规用法
+        laydate.render({
+            elem: '#idCREATEDATE', value: new Date() //必须遵循format参数设定的格式
+        });
+
+        //数据列表-设备申请
+        table.render({
+            elem: '#LAY-tablelist-infeqprequest',
+            //url: setter.getdcsinflist + "?ACTION=101",
+            data: [],
+            cols: [
+                [
+                    { field: 'AUTOID', title: '自增ID', hide: false }
+
+                    , {
+                        field: 'STATUS', title: '状态', hide: false, templet: '#equipmentRequeststatusTpl'
+                    }
+
+                    , { field: 'EQUIPMENTID', title: '设备ID', hide: false }
+                    , { field: 'WAREHOUSEID', title: '仓库ID', hide: true }
+                    , { field: 'REQUESTTYPE', title: '请求类别', hide: true }
+
+                    , { field: 'JOBID', title: '任务ID', hide: false }
+                    , { field: 'BARCODE', title: '申请条码', hide: false }
+                    , { field: 'BRANDID', title: '品牌ID', hide: true }
+                    , { field: 'TUTYPE', title: '托盘类型', hide: false }
+                    , { field: 'REQUESTQTY', title: '请求数量', hide: false }
+                    , { field: 'ENTERDATE', title: '录入时间', hide: true, width: 180 }
+
+                    , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 180 }
+                    , { field: 'CREATEUSERID', title: '创建人ID', hide: true }
+                    , { field: 'CREATEUSERNAME', title: '创建人', hide: true }
+
+                    , { field: 'RESPONDDATE', title: '响应时间', hide: false, width: 180 }
+                    , { field: 'RESPONDCOUNT', title: '响应次数', hide: false }
+                    , { field: 'RESPONDMSG', title: '响应消息', hide: false, width: 500, style: 'background-color: #007688; color: #fff;' }
+
+                    , { field: 'EXTENDINFO', title: '扩展信息', hide: false }
+                    , { field: 'EXTATTR1', title: '扩展属性1', hide: false }
+                    , { field: 'EXTATTR2', title: '扩展属性2', hide: false }
+                    , { field: 'EXTATTR3', title: '扩展属性3', hide: false }
+
+                    , { field: 'MODIFYDATE', title: '修改时间', hide: true }
+                    , { field: 'MODIFYUSERID', title: '修改人ID', hide: true }
+                    , { field: 'MODIFYUSERNAME', title: '修改人', hide: true }
+                    , { field: 'ROWVERSION', title: '版本', hide: false }
+                    , { field: 'ID', title: 'ID', hide: false }
+                ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-250',
+            even: true,
+            toolbar: true,
+            cellMinWidth: 150,
+            initSort: {
+                field: 'AUTOID', //排序字段，对应 cols 设定的各字段名
+                type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //数据列表-下达任务设备信息
+        table.render({
+            elem: '#LAY-tablelist-inftaskorder',
+            //url: setter.getdcsinflist + "?ACTION=102",
+            data: [],
+            cols: [
+                [
+                    { field: 'AUTOID', title: '自增ID', hide: false }
+                    , { field: 'GROUPID', title: '组ID', hide: true }
+                    , { field: 'JOBID', title: '任务ID', hide: false }
+                    , { field: 'EQUIPMENTID', title: '设备ID', hide: false }
+                    , { field: 'WAREHOUSEID', title: '仓库ID', hide: true }
+                    , { field: 'JOBTYPE', title: '任务类型', hide: false, width: 160, templet: '#jobtypeTpl' }
+                    , { field: 'ORDERTYPE', title: '下达类型', hide: true }
+                    , { field: 'SOURCE', title: '源位置', hide: false }
+                    , { field: 'TARGET', title: '目标位置', hide: false }
+                    , { field: 'BRANDID', title: '品牌ID', hide: true }
+                    , { field: 'PLANQTY', title: '计划数量', hide: true }
+                    , { field: 'PILETYPE', title: '垛型', hide: true }
+                    , { field: 'PRIORITY', title: '优先级', hide: true }
+                    , { field: 'BARCODE', title: '条码', hide: false }
+                    , { field: 'TUTYPE', title: '托盘类型', hide: false }
+                    , { field: 'ENTERDATE', title: '录入时间', hide: true, width: 160 }
+                    , { field: 'STATUS', title: '状态', hide: false, templet: '#downloadstatusTpl' }
+                    , { field: 'RESPONDDATE', title: '响应时间', hide: false, width: 160 }
+                    , { field: 'RESPONDCOUNT', title: '响应次数', hide: false }
+                    , { field: 'RESPONDMSG', title: '响应消息', hide: false }
+
+                    , { field: 'WEIGHT', title: '重量', hide: true }
+                    , { field: 'FULLCOUNT', title: '整盘数量', hide: true }
+                    , { field: 'EXTENDINFO', title: '扩展信息', hide: false }
+                    , { field: 'EXTATTR1', title: '扩展属性1', hide: false }
+                    , { field: 'EXTATTR2', title: '扩展属性2', hide: false }
+                    , { field: 'EXTATTR3', title: '扩展属性3', hide: false }
+                    , { field: 'CREATEDATE', title: '创建时间', hide: false }
+                    , { field: 'CREATEUSERID', title: '创建人ID', hide: false }
+                    , { field: 'CREATEUSERNAME', title: '创建人', hide: false }
+                    , { field: 'MODIFYDATE', title: '修改时间', hide: false }
+                    , { field: 'MODIFYUSERID', title: '修改人ID', hide: false }
+                    , { field: 'MODIFYUSERNAME', title: '修改人', hide: false }
+                    , { field: 'ROWVERSION', title: '版本', hide: false }
+                    , { field: 'ID', title: 'ID', hide: false }
+                ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-250',
+            even: true,
+            toolbar: true,
+            cellMinWidth: 150,
+            initSort: {
+                field: 'AUTOID', //排序字段，对应 cols 设定的各字段名
+                type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //数据列表-任务执行反馈
+        table.render({
+            elem: '#LAY-tablelist-inftaskfeedback',
+            //url: setter.getdcsinflist + "?ACTION=103",
+            data: [],
+            cols: [
+                [
+                    { field: 'AUTOID', title: '自增ID', hide: false }
+                    , { field: 'JOBID', title: '任务ID', hide: false }
+                    , { field: 'WAREHOUSEID', title: '仓库ID', hide: false }
+                    , { field: 'FEEDBACKSTATUS', title: '反馈状态', hide: false, width: 160, templet: '#feedbackstatusTpl' }
+                    , { field: 'ERRORCODE', title: '错误码', hide: false }
+                    , { field: 'PLANQTY', title: '计划数量', hide: true }
+                    , { field: 'ACTQTY', title: '实际数量', hide: true }
+                    , { field: 'ENTERDATE', title: '录入时间', hide: false, width: 160 }
+                    , { field: 'STATUS', title: '状态', hide: false, width: 160, templet: '#jobfeedbackstatusTpl' }
+                    , { field: 'RESPONDDATE', title: '响应时间', hide: false, width: 160 }
+                    , { field: 'RESPONDCOUNT', title: '响应次数', hide: false }
+                    , { field: 'RESPONDMSG', title: '响应消息', hide: false, width: 300 }
+
+                    , { field: 'WEIGHT', title: '重量', hide: false }
+                    , { field: 'FULLCOUNT', title: '整盘数量', hide: false }
+                    , { field: 'EXTENDINFO', title: '扩展信息', hide: false }
+                    , { field: 'EXTATTR1', title: '扩展属性1', hide: false }
+                    , { field: 'EXTATTR2', title: '扩展属性2', hide: false }
+                    , { field: 'EXTATTR3', title: '扩展属性3', hide: false }
+                    , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 160 }
+                    , { field: 'CREATEUSERID', title: '创建人ID', hide: false }
+                    , { field: 'CREATEUSERNAME', title: '创建人', hide: false }
+                    , { field: 'MODIFYDATE', title: '修改时间', hide: false }
+                    , { field: 'MODIFYUSERID', title: '修改人ID', hide: false }
+                    , { field: 'MODIFYUSERNAME', title: '修改人', hide: false }
+                    , { field: 'ROWVERSION', title: '版本', hide: false }
+                    , { field: 'ID', title: 'ID', hide: false }
+                ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-250',
+            even: true,
+            toolbar: true,
+            cellMinWidth: 150,
+            initSort: {
+                field: 'AUTOID', //排序字段，对应 cols 设定的各字段名
+                type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //数据列表-设备状态
+        table.render({
+            elem: '#LAY-tablelist-infeqpstatus',
+            //url: setter.getdcsinflist + "?ACTION=104",
+            data: [],
+            cols: [
+                [
+                    { field: 'ID', title: 'ID', hide: false }
+                    , { field: 'EQUIPMENTID', title: '设备ID', hide: false }
+                    , { field: 'WAREHOUSEID', title: '仓库ID', hide: true }
+                    , { field: 'WMSLOCNUM', title: '位置编号', hide: true }
+                    , { field: 'EQUIPMENTSTATUS', title: '设备状态', hide: false, templet: '#equipmentstatusTpl', width: 100, }
+                    , { field: 'EQUIPMENTPOSITION', title: '设备位置', hide: false }
+                    , { field: 'UPDATEDATE', title: '更新时间', hide: false, width: 160 }
+                    , { field: 'JOBID', title: '任务ID', hide: false }
+                    , { field: 'BARCODE', title: '条码', hide: false }
+                    , { field: 'TUTYPE', title: '托盘类型', hide: false }
+                    , { field: 'TARGET', title: '目标地址', hide: false }
+                    , { field: 'EXTENDINFO', title: '扩展信息', hide: false }
+                    , { field: 'EXTATTR1', title: '扩展属性1', hide: false }
+                    , { field: 'EXTATTR2', title: '扩展属性2', hide: false }
+                    , { field: 'EXTATTR3', title: '扩展属性3', hide: false }
+
+                    , { field: 'STATUS', title: '状态', hide: false }
+                    , { field: 'CREATEDATE', title: '创建时间', hide: false }
+                    , { field: 'CREATEUSERID', title: '创建人ID', hide: false }
+                    , { field: 'CREATEUSERNAME', title: '创建人', hide: false }
+                    , { field: 'MODIFYDATE', title: '修改时间', hide: false }
+                    , { field: 'MODIFYUSERID', title: '修改人ID', hide: false }
+                    , { field: 'MODIFYUSERNAME', title: '修改人', hide: false }
+                    , { field: 'ROWVERSION', title: '版本', hide: false }
+                    , { field: 'AUTOID', title: '自增ID', hide: false }
+                ]
+            ],
+            page: true,
+            limit: 100,
+            height: 'full-250',
+            even: true,
+            toolbar: true,
+            cellMinWidth: 150,
+            initSort: {
+                field: 'ID', //排序字段，对应 cols 设定的各字段名
+                type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //监听搜索
+        form.on('submit(keysearch)', function (data) {
+            var field = data.field;
+
+            var myurl1 = setter.getdcsinflist + "?ACTION=101";
+            var myurl2 = setter.getdcsinflist + "?ACTION=102";
+            var myurl3 = setter.getdcsinflist + "?ACTION=103";
+            var myurl4 = setter.getdcsinflist + "?ACTION=104";
+
+            //执行重载
+            table.reload('LAY-tablelist-infeqprequest', { url: myurl1, where: field });
+            table.reload('LAY-tablelist-inftaskorder', { url: myurl2, where: field });
+            table.reload('LAY-tablelist-inftaskfeedback', { url: myurl3, where: field });
+            table.reload('LAY-tablelist-infeqpstatus', { url: myurl4, where: field });
+
+            return false;
+        });
+
+    });
+</script>
+
+<script type="text/html" id="equipmentstatusTpl">
+    {{#  if(d.EQUIPMENTSTATUS === '1'){ }}
+    <span class="layui-badge layui-bg-green">正常1</span>
+    {{#  } else { }}
+    <span class="layui-badge">故障 【{{ d.EQUIPMENTSTATUS }}】</span>
+    {{#  } }}
+</script>
+
+<script type="text/html" id="jobtypeTpl">
+    {{#  if(d.JOBTYPE === 6){ }}
+    <span class="layui-badge layui-bg-green">入库任务下达6</span>
+    {{# } else if(d.JOBTYPE === 7){ }}
+    <span class="layui-badge layui-bg-danger">出库任务下达7</span>
+    {{# } else if(d.JOBTYPE === 8){ }}
+    <span class="layui-badge layui-bg-red">货位间搬运任务8</span>
+    {{# } else if(d.JOBTYPE === 4){ }}
+    <span class="layui-badge layui-bg-orange">站台下达4</span>
+    {{#  } else { }}
+    {{ d.JOBTYPE }}
+    {{#  } }}
+</script>
+
+<script type="text/html" id="downloadstatusTpl">
+    {{#  if(d.STATUS === 0){ }}
+    <span class="layui-badge layui-bg-orange">未处理9</span>
+    {{# } else if(d.STATUS === 1){ }}
+    <span class="layui-badge layui-bg-blue">已处理1</span>
+    {{#  } else { }}
+    <span class="layui-badge">故障 【{{ d.STATUS }}】</span>
+    {{#  } }}
+</script>
+
+<script type="text/html" id="feedbackstatusTpl">
+    {{#  if(d.FEEDBACKSTATUS === '1'){ }}
+    <span class="layui-badge layui-bg-green">任务开始1</span>
+    {{# } else if(d.FEEDBACKSTATUS === '2'){ }}
+    <span class="layui-badge layui-bg-green">取货完成2</span>
+    {{# } else if(d.FEEDBACKSTATUS === '3'){ }}
+    <span class="layui-badge layui-bg-blue">放货完成3</span>
+    {{# } else if(d.FEEDBACKSTATUS === '99'){ }}
+    <span class="layui-badge layui-bg-blue">任务结束99</span>
+    {{#  } else { }}
+    <span class="layui-badge">未知状态 【{{ d.FEEDBACKSTATUS }}】</span>
+    {{#  } }}
+</script>
+
+<script type="text/html" id="jobfeedbackstatusTpl">
+    {{#  if(d.STATUS === 0){ }}
+    <span class="layui-badge layui-bg-orange">未处理0</span>
+    {{# } else if(d.STATUS === 1){ }}
+    <span class="layui-badge layui-bg-green">已处理1</span>
+    {{# } else if(d.STATUS === 9){ }}
+    <span class="layui-badge layui-bg-red">处理失败9</span>
+    {{#  } else { }}
+    <span class="layui-badge"> 未知状态【{{ d.STATUS }}】</span>
+    {{#  } }}
+</script>
+
+<script type="text/html" id="equipmentRequeststatusTpl">
+    {{#  if(d.STATUS === 0){ }}
+    <span class="layui-badge layui-bg-orange">未处理0</span>
+    {{# } else if(d.STATUS === 1){ }}
+    <span class="layui-badge layui-bg-green">已处理1</span>
+    {{# } else if(d.STATUS === 9){ }}
+    <span class="layui-badge layui-bg-red">处理失败9</span>
+    {{#  } else { }}
+    <span class="layui-badge"> 未知状态【{{ d.STATUS }}】</span>
+    {{#  } }}
+</script>
+

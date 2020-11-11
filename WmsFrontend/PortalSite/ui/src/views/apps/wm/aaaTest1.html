@@ -1,0 +1,153 @@
+<title>开发测试1</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+
+        <div class="layui-tab" lay-filter="aaaTest1Tabfilter">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="1">页面1</li>
+                <li lay-id="2">页面2</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+
+                    <div class="layui-card">
+                        <form class="layui-form" lay-filter="aaaTest1Fromfilter" style="padding: 20px 0 0 0;">
+
+                            <!-- ACTION -->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">ACTION：</label>
+                                <div class="layui-input-block">
+                                    <select name="ACTION">
+                                        <option value="101">创建托盘</option>
+                                        <option value="2011">入库</option>
+                                        <option value="2012">出库</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 站台 -->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">站台编号：</label>
+                                <div class="layui-input-block">                                    
+                                    <select name="StationNo">
+                                        <option value="201">组盘站台201</option>
+                                        <option value="204">组盘站台204</option>
+                                        <option value="203">自动申请站台203</option>
+                                        <option value="206">自动申请站台206</option>
+                                        <option value="6001">A线-6001站台</option>
+                                        <option value="6002">B线-6002站台</option>
+
+                                        <option value="108">组盘站台108</option>
+                                        <option value="111">组盘站台111</option>
+                                        <option value="106">自动申请站台106</option>
+                                        <option value="109">自动申请站台109</option>
+
+                                        <option value="101">组盘站台101</option>
+                                        <option value="103">自动申请站台103</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 目标地址 -->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">存储通道：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="Destination" placeholder="" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+
+                            <!-- RF扫描托盘号 -->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">托盘号：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="PalletNo" lay-verify="required" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <!-- 数量 -->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">数量：</label>
+                                <div class="layui-input-block">
+                                    <input type="number" name="Quantity" lay-verify="required" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <!-- 重量 -->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">重量：</label>
+                                <div class="layui-input-block">
+                                    <input type="number" name="Weight" lay-verify="required" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <!-- 备注说明 -->
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">备注</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="Remark" placeholder="请输入内容" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+
+                            <!-- 操作按钮 -->
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="aaaTest1FormAction">确认提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="layui-tab-item">
+                   <p>test</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //监听提交
+        form.on('submit(aaaTest1FormAction)', function (data) {
+            //100
+            //2011
+            //2012
+            var msg = JSON.stringify(data.field);
+            layer.confirm(msg, { icon: 3, title: '提示' }, function (index) {
+
+                admin.req({
+                    type: 'get',
+                    url: setter.projmoverequest,
+                    data: data.field,
+                    dataType: 'json', //返回的类型
+                    success: function (resultdata) {
+                        layer.alert(resultdata.msg);
+                    }
+                });
+
+                layer.close(index);
+            });
+
+            return false;
+        });
+
+    });
+</script>

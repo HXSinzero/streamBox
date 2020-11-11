@@ -1,0 +1,77 @@
+<title>编辑</title>
+
+<form class="layui-form" lay-filter="layui-jobForm"  style="padding: 20px 0 0 0;">
+  <div class="layui-form-item">
+    <label class="layui-form-label">编号：</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <input type="text" name="JOBID" value="{{ d.params.JOBID || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+      </script>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">描述：</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <input type="text" name="JOBDESC" value="{{ d.params.JOBDESC || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input" readonly>
+      </script>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">触发器参数：</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <input type="text" name="JOBTRIGGERPARA" value="{{ d.params.JOBTRIGGERPARA || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+      </script>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">状态：</label>
+    <div class="layui-input-block">
+      <script type="text/html" template>
+        <input type="text" name="STATE" value="{{ d.params.STATE || '' }}" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+      </script>
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="layui-jobFrom-submit">保存</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+
+<script>
+  layui.use(['admin', 'table','laydate'], function() {
+    var $ = layui.$,
+    setter = layui.setter,
+    admin = layui.admin,
+    table = layui.table,
+    laydate =  layui.laydate,
+    form = layui.form,
+    element = layui.element;
+
+
+    //监听提交
+    form.on('submit(layui-jobFrom-submit)', 
+      function(data){
+
+            //提交 Ajax 成功后，关闭当前弹层并重载表格
+            admin.req({
+              type: "get",
+              url: setter.postjob,
+              data:data.field,
+              dataType: 'json', //返回的类型
+              success: function(resultdata) {
+                layer.alert(resultdata.msg); 
+              }
+            });
+            return false;
+          });
+
+
+  })
+</script>

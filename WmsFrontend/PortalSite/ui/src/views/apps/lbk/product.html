@@ -1,0 +1,306 @@
+<title>物料管理</title>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <form class="layui-form" style="padding: 20px 0 0 0;">
+            <div class="layui-form-item">
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">物料类型：</label>
+                    <div class="layui-input-block">
+                        <select name="PRODUCTTYPE" lay-verify="required">
+                            <option value="0">无</option>
+                            <option value="1">空盘托盘</option>
+                            <option value="2">半成品物资</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">物料编号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="PRODUCTNO" placeholder="请输入……" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">物料描述：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="PRODUCTNAME" placeholder="请输入……" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="product-search">
+                            <i class="layui-icon layui-icon-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+
+        <div class="layui-card-body">
+            <table id="productTable" lay-filter="productTablefilter"></table>
+        </div>
+    </div>
+</div>
+
+<!-- 工具栏模板-表格头部工具栏： -->
+<script type="text/html" id="toolbarproduct">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+    </div>
+</script>
+
+<!-- 工具栏模板-主表行操作按钮： -->
+<script type="text/html" id="opbarproduct">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+</script>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util', 'colorpicker'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        form.render();
+
+        //位置数据列表
+        table.render({
+            elem: '#productTable'
+            , data: []
+            , cols: [[
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'PRODUCTNO', title: '物料编号', hide: false, width: 200 }
+                , { field: 'PRODUCTNAME', title: '物料名称', hide: false, width: 400 }
+                , { field: 'PRODUCTDESC', title: '物料描述', hide: true, width: 100 }
+                , { field: 'PRODUCTSUBDESC', title: '简称', hide: true, width: 100 }
+                , { field: 'PRODUCTSPEC', title: '规格', hide: true, width: 100 }
+                , { field: 'PRODUCTBARCODE', title: '条码', hide: true, width: 100 }
+                , { field: 'PRODUCTNODECODE', title: '节点', hide: true, width: 100 }
+                , { field: 'TURNOVERRATE', title: '周转率', hide: true, width: 100 }
+                , { field: 'ABC', title: 'ABC分类', hide: true, width: 100 }
+                , { field: 'PRODUCTCLASS', title: '物料分类', hide: true, width: 100 }
+                , { field: 'PRODUCTTYPE', title: '物料类型', hide: false, width: 100, templet: '#producttypeTpl' }
+                , { field: 'PRODUCTTSTATE', title: '状态', hide: false, width: 100, templet: '#producttstateTpl' }
+                , { field: 'QUANTITY_PACK', title: '包装数量', hide: false, width: 100 }
+                , { field: 'MAINUNIT', title: '物流单位', hide: false, width: 100 }
+                , { field: 'BASICUNIT', title: '基础单位', hide: true, width: 100 }
+                , { field: 'MAINTOBASICRATE', title: '换算率', hide: true, width: 100 }
+                , { field: 'MAINTOBASICDESC', title: '换算率描述', hide: true, width: 100 }
+                , { field: 'CREATEBY', title: '创建人', hide: true, width: 100 }
+                , { field: 'CREATEDATE', title: '创建时间', hide: false, width: 180 }
+                , { field: 'MODIFYBY', title: '修改人', hide: true, width: 100 }
+                , { field: 'MODIFYDATE', title: '修改时间', hide: true, width: 180 }
+                , { field: 'REMARK', title: '备注', hide: false, width: 100 }
+                , { field: 'BRANDID', title: '品牌ID', hide: true, width: 100 }
+                , { field: 'BRANDNAME', title: '品牌描述', hide: true, width: 100 }
+                , { field: 'VENDORID', title: '供应商ID', hide: true, width: 100 }
+                , { field: 'VENDORNAME', title: '供应商名称', hide: true, width: 100 }
+                , { field: 'PRODUCTERID', title: '生产厂家ID', hide: true, width: 100 }
+                , { field: 'PRODUCTERNAME', title: '生产厂家名称', hide: true, width: 100 }
+                , { field: 'MARKETPRICE', title: '市场价', hide: true, width: 100 }
+                , { field: 'LOWESTSALEPRICE', title: '最低销售价', hide: true, width: 100 }
+                , { field: 'SELLPRICE', title: '销售价', hide: true, width: 100 }
+                , { field: 'ISDELICATE', title: '易损品', hide: true, width: 100 }
+                , { field: 'IMPORTPRODUCT', title: '导入产品编号', hide: true, width: 100 }
+                , { field: 'IMAGEURL', title: '图片路径', hide: true, width: 100 }
+                , { field: 'DEFAULTCOLOR', title: '默认颜色', hide: false, width: 100 }
+                , { field: 'PALLETEMPLTY', title: '空盘类型', hide: true, width: 100 }
+                , { field: 'PALLETENTITY', title: '实盘类型', hide: true, width: 100 }
+                , { field: 'SIZE_LENGTH', title: '长', hide: true, width: 100 }
+                , { field: 'SIZE_WIDTH', title: '宽', hide: true, width: 100 }
+                , { field: 'SIZE_HEIGHT', title: '高', hide: true, width: 100 }
+                , { field: 'VOLUME', title: '容积', hide: true, width: 100 }
+                , { field: 'WEIGHT', title: '重量', hide: true, width: 100 }
+                , { field: 'NETWEIGHT', title: '净重', hide: true, width: 100 }
+                , { field: 'WARNSTATE', title: '预警状态', hide: true, width: 100 }
+                , { field: 'INV_HIGH', title: '库存高位', hide: true, width: 100 }
+                , { field: 'INV_SAFE', title: '安全库存', hide: true, width: 100 }
+                , { field: 'INV_ORDER', title: '订货数量', hide: true, width: 100 }
+                , { field: 'INV_HIVEDAYS', title: '保质期', hide: true, width: 100 }
+                , { field: 'INV_LIMIT', title: '库存下限', hide: true, width: 100 }
+                , { field: 'INV_HIGH_COLOR', title: '库存高位颜色', hide: true, width: 100 }
+                , { field: 'INV_SAFE_COLOR', title: '安全库存颜色', hide: true, width: 100 }
+                , { field: 'INV_ORDER_COLOR', title: '订货数量颜色', hide: true, width: 100 }
+                , { field: 'INV_HIVEDAYS_COLOR', title: '保质期过期颜色', hide: true, width: 100 }
+                , { field: 'INV_LIMIT_COLOR', title: '库存下限颜色', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL01', title: '属性1', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL02', title: '属性2', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL03', title: '属性3', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL04', title: '属性4', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL05', title: '属性5', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL06', title: '属性6', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL07', title: '属性7', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL08', title: '属性8', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL09', title: '属性9', hide: true, width: 100 }
+                , { field: 'CUSTOMCOL10', title: '属性10', hide: true, width: 100 }
+
+                , { title: '操作', width: 100, align: 'center', fixed: 'right', toolbar: '#opbarproduct' }
+            ]]
+            , page: true
+            , limit: 100
+            , height: 'full-250',
+            even: true,
+            toolbar: true,// '#toolbarproduct',
+            initSort: {
+                field: 'ID' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            }
+        });
+
+        //监听头工具栏事件
+        table.on('toolbar(productTablefilter)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    var data = checkStatus.data;
+                    //layer.alert(JSON.stringify(data));
+                    add(data);
+                    break;
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(productTablefilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                edit(data);
+            }
+        });
+
+        //查询按钮
+        form.on('submit(product-search)', function (data) {
+            var myurl = setter.product + "?ACTION=100";
+
+            table.reload('productTable', {
+                url: myurl, where: data.field
+            });
+            return false;
+        });
+
+        add = function (formData) {
+            //打开编辑窗口
+            admin.popup({
+                id: 'popup-productAddForm' //定义唯一ID，防止重复弹出
+                , title: '编辑物料'
+                , type: 1
+                , area: ['800px', '600px']
+                , success: function (layero, index) {
+
+                    layui.view(this.id).render('apps/wm/productAddForm', formData)
+                        .done(function () {
+
+                            form.render(null, 'productAddFormfilter');
+
+                            //监听提交
+                            form.on('submit(productAddForm-submit)', function (data) {
+                                var field = data.field; //获取提交的字段
+                                //console.log(data);
+                                var postData = {
+                                    ACTION: 1,
+                                    PostData: JSON.stringify(data.field)
+                                };
+                                //console.log(JSON.stringify(postData));
+                                admin.req({
+                                    type: "get",
+                                    url: setter.product,
+                                    data: postData,
+                                    dataType: 'json', //返回的类型
+                                    success: function (resultdata) {
+                                        layer.msg(resultdata.msg);
+                                        layui.table.reload('productTable'); //重载表格
+                                        layer.close(index); //执行关闭
+                                    }
+                                });
+
+                                return false;
+                            });//From-submit结束
+
+
+                        });
+
+                }
+            });//popup方法结束
+        }
+
+        edit = function (formData) {
+            //打开编辑窗口
+            admin.popup({
+                id: 'popup-productForm' //定义唯一ID，防止重复弹出
+                , title: '编辑物料'
+                , type: 1
+                , area: ['800px', '600px']
+                , success: function (layero, index) {
+
+                    layui.view(this.id).render('apps/lbk/productForm', formData)
+                        .done(function () {
+
+                            //监听提交
+                            form.on('submit(productFrom-submit)', function (data) {
+                                var field = data.field; //获取提交的字段
+                                console.log(data);
+                                var postData = {
+                                    ACTION: 2011,
+                                    PostData: JSON.stringify(data.field)
+                                };
+                                //console.log(JSON.stringify(postData));
+                                admin.req({
+                                    type: "get",
+                                    url: setter.product,
+                                    data: postData,
+                                    dataType: 'json', //返回的类型
+                                    success: function (resultdata) {
+                                        layer.msg(resultdata.msg);
+                                        layui.table.reload('productTable'); //重载表格
+                                        layer.close(index); //执行关闭
+                                    }
+                                });
+
+                                return false;
+                            });//From-submit结束
+
+
+                        });
+
+                }
+            });//popup方法结束
+        }
+
+    });
+</script>
+
+<script type="text/html" id="producttypeTpl">
+    {{#  if(d.PRODUCTTYPE === '1'){ }}
+    <span style="color: green;">空盘托盘组</span>
+    {{# } else if(d.PRODUCTTYPE === '2'){ }}
+    <span style="color: blue;">半成品物资</span>
+    {{# } else if(d.PRODUCTTYPE === '3'){ }}
+    <span style="color: blue;">其他</span>
+    {{#  } else { }}
+    {{ d.PRODUCTTYPE }}
+    {{#  } }}
+</script>
+
+<script type="text/html" id="producttstateTpl">
+    {{#  if(d.PRODUCTTSTATE === '0'){ }}
+    <span style="color: red;">停用</span>
+    {{# } else if(d.PRODUCTTSTATE === '2'){ }}
+<span style="color: green;">使用</span>
+    {{#  } else { }}
+    {{ d.PRODUCTTSTATE }}
+    {{#  } }}
+</script>

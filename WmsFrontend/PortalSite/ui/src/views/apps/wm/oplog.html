@@ -1,0 +1,93 @@
+<title>操作日志</title>
+
+<div class="layui-fluid">
+
+    <div class="layui-card">
+
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">时间范围：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="datetimerange" class="layui-input" id="oplog-datetimerange" placeholder="yyyy-MM-dd" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">关键值:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="KEYVALUE" placeholder="请输入……" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <button class="layui-btn" lay-submit lay-filter="oplogFilter">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="layui-card-body">
+            <table id="oplog-tablelist" lay-filter="oplog-tablelist-filter"></table>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'laydate', 'layer', 'element', 'util'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            element = layui.element;
+
+        //日期时间范围
+        laydate.render({
+            elem: '#oplog-datetimerange'
+            , type: 'date'
+            , range: true
+        });
+
+        form.render();
+
+        //数据列表
+        table.render({
+            elem: '#oplog-tablelist',
+            url: setter.getmsglist + "?ACTION=100101",
+            cols: [[
+                { field: 'ID', title: 'ID', hide: false, width: 100 }
+                , { field: 'LEVEL', title: '消息类别', hide: false, width: 100 }
+                , { field: 'ENTERDATE', title: '录入时间', hide: false, width: 180 }
+                , { field: 'KEYVALUE', title: '消息关键值', hide: false, width: 200 }
+                , { field: 'OPMESSAGE', title: '消息内容', hide: false, width: 800/*, templet: '#msgstateTpl'*/ }
+            ]],
+            page: true,
+            limit: 1000,
+            height: 'full-200',
+            even: true,
+            toolbar: true
+        });
+
+        //监听搜索
+        form.on('submit(oplogFilter)', function (data) {
+            var field = data.field;
+
+            //执行重载
+            table.reload('oplog-tablelist', {
+                where: field
+            });
+
+            return false;
+
+        });
+
+    });
+</script>
+

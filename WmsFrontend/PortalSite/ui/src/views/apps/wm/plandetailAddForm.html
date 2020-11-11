@@ -1,0 +1,267 @@
+<title>编辑计划</title>
+
+<form class="layui-form" lay-filter="plandetailAddFormfilter">
+
+    <div class="layui-form-item">
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">计划编号：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="PLANNO" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">业务编号：</label>
+                <div class="layui-input-block">
+                    <select name="BPNO" id="BPNO" lay-verify="required" lay-filter="plandetailselectBPChange">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">业务名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="BPNAME" id="BPNAME" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">方向：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="PLANTYPE" id="PLANTYPE" lay-verify="required" placeholder="请输入……" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">站台编号：</label>
+                <div class="layui-input-block">
+                    <select name="STATIONNO" id="STATIONNO" lay-verify="required">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">物料编号：</label>
+                <div class="layui-input-block">
+                    <select name="PRODUCTNO" id="PRODUCTNO" lay-verify="required" lay-filter="plandetailselectProductChange">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">物料描述：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="PRODUCTNAME" id="PRODUCTNAME" disabled lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+
+            <div class="layui-inline">
+                <label class="layui-form-label">计划件数：</label>
+                <div class="layui-input-block">
+                    <input type="number" name="Q05" id="QUANTITY_COUNT"
+                           lay-verify="required|number" autocomplete="off" class="layui-input" lay-filter="plandetailQtyChange">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">单包重量：</label>
+                <div class="layui-input-block">
+                    <input type="number" name="Q06" id="QUANTITY_PACK"
+                           lay-verify="required|number" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">*计划数量：</label>
+                <div class="layui-input-block">
+                    <input type="number" name="Q01" id="QUANTITY_PLAN"
+                           lay-verify="required|number" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">物流单位：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="MAINUNIT" id="MAINUNIT" readonly lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <span style="color:red">*计划数量=计划件数 * 单包重量：</span>
+        </div>
+
+        <div class="layui-form-item">
+
+            <!--批次信息-->
+            <div class="layui-inline">
+                <label class="layui-form-label">批次信息：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="BATCHNO" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <!--产地-->
+            <div class="layui-inline">
+                <label class="layui-form-label">产地：</label>
+                <div class="layui-input-block">
+                    <select name="P01" id="PRODUCER">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <!--评语-->
+            <div class="layui-inline">
+                <label class="layui-form-label">评语：</label>
+                <div class="layui-input-block">
+                    <select name="P02">
+                        <option value=""></option>
+                        <option value="0">未色选</option>
+                        <option value="1">已色选</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
+                <input type="text" name="REMARK1" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="plandetailAddForm-submit">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(['admin', 'table'], function () {
+        var $ = layui.$
+            , setter = layui.setter
+            , admin = layui.admin
+            , table = layui.table
+            , form = layui.form
+            , element = layui.element;
+
+        form.render();
+        var stnlist = [];
+        var itemlist = [];
+
+
+        admin.req({
+            type: "get",
+            url: setter.basic + "?ACTION=100&BasicType=BUNIESSTYPE",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                stnlist = resultdata.data;
+                $.each(resultdata.data, function (index, item) {
+                    $('#BPNO').append(new Option(item.BUNIESSTYPENO + "-" + item.BUNIESSTYPENAME, item.BUNIESSTYPENO)); // 下拉菜单里添加元素
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+        admin.req({
+            type: "get",
+            url: setter.basic + "?ACTION=100&BasicType=PRODUCER",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                stnlist = resultdata.data;
+                $.each(resultdata.data, function (index, item) {
+                    $('#PRODUCER').append(new Option(item.PRODUCERNAME, item.PRODUCERNAME)); // 下拉菜单里添加元素
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+        admin.req({
+            type: "get",
+            url: setter.product + "?ACTION=100",
+            dataType: 'json', //返回的类型
+            success: function (resultdata) {
+                itemlist = resultdata.data;
+                $.each(resultdata.data, function (index, item) {
+                    $('#PRODUCTNO').append(new Option(item.PRODUCTNO + "-" + item.PRODUCTNAME, item.PRODUCTNO)); // 下拉菜单里添加元素
+                });
+
+                layui.form.render("select");
+            }
+        });
+
+        form.on('select(plandetailselectBPChange)', function (data) {
+
+            var item = stnlist.find(obj => obj.BUNIESSTYPENO == data.value);
+            //console.log(item);
+            if (item) {
+                var array = item.STATIONNO.split(",");
+                $("#STATIONNO option").remove();
+                $.each(array, function (index, item) {
+                    $('#STATIONNO').append(new Option(item));
+                });
+                layui.form.render("select");
+
+                $('#BPNAME').val(item.BUNIESSTYPENAME);
+                $('#PLANTYPE').val(item.DIRECTION);
+                form.render();
+            }
+
+        });
+
+        form.on('select(plandetailselectProductChange)', function (data) {
+            //console.log(data.elem); //得到select原始DOM对象
+            //console.log(data.value); //得到被选中的值
+            //console.log(data.othis); //得到美化后的DOM对象
+
+            var item = itemlist.find(obj => obj.PRODUCTNO == data.value);
+            //console.log(item);
+            if (item) {
+                $('#PRODUCTNAME').val(item.PRODUCTNAME);
+                $('#MAINUNIT').val(item.MAINUNIT);
+                $('#QUANTITY_PACK').val(item.QUANTITY_PACK);
+            }
+
+        });
+
+
+        $("#QUANTITY_COUNT").on("input",function(e){
+            //获取input输入的值
+            //console.log(e.delegateTarget.value);
+            var qty = $('#QUANTITY_COUNT').val() * $('#QUANTITY_PACK').val();
+             $('#QUANTITY_PLAN').val(qty);
+
+        });
+
+         $("#QUANTITY_PACK").on("input",function(e){
+            //获取input输入的值
+            //console.log(e.delegateTarget.value);
+              var qty = $('#QUANTITY_COUNT').val() * $('#QUANTITY_PACK').val();
+              $('#QUANTITY_PLAN').val(qty);
+        });
+
+
+    })
+</script>
